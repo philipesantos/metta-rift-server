@@ -1,11 +1,10 @@
-from metta.functions.function import Function
-
+from metta.function import Function
 
 class Exists(Function):
     @staticmethod
     def to_metta_usage(atom: str) -> str:
         return (
-            f"(exists ({atom}))"
+            f"(exists {atom})"
         )
 
 

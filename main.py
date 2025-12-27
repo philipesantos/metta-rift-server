@@ -1,15 +1,15 @@
 from hyperon import MeTTa
 
+from metta.atoms.at import At
 from metta.atoms.character import Character
 from metta.atoms.location import Location
-from metta.atoms.route import Route
+from metta.atoms.current_tick import CurrentTick
 from metta.atoms.world import World
-from metta.functions.compare_newer import CompareNewer
-from metta.functions.current import Current
-from metta.functions.current_tick import CurrentTick
+from metta.events.move_event import MoveEvent
 from metta.functions.exists import Exists
 from metta.functions.move_to import MoveTo
 from metta.functions.move_towards import MoveTowards
+from metta.functions.trigger import Trigger
 from utils.direction import Direction
 
 
@@ -53,14 +53,24 @@ def build_world():
         desc="Forked path, you can go east or west."
     )
 
-    world = World()
+    current_tick = CurrentTick("1")
 
-    world.add_function(CompareNewer())
-    world.add_function(Current())
-    world.add_function(CurrentTick())
+    world = World(current_tick)
+
     world.add_function(Exists())
     world.add_function(MoveTo(character_player))
     world.add_function(MoveTowards(character_player))
+    world.add_function(Trigger(
+        MoveEvent("$from", "$to"),
+        (
+            f"(let* (($tick (match &self (Current Tick $tick) $tick))\n"
+            f"    ( ()  (add-atom &self (At $tick ch_player $to)))\n"
+            f"    ( ()  (remove-atom &self (Current At ch_player $from)))\n"
+            f"    ( ()  (add-atom &self (Current At ch_player $to))))\n"
+            f'    "You moved"\n'
+            f")\n"
+        )
+    ))
 
     world.add_character(character_player)
 
@@ -70,6 +80,8 @@ def build_world():
 
     world.add_route(location_glade, Direction.SOUTH, location_path_1)
     world.add_route(location_path_1, Direction.SOUTH, location_cave)
+
+    world.add_at(At(current_tick.tick, character_player.key, location_glade.key), True)
 
     return world
 
