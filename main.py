@@ -11,8 +11,8 @@ from metta.functions.move_to import MoveTo
 from metta.functions.move_towards import MoveTowards
 from metta.functions.synchronize_tick import SynchronizeTick
 from metta.functions.trigger import Trigger
-from metta.side_effects.on_move_update_at_side_effect import OnMoveUpdateAtSideEffect
-from metta.side_effects.on_move_update_tick_side_effect import OnMoveUpdateTickSideEffect
+from metta.side_effects.on_move_update_at import OnMoveUpdateAt
+from metta.side_effects.on_move_update_tick import OnMoveUpdateTick
 from utils.direction import Direction
 
 
@@ -69,8 +69,8 @@ def build_world():
     world.add_function(Trigger(
         MoveEvent("$from", "$to"),
         [
-            OnMoveUpdateAtSideEffect(character_player),
-            OnMoveUpdateTickSideEffect()
+            OnMoveUpdateAt(character_player),
+            OnMoveUpdateTick()
         ]
     ))
 
