@@ -1,11 +1,12 @@
 from metta.event import Event
 from metta.function import Function
+from metta.side_effect import SideEffect
 
 
 class Trigger(Function):
-    def __init__(self, event: Event, metta_code: str):
+    def __init__(self, event: Event, side_effects: list[SideEffect]):
         self.event = event
-        self.metta_code = metta_code
+        self.side_effects = side_effects
 
 
     @staticmethod
@@ -14,11 +15,18 @@ class Trigger(Function):
             f"(trigger {event.to_metta()})"
         )
 
-
     def to_metta_definition(self) -> str:
-        formatted_metta_code = "\n".join("   " + line if line else line for line in self.metta_code.splitlines())
-        return (
-            f"(= (trigger {self.event.to_metta()})\n"
-            f"{formatted_metta_code}\n"
-            f")"
+        def indent_block(text: str, indent: str = "   ") -> str:
+            return "\n".join(
+                (indent + line) if line else line
+                for line in text.splitlines()
+            )
+
+        return "\n".join(
+            (
+                f"(= (trigger {self.event.to_metta()})\n"
+                f"{indent_block(side_effect.to_metta_definition())}\n"
+                f")"
+            )
+            for side_effect in self.side_effects
         )

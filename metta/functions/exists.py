@@ -11,10 +11,13 @@ class Exists(Function):
     def to_metta_definition(self) -> str:
         return (
             f"(= (exists $atom)\n"
-            f"    (case(match &self $atom True)\n"
-            f"    (\n"
-            f"        (True True)\n"
-            f"        (Empty False)\n"
-            f"    ))\n"
+            f"    (let $result\n"
+            f"        (collapse (match &self $atom True))\n"
+            f"        (case (car-atom $result)\n"
+            f"        (\n"
+            f"            (True True)\n"
+            f"            ($_ False)\n"
+            f"        ))\n"
+            f"    )\n"
             f")"
         )

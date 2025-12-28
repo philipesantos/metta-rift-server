@@ -9,7 +9,10 @@ from metta.events.move_event import MoveEvent
 from metta.functions.exists import Exists
 from metta.functions.move_to import MoveTo
 from metta.functions.move_towards import MoveTowards
+from metta.functions.synchronize_tick import SynchronizeTick
 from metta.functions.trigger import Trigger
+from metta.side_effects.on_move_update_at_side_effect import OnMoveUpdateAtSideEffect
+from metta.side_effects.on_move_update_tick_side_effect import OnMoveUpdateTickSideEffect
 from utils.direction import Direction
 
 
@@ -30,6 +33,7 @@ def main():
             break
 
         print(metta.run(user_query))
+        print(metta.run(f"!{SynchronizeTick.to_metta_usage()}"))
 
 
 def build_world():
@@ -60,16 +64,14 @@ def build_world():
     world.add_function(Exists())
     world.add_function(MoveTo(character_player))
     world.add_function(MoveTowards(character_player))
+    world.add_function(SynchronizeTick())
+
     world.add_function(Trigger(
         MoveEvent("$from", "$to"),
-        (
-            f"(let* (($tick (match &self (Current Tick $tick) $tick))\n"
-            f"    ( ()  (add-atom &self (At $tick ch_player $to)))\n"
-            f"    ( ()  (remove-atom &self (Current At ch_player $from)))\n"
-            f"    ( ()  (add-atom &self (Current At ch_player $to))))\n"
-            f'    "You moved"\n'
-            f")\n"
-        )
+        [
+            OnMoveUpdateAtSideEffect(character_player),
+            OnMoveUpdateTickSideEffect()
+        ]
     ))
 
     world.add_character(character_player)
@@ -81,7 +83,7 @@ def build_world():
     world.add_route(location_glade, Direction.SOUTH, location_path_1)
     world.add_route(location_path_1, Direction.SOUTH, location_cave)
 
-    world.add_at(At(current_tick.tick, character_player.key, location_glade.key), True)
+    world.add_at(At("0", character_player.key, location_glade.key), True)
 
     return world
 
