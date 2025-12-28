@@ -5,7 +5,7 @@ from metta.atoms.current_tick import CurrentTick
 from metta.side_effect import SideEffect
 
 
-class OnMoveUpdateAtSideEffect(SideEffect):
+class OnMoveUpdateAt(SideEffect):
     def __init__(self, character: Character):
         self.character = character
 
@@ -20,6 +20,6 @@ class OnMoveUpdateAtSideEffect(SideEffect):
             f"    ( ()  (add-atom &self {at_add_atom}))\n"
             f"    ( ()  (remove-atom &self {current_at_remove_atom}))\n"
             f"    ( ()  (add-atom &self {current_at_add_atom})))\n"
-            f'    "You moved"\n'
+            f'    Empty\n'
             f")\n"
         )

@@ -16,7 +16,7 @@ class Trigger(Function):
         )
 
     def to_metta_definition(self) -> str:
-        def indent_block(text: str, indent: str = "   ") -> str:
+        def indent_block(text: str, indent: str = "    ") -> str:
             return "\n".join(
                 (indent + line) if line else line
                 for line in text.splitlines()
