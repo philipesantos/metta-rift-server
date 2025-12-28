@@ -14,7 +14,7 @@ class MoveTowards(Function):
     @staticmethod
     def to_metta_usage(direction: str) -> str:
         return (
-            f"(move-towards {direction})"
+            f"(move-towards ({direction}))"
         )
 
 
