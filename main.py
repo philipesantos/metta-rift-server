@@ -44,17 +44,82 @@ def build_world():
 
     location_glade = Location(
         key="glade",
-        desc="You are in the Glade. There are two pathways, one north, other south."
+        desc="You are in the Glade."
     )
 
     location_cave = Location(
         key="cave",
-        desc="You are in the cave. There is a pathway east."
+        desc="You are in the cave."
+    )
+
+    location_boat = Location(
+        key="boat",
+        desc="You are in the boat."
+    )
+
+    location_plane = Location(
+        key="plane",
+        desc="You are in the plane."
+    )
+
+    location_cabin = Location(
+        key="cabin",
+        desc="You are in the cabin."
+    )
+
+    location_camping_site = Location(
+        key="camping_site",
+        desc="You are in the camping site."
+    )
+
+    location_monolith = Location(
+        key="monolith",
+        desc="You are in the monolith."
     )
 
     location_path_1 = Location(
         key="path_1",
-        desc="Forked path, you can go east or west."
+        desc="You are in the path 1."
+    )
+
+    location_path_2 = Location(
+        key="path_2",
+        desc="You are in the path 2."
+    )
+
+    location_path_3 = Location(
+        key="path_3",
+        desc="You are in the path 3."
+    )
+
+    location_path_4 = Location(
+        key="path_4",
+        desc="You are in the path 4."
+    )
+
+    location_path_5 = Location(
+        key="path_5",
+        desc="You are in the path 5."
+    )
+
+    location_path_6 = Location(
+        key="path_6",
+        desc="You are in the path 6."
+    )
+
+    location_path_7 = Location(
+        key="path_7",
+        desc="You are in the path 7."
+    )
+
+    location_path_8 = Location(
+        key="path_8",
+        desc="You are in the path 8."
+    )
+
+    location_path_9 = Location(
+        key="path_9",
+        desc="You are in the path 9."
     )
 
     current_tick = CurrentTick("1")
@@ -78,10 +143,36 @@ def build_world():
 
     world.add_location(location_glade)
     world.add_location(location_cave)
+    world.add_location(location_boat)
+    world.add_location(location_plane)
+    world.add_location(location_cabin)
+    world.add_location(location_camping_site)
+    world.add_location(location_monolith)
     world.add_location(location_path_1)
+    world.add_location(location_path_2)
+    world.add_location(location_path_3)
+    world.add_location(location_path_4)
+    world.add_location(location_path_5)
+    world.add_location(location_path_6)
+    world.add_location(location_path_7)
+    world.add_location(location_path_8)
+    world.add_location(location_path_9)
 
     world.add_route(location_glade, Direction.SOUTH, location_path_1)
-    world.add_route(location_path_1, Direction.SOUTH, location_cave)
+    world.add_route(location_path_1, Direction.WEST, location_path_2)
+    world.add_route(location_path_2, Direction.SOUTH, location_cave)
+    world.add_route(location_path_1, Direction.EAST, location_path_3)
+    world.add_route(location_path_3, Direction.EAST, location_boat)
+    world.add_route(location_glade, Direction.WEST, location_path_9)
+    world.add_route(location_path_9, Direction.WEST, location_monolith)
+    world.add_route(location_glade, Direction.NORTH, location_path_4)
+    world.add_route(location_path_4, Direction.NORTH, location_path_5)
+    world.add_route(location_path_5, Direction.EAST, location_path_6)
+    world.add_route(location_path_6, Direction.EAST, location_plane)
+    world.add_route(location_path_5, Direction.NORTH, location_path_7)
+    world.add_route(location_path_7, Direction.WEST, location_path_8)
+    world.add_route(location_path_8, Direction.WEST, location_cabin)
+    world.add_route(location_path_7, Direction.NORTH, location_camping_site)
 
     world.add_at(At("0", character_player.key, location_glade.key), True)
 
