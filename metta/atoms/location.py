@@ -5,7 +5,7 @@ from metta.side_effects.on_move_describe_location import OnMoveDescribeLocation
 
 class Location:
     def __init__(self, key: str, desc: str):
-        self.key = f"lc_{key}"
+        self.key = f"{key}"
         self.desc = desc
 
 

@@ -1,11 +1,13 @@
 class Character:
     def __init__(self, key: str, name: str):
-        self.key = f"ch_{key}"
+        self.key = f"{key}"
         self.name = name
 
     @staticmethod
     def to_metta_usage(key: str, name: str) -> str:
-        return f'(Character {key} "{name}")'
+        if " " in name:
+            name = f'"{name}"'
+        return f'(Character {key} {name})'
 
 
     def to_metta_definition(self) -> str:

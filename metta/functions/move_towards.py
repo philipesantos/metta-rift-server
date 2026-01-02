@@ -20,7 +20,7 @@ class MoveTowards(Function):
 
     def to_metta_definition(self) -> str:
         current_at_match = CurrentAt.to_metta_usage(self.character.key, "$from")
-        route_match = Route.to_meta_usage("$from", "$direction", "$to")
+        route_match = Route.to_metta_usage("$from", "$direction", "$to")
         move_event = MoveEvent("$from", "$to")
         return (
             f"(= (move-towards ($direction))\n"

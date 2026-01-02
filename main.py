@@ -4,7 +4,7 @@ from metta.atoms.at import At
 from metta.atoms.character import Character
 from metta.atoms.location import Location
 from metta.atoms.current_tick import CurrentTick
-from metta.atoms.world import World
+from metta.world import World
 from metta.events.move_event import MoveEvent
 from metta.functions.exists import Exists
 from metta.functions.move_to import MoveTo
