@@ -2,9 +2,8 @@ import unittest
 
 from hyperon import MeTTa
 
-from metta.atoms.current_tick import CurrentTick
 from metta.atoms.out_of_date_tick import OutOfDateTick
-from tests.utils import unwrap_first_match
+from tests.utils.utils import unwrap_first_match
 
 
 class TestMettaAtomOutOfDateTick(unittest.TestCase):
