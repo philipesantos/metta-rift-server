@@ -7,4 +7,4 @@ class MoveEvent(Event):
         self.to_location = to_location
 
     def to_metta(self) -> str:
-        return f"(move {self.from_location} {self.to_location})"
+        return f"(Move {self.from_location} {self.to_location})"
