@@ -7,7 +7,7 @@ from tests.utils.metta import get_test_metta
 from tests.utils.utils import unwrap_first_match
 
 
-class TestMettaAtomCharacter(unittest.TestCase):
+class TestMettaAtomWrapperState(unittest.TestCase):
 
     def test_to_metta_usage(self):
         atom = Tick.to_metta_usage("0")
