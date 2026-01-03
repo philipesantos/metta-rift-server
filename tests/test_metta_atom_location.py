@@ -2,12 +2,10 @@ import unittest
 
 from hyperon import MeTTa
 
-from metta.atoms.at import At
-from metta.atoms.character import Character
 from metta.atoms.location import Location
 from metta.events.move_event import MoveEvent
 from metta.functions.trigger import Trigger
-from tests.utils import unwrap_first_match
+from tests.utils.utils import unwrap_first_match
 
 
 class TestMettaAtomLocation(unittest.TestCase):

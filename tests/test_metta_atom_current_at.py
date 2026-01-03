@@ -3,7 +3,7 @@ import unittest
 from hyperon import MeTTa
 
 from metta.atoms.current_at import CurrentAt
-from tests.utils import unwrap_first_match
+from tests.utils.utils import unwrap_first_match
 
 
 class TestMettaAtomCurrentAt(unittest.TestCase):

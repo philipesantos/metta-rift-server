@@ -2,9 +2,8 @@ import unittest
 
 from hyperon import MeTTa
 
-from metta.atoms.at import At
 from metta.atoms.route import Route
-from tests.utils import unwrap_first_match
+from tests.utils.utils import unwrap_first_match
 from utils.direction import Direction
 
 
