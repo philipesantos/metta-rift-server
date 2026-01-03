@@ -1,21 +1,15 @@
 import unittest
 
+from metta.atoms.state import State
+from metta.atoms.tick import Tick
 from tests.utils.metta import get_test_metta
 
 from metta.atoms.at import At
 from metta.atoms.character import Character
 from metta.atoms.current_at import CurrentAt
-from metta.atoms.current_tick import CurrentTick
-from metta.atoms.out_of_date_tick import OutOfDateTick
 from metta.events.move_event import MoveEvent
-from metta.functions.exists import Exists
 from metta.functions.trigger import Trigger
-from metta.side_effects.on_move_describe_location import OnMoveDescribeLocation
 from metta.side_effects.on_move_update_at import OnMoveUpdateAt
-from metta.side_effects.on_move_update_tick import OnMoveUpdateTick
-from tests.utils import some_event
-from tests.utils.some_event import SomeEvent
-from tests.utils.text_side_effect import TextSideEffect
 from tests.utils.utils import unwrap_first_match, count_atoms, unwrap_match
 
 
@@ -25,9 +19,9 @@ class TestMettaSideEffectOnMoveUpdateAt(unittest.TestCase):
         metta = get_test_metta()
 
         character = Character("player", "John")
-        current_tick = CurrentTick("0")
+        tick_state = State(Tick("0").to_metta_definition())
 
-        metta.run(current_tick.to_metta_definition())
+        metta.run(tick_state.to_metta_definition())
         metta.run(CurrentAt(character.key, "glade").to_metta_definition())
 
         trigger = Trigger(MoveEvent("$from", "$to"), [OnMoveUpdateAt(character)])
@@ -47,8 +41,8 @@ class TestMettaSideEffectOnMoveUpdateAt(unittest.TestCase):
         self.assertEqual(unwrap_first_match(result_1_2), CurrentAt.to_metta_usage(character.key, "cave"))
         self.assertEqual(count_atoms(result_1_2), 1)
 
-        metta.run(f"!(remove-atom &self {current_tick.to_metta_definition()})")
-        metta.run(f"!(add-atom &self {CurrentTick("1").to_metta_definition()})")
+        metta.run(f"!(remove-atom &self {tick_state.to_metta_definition()})")
+        metta.run(f"!(add-atom &self {State(Tick("1").to_metta_definition()).to_metta_definition()})")
 
         trigger_metta_usage_2 = Trigger.to_metta_usage(MoveEvent("cave", "beach"))
         metta.run(f"!{trigger_metta_usage_2}")
