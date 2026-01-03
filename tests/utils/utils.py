@@ -16,12 +16,14 @@ def unwrap_atom(atom):
 def unwrap_first_match(result):
     return unwrap_match(result, 0)
 
+
 def unwrap_match(result, index):
     if not result:
         raise AssertionError("Expected match results, got empty list")
     if not result[0]:
         raise AssertionError("Expected first match to have bindings")
     return unwrap_atom(result[0][index])
+
 
 def count_atoms(result):
     if not result:

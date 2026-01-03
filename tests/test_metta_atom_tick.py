@@ -7,12 +7,10 @@ from tests.utils.utils import unwrap_first_match
 
 
 class TestMettaAtomTick(unittest.TestCase):
-
     def test_to_metta_usage(self):
         tick = 0
         tick_metta_usage = Tick.to_metta_usage(str(tick))
         self.assertEqual(tick_metta_usage, f"(Tick {tick})")
-
 
     def test_to_metta_definition(self):
         metta = get_test_metta()

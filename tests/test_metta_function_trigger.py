@@ -12,12 +12,10 @@ from tests.utils.utils import unwrap_first_match
 
 
 class TestMettaFunctionTrigger(unittest.TestCase):
-
     def test_to_metta_usage(self):
         event = SomeEvent("glade")
         trigger_metta_usage = Trigger.to_metta_usage(event)
         self.assertEqual(trigger_metta_usage, f"(trigger {event.to_metta()})")
-
 
     def test_to_metta_definition(self):
         metta = get_test_metta()

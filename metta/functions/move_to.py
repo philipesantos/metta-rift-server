@@ -11,13 +11,9 @@ class MoveTo(Function):
     def __init__(self, character: Character):
         self.character = character
 
-
     @staticmethod
     def to_metta_usage(where: str) -> str:
-        return (
-            f"(move-to ({where}))"
-        )
-
+        return f"(move-to ({where}))"
 
     def to_metta_definition(self) -> str:
         current_at_match = CurrentAt.to_metta_usage(self.character.key, "$from")

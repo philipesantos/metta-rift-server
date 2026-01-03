@@ -8,10 +8,7 @@ from metta.functions.exists import Exists
 class SynchronizeTick(Function):
     @staticmethod
     def to_metta_usage() -> str:
-        return (
-            f"(synchronize-tick)"
-        )
-
+        return f"(synchronize-tick)"
 
     def to_metta_definition(self) -> str:
         stale_tick = Stale.to_metta_usage(Tick.__name__)

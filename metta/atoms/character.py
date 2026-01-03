@@ -7,11 +7,7 @@ class Character:
     def to_metta_usage(key: str, name: str) -> str:
         if " " in name:
             name = f'"{name}"'
-        return f'(Character {key} {name})'
-
+        return f"(Character {key} {name})"
 
     def to_metta_definition(self) -> str:
-        return (
-            f"(: {self.key} Character)\n"
-            f"{self.to_metta_usage(self.key, self.name)}"
-        )
+        return f"(: {self.key} Character)\n{self.to_metta_usage(self.key, self.name)}"

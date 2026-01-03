@@ -12,7 +12,6 @@ from tests.utils.utils import unwrap_first_match, count_atoms
 
 
 class TestMettaSideEffectOnMoveUpdateTick(unittest.TestCase):
-
     def test_to_metta_definition(self):
         metta = get_test_metta()
 
@@ -24,14 +23,18 @@ class TestMettaSideEffectOnMoveUpdateTick(unittest.TestCase):
         trigger_metta_usage_1 = Trigger.to_metta_usage(MoveEvent("cave", "glade"))
         metta.run(f"!{trigger_metta_usage_1}")
 
-        result_1 = metta.run(f"!(match &self {Stale.to_metta_usage(Tick.__name__)} True)")
+        result_1 = metta.run(
+            f"!(match &self {Stale.to_metta_usage(Tick.__name__)} True)"
+        )
         self.assertEqual(unwrap_first_match(result_1), True)
         self.assertEqual(count_atoms(result_1), 1)
 
         trigger_metta_usage_2 = Trigger.to_metta_usage(MoveEvent("glade", "beach"))
         metta.run(f"!{trigger_metta_usage_2}")
 
-        result_2 = metta.run(f"!(match &self {Stale.to_metta_usage(Tick.__name__)} True)")
+        result_2 = metta.run(
+            f"!(match &self {Stale.to_metta_usage(Tick.__name__)} True)"
+        )
         self.assertEqual(unwrap_first_match(result_2), True)
         self.assertEqual(count_atoms(result_2), 1)
 

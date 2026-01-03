@@ -9,12 +9,10 @@ from tests.utils.utils import unwrap_first_match
 
 
 class TestMettaAtomLocation(unittest.TestCase):
-
     def test_to_metta_usage(self):
         key = "glade"
         location_metta_usage = Location.to_metta_usage(key)
-        self.assertEqual(location_metta_usage, f'(Location {key})')
-
+        self.assertEqual(location_metta_usage, f"(Location {key})")
 
     def test_to_metta_definition(self):
         metta = get_test_metta()
@@ -32,12 +30,16 @@ class TestMettaAtomLocation(unittest.TestCase):
         result_key = metta.run(f"!(match &self {location_metta_usage_key} $key)")
         self.assertEqual(unwrap_first_match(result_key), key)
 
-        location_metta_usage_move_trigger = Trigger.to_metta_usage(MoveEvent("cave", key))
+        location_metta_usage_move_trigger = Trigger.to_metta_usage(
+            MoveEvent("cave", key)
+        )
         result_move_trigger = metta.run(f"!{location_metta_usage_move_trigger}")
         self.assertEqual(unwrap_first_match(result_move_trigger), description)
 
         location_metta_usage_no_match = Location.to_metta_usage("cave")
-        result_no_match = metta.run(f"!(match &self {location_metta_usage_no_match} True)")
+        result_no_match = metta.run(
+            f"!(match &self {location_metta_usage_no_match} True)"
+        )
         self.assertEqual(result_no_match, [[]])
 
 

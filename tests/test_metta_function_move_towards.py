@@ -17,12 +17,10 @@ from utils.direction import Direction
 
 
 class TestMettaFunctionMoveTowards(unittest.TestCase):
-
     def test_to_metta_usage(self):
         direction = Direction.WEST.value
         move_towards_metta_usage = MoveTowards.to_metta_usage(direction)
         self.assertEqual(move_towards_metta_usage, f"(move-towards ({direction}))")
-
 
     def test_to_metta_definition(self):
         metta = get_test_metta()
@@ -30,11 +28,10 @@ class TestMettaFunctionMoveTowards(unittest.TestCase):
         character = Character("player", "John")
 
         metta.run(MoveTowards(character).to_metta_definition())
-        metta.run(Trigger(
-                MoveEvent("$from", "$to"),
-                [OnMoveDoNothing()]
-            )
-            .to_metta_definition()
+        metta.run(
+            Trigger(
+                MoveEvent("$from", "$to"), [OnMoveDoNothing()]
+            ).to_metta_definition()
         )
 
         metta.run(Route("cave", Direction.NORTH.value, "beach").to_metta_definition())
@@ -52,9 +49,13 @@ class TestMettaFunctionMoveTowards(unittest.TestCase):
 
         move_towards_metta_usage_west = MoveTowards.to_metta_usage(Direction.WEST.value)
         result_move_towards_west = metta.run(f"!{move_towards_metta_usage_west}")
-        self.assertEqual(unwrap_first_match(result_move_towards_west), "No way to go there")
+        self.assertEqual(
+            unwrap_first_match(result_move_towards_west), "No way to go there"
+        )
 
-        move_towards_metta_usage_south = MoveTowards.to_metta_usage(Direction.SOUTH.value)
+        move_towards_metta_usage_south = MoveTowards.to_metta_usage(
+            Direction.SOUTH.value
+        )
         result_move_towards_south = metta.run(f"!{move_towards_metta_usage_south}")
         self.assertEqual(result_move_towards_south, [[]])
 

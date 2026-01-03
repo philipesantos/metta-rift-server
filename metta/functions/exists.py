@@ -1,12 +1,10 @@
 from metta.function import Function
 
+
 class Exists(Function):
     @staticmethod
     def to_metta_usage(atom: str) -> str:
-        return (
-            f"(exists {atom})"
-        )
-
+        return f"(exists {atom})"
 
     def to_metta_definition(self) -> str:
         return (

@@ -14,7 +14,6 @@ from tests.utils.utils import unwrap_first_match
 
 
 class TestMettaSideEffectOnMoveDescribeLocation(unittest.TestCase):
-
     def test_to_metta_definition(self):
         metta = get_test_metta()
 

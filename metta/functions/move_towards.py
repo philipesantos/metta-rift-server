@@ -10,13 +10,9 @@ class MoveTowards(Function):
     def __init__(self, character: Character):
         self.character = character
 
-
     @staticmethod
     def to_metta_usage(direction: str) -> str:
-        return (
-            f"(move-towards ({direction}))"
-        )
-
+        return f"(move-towards ({direction}))"
 
     def to_metta_definition(self) -> str:
         current_at_match = CurrentAt.to_metta_usage(self.character.key, "$from")
