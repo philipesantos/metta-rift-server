@@ -1,4 +1,3 @@
-from metta.atoms.out_of_date_tick import OutOfDateTick
 from metta.side_effect import SideEffect
 
 

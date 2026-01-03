@@ -1,10 +1,10 @@
 import unittest
 
+from metta.atoms.wrappers.stale import Stale
 from metta.atoms.wrappers.state import State
 from metta.atoms.tick import Tick
 from tests.utils.metta import get_test_metta
 
-from metta.atoms.out_of_date_tick import OutOfDateTick
 from metta.functions.exists import Exists
 from metta.functions.synchronize_tick import SynchronizeTick
 from tests.utils.utils import unwrap_first_match
@@ -33,7 +33,7 @@ class TestMettaFunctionSynchronizeTick(unittest.TestCase):
         result_match_tick_1 = metta.run(f"!(match &self {tick_state_metta_match_tick} $tick)")
         self.assertEqual(unwrap_first_match(result_match_tick_1), 0)
 
-        metta.run(OutOfDateTick().to_metta_definition())
+        metta.run(Stale(Tick.__name__).to_metta_definition())
 
         result_synchronize_tick_2 = metta.run(f"!{synchronize_tick_metta_usage}")
         self.assertEqual(result_synchronize_tick_2, [[]])
