@@ -1,6 +1,6 @@
 import unittest
 
-from hyperon import MeTTa
+from tests.utils.metta import get_test_metta
 
 from metta.atoms.at import At
 from tests.utils.utils import unwrap_first_match
@@ -17,7 +17,7 @@ class TestMettaAtomAt(unittest.TestCase):
 
 
     def test_to_metta_definition(self):
-        metta = MeTTa()
+        metta = get_test_metta()
 
         tick = 0
         what = "player"

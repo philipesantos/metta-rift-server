@@ -1,6 +1,6 @@
 import unittest
 
-from hyperon import MeTTa
+from tests.utils.metta import get_test_metta
 
 from metta.atoms.at import At
 from metta.atoms.current_tick import CurrentTick
@@ -18,7 +18,7 @@ class TestMettaFunctionSynchronizeTick(unittest.TestCase):
 
 
     def test_to_metta_definition(self):
-        metta = MeTTa()
+        metta = get_test_metta()
 
         metta.run(Exists().to_metta_definition())
         metta.run(SynchronizeTick().to_metta_definition())

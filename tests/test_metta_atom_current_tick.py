@@ -1,6 +1,6 @@
 import unittest
 
-from hyperon import MeTTa
+from tests.utils.metta import get_test_metta
 
 from metta.atoms.current_tick import CurrentTick
 from tests.utils.utils import unwrap_first_match
@@ -15,7 +15,7 @@ class TestMettaAtomCurrentTick(unittest.TestCase):
 
 
     def test_to_metta_definition(self):
-        metta = MeTTa()
+        metta = get_test_metta()
 
         tick = 0
 

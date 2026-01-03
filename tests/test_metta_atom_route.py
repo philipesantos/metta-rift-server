@@ -1,6 +1,6 @@
 import unittest
 
-from hyperon import MeTTa
+from tests.utils.metta import get_test_metta
 
 from metta.atoms.route import Route
 from tests.utils.utils import unwrap_first_match
@@ -18,7 +18,7 @@ class TestMettaAtomRoute(unittest.TestCase):
 
 
     def test_to_metta_definition(self):
-        metta = MeTTa()
+        metta = get_test_metta()
 
         location_from = "glade"
         direction = Direction.SOUTH.value
