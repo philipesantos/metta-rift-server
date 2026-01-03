@@ -1,7 +1,7 @@
 from metta.atoms.at import At
 from metta.atoms.character import Character
 from metta.atoms.current_at import CurrentAt
-from metta.atoms.state import State
+from metta.atoms.wrappers.state import State
 from metta.atoms.tick import Tick
 from metta.side_effect import SideEffect
 
