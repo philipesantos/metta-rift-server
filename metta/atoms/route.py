@@ -4,13 +4,9 @@ class Route:
         self.direction = direction
         self.location_to = location_to
 
-
     @staticmethod
     def to_metta_usage(location_from: str, direction: str, location_to: str) -> str:
-        return f'(Route {location_from} {direction} {location_to})'
-
+        return f"(Route {location_from} {direction} {location_to})"
 
     def to_metta_definition(self) -> str:
-        return (
-            f"{self.to_metta_usage(self.location_from, self.direction, self.location_to)}"
-        )
+        return f"{self.to_metta_usage(self.location_from, self.direction, self.location_to)}"

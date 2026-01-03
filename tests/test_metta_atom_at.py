@@ -7,14 +7,12 @@ from tests.utils.utils import unwrap_first_match
 
 
 class TestMettaAtomAt(unittest.TestCase):
-
     def test_to_metta_usage(self):
         tick = 0
         what = "player"
         where = "glade"
         at_metta_usage = At.to_metta_usage(str(tick), what, where)
         self.assertEqual(at_metta_usage, f"(At {str(tick)} {what} {where})")
-
 
     def test_to_metta_definition(self):
         metta = get_test_metta()

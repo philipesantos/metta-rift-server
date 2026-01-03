@@ -16,12 +16,10 @@ from utils.direction import Direction
 
 
 class TestMettaFunctionMoveTo(unittest.TestCase):
-
     def test_to_metta_usage(self):
         where = "glade"
         move_to_metta_usage = MoveTo.to_metta_usage(where)
         self.assertEqual(move_to_metta_usage, f"(move-to ({where}))")
-
 
     def test_to_metta_definition(self):
         metta = get_test_metta()
@@ -30,11 +28,10 @@ class TestMettaFunctionMoveTo(unittest.TestCase):
 
         metta.run(Exists().to_metta_definition())
         metta.run(MoveTo(character).to_metta_definition())
-        metta.run(Trigger(
-                MoveEvent("$from", "$to"),
-                [OnMoveDoNothing()]
-            )
-            .to_metta_definition()
+        metta.run(
+            Trigger(
+                MoveEvent("$from", "$to"), [OnMoveDoNothing()]
+            ).to_metta_definition()
         )
 
         metta.run(Route("cave", Direction.NORTH.value, "beach").to_metta_definition())

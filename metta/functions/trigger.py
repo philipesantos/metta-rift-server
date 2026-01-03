@@ -8,18 +8,14 @@ class Trigger(Function):
         self.event = event
         self.side_effects = side_effects
 
-
     @staticmethod
     def to_metta_usage(event: Event) -> str:
-        return (
-            f"(trigger {event.to_metta()})"
-        )
+        return f"(trigger {event.to_metta()})"
 
     def to_metta_definition(self) -> str:
         def indent_block(text: str, indent: str = "    ") -> str:
             return "\n".join(
-                (indent + line) if line else line
-                for line in text.splitlines()
+                (indent + line) if line else line for line in text.splitlines()
             )
 
         return "\n".join(

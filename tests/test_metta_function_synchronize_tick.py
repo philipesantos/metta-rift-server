@@ -11,11 +11,9 @@ from tests.utils.utils import unwrap_first_match
 
 
 class TestMettaFunctionSynchronizeTick(unittest.TestCase):
-
     def test_to_metta_usage(self):
         synchronize_tick_metta_usage = SynchronizeTick.to_metta_usage()
         self.assertEqual(synchronize_tick_metta_usage, f"(synchronize-tick)")
-
 
     def test_to_metta_definition(self):
         metta = get_test_metta()
@@ -30,7 +28,9 @@ class TestMettaFunctionSynchronizeTick(unittest.TestCase):
         result_synchronize_tick_1 = metta.run(f"!{synchronize_tick_metta_usage}")
         self.assertEqual(result_synchronize_tick_1, [[]])
 
-        result_match_tick_1 = metta.run(f"!(match &self {tick_state_metta_match_tick} $tick)")
+        result_match_tick_1 = metta.run(
+            f"!(match &self {tick_state_metta_match_tick} $tick)"
+        )
         self.assertEqual(unwrap_first_match(result_match_tick_1), 0)
 
         metta.run(Stale(Tick.__name__).to_metta_definition())
@@ -38,15 +38,18 @@ class TestMettaFunctionSynchronizeTick(unittest.TestCase):
         result_synchronize_tick_2 = metta.run(f"!{synchronize_tick_metta_usage}")
         self.assertEqual(result_synchronize_tick_2, [[]])
 
-        result_match_tick_2 = metta.run(f"!(match &self {tick_state_metta_match_tick} $tick)")
+        result_match_tick_2 = metta.run(
+            f"!(match &self {tick_state_metta_match_tick} $tick)"
+        )
         self.assertEqual(unwrap_first_match(result_match_tick_2), 1)
 
         result_synchronize_tick_3 = metta.run(f"!{synchronize_tick_metta_usage}")
         self.assertEqual(result_synchronize_tick_3, [[]])
 
-        result_match_tick_3 = metta.run(f"!(match &self {tick_state_metta_match_tick} $tick)")
+        result_match_tick_3 = metta.run(
+            f"!(match &self {tick_state_metta_match_tick} $tick)"
+        )
         self.assertEqual(unwrap_first_match(result_match_tick_3), 1)
-
 
 
 if __name__ == "__main__":

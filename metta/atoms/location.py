@@ -8,18 +8,13 @@ class Location:
         self.key = f"{key}"
         self.desc = desc
 
-
     @staticmethod
     def to_metta_usage(key: str) -> str:
         return f"(Location {key})"
 
-
     def to_metta_definition(self) -> str:
         trigger = Trigger(
-            MoveEvent("$from", self.key),
-            [
-                OnMoveDescribeLocation(self.desc)
-            ]
+            MoveEvent("$from", self.key), [OnMoveDescribeLocation(self.desc)]
         )
         return (
             f"(: {self.key} Location)\n"

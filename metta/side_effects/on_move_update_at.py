@@ -10,7 +10,6 @@ class OnMoveUpdateAt(SideEffect):
     def __init__(self, character: Character):
         self.character = character
 
-
     def to_metta_definition(self) -> str:
         tick_state_match = State.to_metta_usage(Tick.to_metta_usage("$tick"))
         at_add_atom = At.to_metta_usage("$current_tick", self.character.key, "$to")
@@ -21,6 +20,6 @@ class OnMoveUpdateAt(SideEffect):
             f"    ( ()  (add-atom &self {at_add_atom}))\n"
             f"    ( ()  (remove-atom &self {current_at_remove_atom}))\n"
             f"    ( ()  (add-atom &self {current_at_add_atom})))\n"
-            f'    Empty\n'
+            f"    Empty\n"
             f")\n"
         )

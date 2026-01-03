@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-class Function(ABC):
 
+class Function(ABC):
     @abstractmethod
     def to_metta_usage(self, *args) -> str:
         pass

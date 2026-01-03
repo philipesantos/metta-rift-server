@@ -7,13 +7,11 @@ from tests.utils.utils import unwrap_first_match
 
 
 class TestMettaAtomCharacter(unittest.TestCase):
-
     def test_to_metta_usage(self):
         key = "player"
         name = "John Doe"
         character_metta_usage = Character.to_metta_usage(key, name)
         self.assertEqual(character_metta_usage, f'(Character {key} "{name}")')
-
 
     def test_to_metta_definition(self):
         metta = get_test_metta()
@@ -36,7 +34,9 @@ class TestMettaAtomCharacter(unittest.TestCase):
         self.assertEqual(unwrap_first_match(result_name), name)
 
         character_metta_usage_no_match = Character.to_metta_usage("james", name)
-        result_no_match = metta.run(f"!(match &self {character_metta_usage_no_match} True)")
+        result_no_match = metta.run(
+            f"!(match &self {character_metta_usage_no_match} True)"
+        )
         self.assertEqual(result_no_match, [[]])
 
 

@@ -5,8 +5,5 @@ class OnMoveDescribeLocation(SideEffect):
     def __init__(self, description: str):
         self.description = description
 
-
     def to_metta_definition(self) -> str:
-        return (
-            f'"{self.description}"'
-        )
+        return f'"{self.description}"'

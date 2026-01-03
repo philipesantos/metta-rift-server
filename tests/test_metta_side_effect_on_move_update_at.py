@@ -14,7 +14,6 @@ from tests.utils.utils import unwrap_first_match, count_atoms, unwrap_match
 
 
 class TestMettaSideEffectOnMoveUpdateAt(unittest.TestCase):
-
     def test_to_metta_definition(self):
         metta = get_test_metta()
 
@@ -34,32 +33,49 @@ class TestMettaSideEffectOnMoveUpdateAt(unittest.TestCase):
         metta.run(f"!{trigger_metta_usage_1}")
 
         result_1_1 = metta.run(f"!(match &self {at_usage} {at_usage})")
-        self.assertEqual(unwrap_first_match(result_1_1), At.to_metta_usage("0", character.key, "cave"))
+        self.assertEqual(
+            unwrap_first_match(result_1_1),
+            At.to_metta_usage("0", character.key, "cave"),
+        )
         self.assertEqual(count_atoms(result_1_1), 1)
 
         result_1_2 = metta.run(f"!(match &self {current_at_usage} {current_at_usage})")
-        self.assertEqual(unwrap_first_match(result_1_2), CurrentAt.to_metta_usage(character.key, "cave"))
+        self.assertEqual(
+            unwrap_first_match(result_1_2),
+            CurrentAt.to_metta_usage(character.key, "cave"),
+        )
         self.assertEqual(count_atoms(result_1_2), 1)
 
         metta.run(f"!(remove-atom &self {tick_state.to_metta_definition()})")
-        metta.run(f"!(add-atom &self {State(Tick("1").to_metta_definition()).to_metta_definition()})")
+        metta.run(
+            f"!(add-atom &self {State(Tick('1').to_metta_definition()).to_metta_definition()})"
+        )
 
         trigger_metta_usage_2 = Trigger.to_metta_usage(MoveEvent("cave", "beach"))
         metta.run(f"!{trigger_metta_usage_2}")
 
         result_2_1 = metta.run(f"!(match &self {at_usage} {at_usage})")
-        self.assertIn(unwrap_match(result_2_1, 0),[
-            At.to_metta_usage("0", character.key, "cave"),
-            At.to_metta_usage("1", character.key, "beach")
-        ])
-        self.assertIn(unwrap_match(result_2_1, 1),[
-            At.to_metta_usage("0", character.key, "cave"),
-            At.to_metta_usage("1", character.key, "beach")
-        ])
+        self.assertIn(
+            unwrap_match(result_2_1, 0),
+            [
+                At.to_metta_usage("0", character.key, "cave"),
+                At.to_metta_usage("1", character.key, "beach"),
+            ],
+        )
+        self.assertIn(
+            unwrap_match(result_2_1, 1),
+            [
+                At.to_metta_usage("0", character.key, "cave"),
+                At.to_metta_usage("1", character.key, "beach"),
+            ],
+        )
         self.assertEqual(count_atoms(result_2_1), 2)
 
         result_2_2 = metta.run(f"!(match &self {current_at_usage} {current_at_usage})")
-        self.assertEqual(unwrap_first_match(result_2_2), CurrentAt.to_metta_usage(character.key, "beach"))
+        self.assertEqual(
+            unwrap_first_match(result_2_2),
+            CurrentAt.to_metta_usage(character.key, "beach"),
+        )
         self.assertEqual(count_atoms(result_2_2), 1)
 
 

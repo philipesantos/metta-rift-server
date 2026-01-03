@@ -8,12 +8,10 @@ from tests.utils.utils import unwrap_first_match
 
 
 class TestMettaAtomWrapperState(unittest.TestCase):
-
     def test_to_metta_usage(self):
         atom = Tick.to_metta_usage("0")
         state_metta_usage = State.to_metta_usage(atom)
-        self.assertEqual(state_metta_usage, f'(State {atom})')
-
+        self.assertEqual(state_metta_usage, f"(State {atom})")
 
     def test_to_metta_definition(self):
         metta = get_test_metta()
