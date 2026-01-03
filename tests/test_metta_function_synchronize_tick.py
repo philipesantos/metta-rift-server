@@ -1,6 +1,6 @@
 import unittest
 
-from metta.atoms.state import State
+from metta.atoms.wrappers.state import State
 from metta.atoms.tick import Tick
 from tests.utils.metta import get_test_metta
 

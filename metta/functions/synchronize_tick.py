@@ -1,5 +1,5 @@
 from metta.atoms.out_of_date_tick import OutOfDateTick
-from metta.atoms.state import State
+from metta.atoms.wrappers.state import State
 from metta.atoms.tick import Tick
 from metta.function import Function
 from metta.functions.exists import Exists
