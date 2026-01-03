@@ -3,7 +3,7 @@ from hyperon import MeTTa
 from metta.atoms.at import At
 from metta.atoms.character import Character
 from metta.atoms.location import Location
-from metta.atoms.current_tick import CurrentTick
+from metta.atoms.tick import Tick
 from metta.world import World
 from metta.events.move_event import MoveEvent
 from metta.functions.exists import Exists
@@ -122,9 +122,9 @@ def build_world():
         desc="You are in the path 9."
     )
 
-    current_tick = CurrentTick("1")
+    tick = Tick("1")
 
-    world = World(current_tick)
+    world = World(tick)
 
     world.add_function(Exists())
     world.add_function(MoveTo(character_player))

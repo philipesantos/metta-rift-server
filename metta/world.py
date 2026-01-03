@@ -3,20 +3,21 @@ from metta.atoms.character import Character
 from metta.atoms.current_at import CurrentAt
 from metta.atoms.location import Location
 from metta.atoms.route import Route
-from metta.atoms.current_tick import CurrentTick
+from metta.atoms.state import State
+from metta.atoms.tick import Tick
 from metta.function import Function
 from utils.direction import Direction
 
 
 class World:
-    def __init__(self, current_tick: CurrentTick):
+    def __init__(self, tick: Tick):
         self.functions: list[Function] = []
         self.characters: list[Character] = []
         self.locations: list[Location] = []
         self.routes: list[Route] = []
         self.ats: list[At] = []
         self.current_ats: dict[str, CurrentAt] = {}
-        self.current_tick = current_tick
+        self.tick = tick
 
 
     def add_function(self, function: Function):
@@ -50,7 +51,7 @@ class World:
         routes_metta = line_break.join([route.to_metta_definition() for route in self.routes])
         ats_metta = line_break.join([at.to_metta_definition() for at in self.ats])
         current_ats_metta = line_break.join([current_at.to_metta_definition() for current_at in self.current_ats.values()])
-        current_tick_metta = self.current_tick.to_metta_definition()
+        tick_state_metta = State(self.tick.to_metta_definition()).to_metta_definition()
         return (
             f"{functions_metta}{line_break}"
             f"{characters_metta}{line_break}"
@@ -58,5 +59,5 @@ class World:
             f"{routes_metta}{line_break}"
             f"{ats_metta}{line_break}"
             f"{current_ats_metta}{line_break}"
-            f"{current_tick_metta}{line_break}"
+            f"{tick_state_metta}{line_break}"
         )
