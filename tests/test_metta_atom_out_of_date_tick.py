@@ -1,6 +1,6 @@
 import unittest
 
-from hyperon import MeTTa
+from tests.utils.metta import get_test_metta
 
 from metta.atoms.out_of_date_tick import OutOfDateTick
 from tests.utils.utils import unwrap_first_match
@@ -14,7 +14,7 @@ class TestMettaAtomOutOfDateTick(unittest.TestCase):
 
 
     def test_to_metta_definition(self):
-        metta = MeTTa()
+        metta = get_test_metta()
 
         out_of_date_tick_metta_definition = OutOfDateTick().to_metta_definition()
         metta.run(out_of_date_tick_metta_definition)

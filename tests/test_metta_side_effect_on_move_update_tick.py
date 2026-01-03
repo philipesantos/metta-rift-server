@@ -1,6 +1,6 @@
 import unittest
 
-from hyperon import MeTTa
+from tests.utils.metta import get_test_metta
 
 from metta.atoms.at import At
 from metta.atoms.out_of_date_tick import OutOfDateTick
@@ -18,7 +18,7 @@ from tests.utils.utils import unwrap_first_match, count_atoms
 class TestMettaSideEffectOnMoveUpdateTick(unittest.TestCase):
 
     def test_to_metta_definition(self):
-        metta = MeTTa()
+        metta = get_test_metta()
 
         metta.run(Exists().to_metta_definition())
 

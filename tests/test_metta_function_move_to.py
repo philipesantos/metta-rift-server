@@ -1,6 +1,6 @@
 import unittest
 
-from hyperon import MeTTa
+from tests.utils.metta import get_test_metta
 
 from metta.atoms.at import At
 from metta.atoms.character import Character
@@ -24,7 +24,7 @@ class TestMettaFunctionMoveTo(unittest.TestCase):
 
 
     def test_to_metta_definition(self):
-        metta = MeTTa()
+        metta = get_test_metta()
 
         character = Character("player", "John")
 

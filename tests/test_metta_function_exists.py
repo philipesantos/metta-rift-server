@@ -1,6 +1,6 @@
 import unittest
 
-from hyperon import MeTTa
+from tests.utils.metta import get_test_metta
 
 from metta.atoms.at import At
 from metta.functions.exists import Exists
@@ -16,7 +16,7 @@ class TestMettaFunctionExists(unittest.TestCase):
 
 
     def test_to_metta_definition(self):
-        metta = MeTTa()
+        metta = get_test_metta()
 
         exists_metta_definition = Exists().to_metta_definition()
         metta.run(exists_metta_definition)

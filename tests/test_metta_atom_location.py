@@ -1,6 +1,6 @@
 import unittest
 
-from hyperon import MeTTa
+from tests.utils.metta import get_test_metta
 
 from metta.atoms.location import Location
 from metta.events.move_event import MoveEvent
@@ -17,7 +17,7 @@ class TestMettaAtomLocation(unittest.TestCase):
 
 
     def test_to_metta_definition(self):
-        metta = MeTTa()
+        metta = get_test_metta()
 
         key = "glade"
         description = "The glade description"

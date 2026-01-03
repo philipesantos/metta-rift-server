@@ -1,6 +1,6 @@
 import unittest
 
-from hyperon import MeTTa
+from tests.utils.metta import get_test_metta
 
 from metta.atoms.at import At
 from metta.functions.exists import Exists
@@ -20,7 +20,7 @@ class TestMettaFunctionTrigger(unittest.TestCase):
 
 
     def test_to_metta_definition(self):
-        metta = MeTTa()
+        metta = get_test_metta()
 
         side_effect_text = "Trigger text"
 

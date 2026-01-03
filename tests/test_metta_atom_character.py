@@ -1,6 +1,6 @@
 import unittest
 
-from hyperon import MeTTa
+from tests.utils.metta import get_test_metta
 
 from metta.atoms.character import Character
 from tests.utils.utils import unwrap_first_match
@@ -16,7 +16,7 @@ class TestMettaAtomCharacter(unittest.TestCase):
 
 
     def test_to_metta_definition(self):
-        metta = MeTTa()
+        metta = get_test_metta()
 
         key = "player"
         name = "John"

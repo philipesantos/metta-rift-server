@@ -1,6 +1,6 @@
 import unittest
 
-from hyperon import MeTTa
+from tests.utils.metta import get_test_metta
 
 from metta.atoms.at import At
 from metta.atoms.character import Character
@@ -22,7 +22,7 @@ from tests.utils.utils import unwrap_first_match, count_atoms, unwrap_match
 class TestMettaSideEffectOnMoveUpdateAt(unittest.TestCase):
 
     def test_to_metta_definition(self):
-        metta = MeTTa()
+        metta = get_test_metta()
 
         character = Character("player", "John")
         current_tick = CurrentTick("0")
