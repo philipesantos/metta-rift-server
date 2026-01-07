@@ -1,5 +1,4 @@
 from metta.patterns.fact_pattern import FactPattern
-from metta.patterns.pattern import Pattern
 
 
 class AtFactPattern(FactPattern):

@@ -1,5 +1,4 @@
 from metta.patterns.fact_pattern import FactPattern
-from metta.patterns.pattern import Pattern
 
 
 class RouteFactPattern(FactPattern):
@@ -10,4 +9,3 @@ class RouteFactPattern(FactPattern):
 
     def to_metta(self) -> str:
         return f"(Route {self.location_from} {self.direction} {self.location_to})"
-

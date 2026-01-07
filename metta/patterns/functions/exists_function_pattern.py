@@ -1,4 +1,3 @@
-from metta.definitions.function_definition import FunctionDefinition
 from metta.patterns.function_pattern import FunctionPattern
 from metta.patterns.pattern import Pattern
 

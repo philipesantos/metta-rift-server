@@ -1,6 +1,5 @@
 from metta.definitions.wrapper_definition import WrapperDefinition
 from metta.patterns.fact_pattern import FactPattern
-from metta.patterns.wrapper_pattern import WrapperPattern
 from metta.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
 
 

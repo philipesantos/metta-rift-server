@@ -6,12 +6,13 @@ from tests.utils.metta import get_test_metta
 
 from metta.patterns.facts.location_fact_pattern import LocationFactPattern
 from metta.patterns.events.move_event_pattern import MoveEventPattern
-from metta.definitions.functions.trigger_function_definition import TriggerFunctionDefinition
+from metta.definitions.functions.trigger_function_definition import (
+    TriggerFunctionDefinition,
+)
 from tests.utils.utils import unwrap_first_match
 
 
 class TestLocationFactDefinition(unittest.TestCase):
-
     def test_to_metta(self):
         metta = get_test_metta()
 
@@ -27,9 +28,7 @@ class TestLocationFactDefinition(unittest.TestCase):
         result_key = metta.run(f"!(match &self {location_key.to_metta()} $key)")
         self.assertEqual(unwrap_first_match(result_key), key)
 
-        location_move_trigger = TriggerFunctionPattern(
-            MoveEventPattern("cave", key)
-        )
+        location_move_trigger = TriggerFunctionPattern(MoveEventPattern("cave", key))
         result_move_trigger = metta.run(f"!{location_move_trigger.to_metta()}")
         self.assertEqual(unwrap_first_match(result_move_trigger), description)
 
