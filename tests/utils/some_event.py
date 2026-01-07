@@ -1,7 +1,7 @@
-from metta.event import Event
+from metta.patterns.event_pattern import EventPattern
 
 
-class SomeEvent(Event):
+class SomeEventPattern(EventPattern):
     def __init__(self, value: str):
         self.value = value
 
