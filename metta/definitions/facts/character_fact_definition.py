@@ -11,7 +11,4 @@ class CharacterFactDefinition(FactDefinition):
         return CharacterFactPattern(self.key, self.name)
 
     def to_metta(self) -> str:
-        return (
-            f"(: {self.key} Character)"
-            f"{self.to_pattern().to_metta()}"
-        )
+        return f"(: {self.key} Character){self.to_pattern().to_metta()}"

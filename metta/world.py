@@ -21,7 +21,4 @@ class World:
         patterns_metta = line_break.join(
             [pattern.to_metta() for pattern in self.patterns]
         )
-        return (
-            f"{definitions_metta}{line_break}"
-            f"{patterns_metta}{line_break}"
-        )
+        return f"{definitions_metta}{line_break}{patterns_metta}{line_break}"

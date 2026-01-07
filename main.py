@@ -4,14 +4,26 @@ from metta.definitions.facts.character_fact_definition import CharacterFactDefin
 from metta.definitions.facts.location_fact_definition import LocationFactDefinition
 from metta.definitions.facts.route_fact_definition import RouteFactDefinition
 from metta.definitions.facts.tick_fact_definition import TickFactDefinition
-from metta.patterns.functions.synchronize_tick_function_pattern import SynchronizeTickFunctionPattern
+from metta.patterns.functions.synchronize_tick_function_pattern import (
+    SynchronizeTickFunctionPattern,
+)
 from metta.world import World
 from metta.patterns.events.move_event_pattern import MoveEventPattern
-from metta.definitions.functions.exists_function_definition import ExistsFunctionDefinition
-from metta.definitions.functions.move_to_function_definition import MoveToFunctionDefinition
-from metta.definitions.functions.move_towards_function_definition import MoveTowardsFunctionDefinition
-from metta.definitions.functions.synchronize_tick_function_definition import SynchronizeTickFunctionDefinition
-from metta.definitions.functions.trigger_function_definition import TriggerFunctionDefinition
+from metta.definitions.functions.exists_function_definition import (
+    ExistsFunctionDefinition,
+)
+from metta.definitions.functions.move_to_function_definition import (
+    MoveToFunctionDefinition,
+)
+from metta.definitions.functions.move_towards_function_definition import (
+    MoveTowardsFunctionDefinition,
+)
+from metta.definitions.functions.synchronize_tick_function_definition import (
+    SynchronizeTickFunctionDefinition,
+)
+from metta.definitions.functions.trigger_function_definition import (
+    TriggerFunctionDefinition,
+)
 from metta.definitions.side_effects.on_move_update_at import OnMoveUpdateAt
 from metta.definitions.side_effects.on_move_update_tick import OnMoveUpdateTick
 from utils.direction import Direction
@@ -48,16 +60,36 @@ def build_world():
     location_camping_site = LocationFactDefinition(
         key="camping_site", desc="You are in the camping site."
     )
-    location_monolith = LocationFactDefinition(key="monolith", desc="You are in the monolith.")
-    location_path_1 = LocationFactDefinition(key="path_1", desc="You are in the path 1.")
-    location_path_2 = LocationFactDefinition(key="path_2", desc="You are in the path 2.")
-    location_path_3 = LocationFactDefinition(key="path_3", desc="You are in the path 3.")
-    location_path_4 = LocationFactDefinition(key="path_4", desc="You are in the path 4.")
-    location_path_5 = LocationFactDefinition(key="path_5", desc="You are in the path 5.")
-    location_path_6 = LocationFactDefinition(key="path_6", desc="You are in the path 6.")
-    location_path_7 = LocationFactDefinition(key="path_7", desc="You are in the path 7.")
-    location_path_8 = LocationFactDefinition(key="path_8", desc="You are in the path 8.")
-    location_path_9 = LocationFactDefinition(key="path_9", desc="You are in the path 9.")
+    location_monolith = LocationFactDefinition(
+        key="monolith", desc="You are in the monolith."
+    )
+    location_path_1 = LocationFactDefinition(
+        key="path_1", desc="You are in the path 1."
+    )
+    location_path_2 = LocationFactDefinition(
+        key="path_2", desc="You are in the path 2."
+    )
+    location_path_3 = LocationFactDefinition(
+        key="path_3", desc="You are in the path 3."
+    )
+    location_path_4 = LocationFactDefinition(
+        key="path_4", desc="You are in the path 4."
+    )
+    location_path_5 = LocationFactDefinition(
+        key="path_5", desc="You are in the path 5."
+    )
+    location_path_6 = LocationFactDefinition(
+        key="path_6", desc="You are in the path 6."
+    )
+    location_path_7 = LocationFactDefinition(
+        key="path_7", desc="You are in the path 7."
+    )
+    location_path_8 = LocationFactDefinition(
+        key="path_8", desc="You are in the path 8."
+    )
+    location_path_9 = LocationFactDefinition(
+        key="path_9", desc="You are in the path 9."
+    )
 
     world = World()
 
@@ -110,16 +142,25 @@ def build_world():
 
     world.add_definition(TickFactDefinition("1"))
 
-    #TODO: Adicionar local atual do jogador
+    # TODO: Adicionar local atual do jogador
 
     return world
 
 
 def add_route(
-    world: World, location_from: LocationFactDefinition, direction: Direction, locations_to: LocationFactDefinition
+    world: World,
+    location_from: LocationFactDefinition,
+    direction: Direction,
+    locations_to: LocationFactDefinition,
 ):
-    world.add_definition(RouteFactDefinition(location_from.key, direction.value, locations_to.key))
-    world.add_definition(RouteFactDefinition(locations_to.key, direction.opposite.value, location_from.key))
+    world.add_definition(
+        RouteFactDefinition(location_from.key, direction.value, locations_to.key)
+    )
+    world.add_definition(
+        RouteFactDefinition(
+            locations_to.key, direction.opposite.value, location_from.key
+        )
+    )
 
 
 if __name__ == "__main__":

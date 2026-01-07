@@ -5,7 +5,9 @@ from metta.patterns.functions.exists_function_pattern import ExistsFunctionPatte
 from tests.utils.metta import get_test_metta
 
 from metta.patterns.facts.at_fact_pattern import AtFactPattern
-from metta.definitions.functions.exists_function_definition import ExistsFunctionDefinition
+from metta.definitions.functions.exists_function_definition import (
+    ExistsFunctionDefinition,
+)
 from tests.utils.utils import unwrap_first_match
 
 

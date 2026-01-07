@@ -1,11 +1,10 @@
 from metta.definitions.wrapper_definition import WrapperDefinition
-from metta.patterns.fact_pattern import FactPattern
-from metta.patterns.wrapper_pattern import WrapperPattern
+from metta.patterns.event_pattern import EventPattern
 from metta.patterns.wrappers.log_wrapper_pattern import LogWrapperPattern
 
 
 class LogWrapperDefinition(WrapperDefinition):
-    def __init__(self, tick: str, pattern: FactPattern):
+    def __init__(self, tick: str, pattern: EventPattern):
         self.tick = tick
         self.pattern = pattern
 

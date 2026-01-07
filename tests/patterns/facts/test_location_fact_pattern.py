@@ -4,7 +4,9 @@ from tests.utils.metta import get_test_metta
 
 from metta.patterns.facts.location_fact_pattern import LocationFactPattern
 from metta.patterns.events.move_event_pattern import MoveEventPattern
-from metta.definitions.functions.trigger_function_definition import TriggerFunctionDefinition
+from metta.definitions.functions.trigger_function_definition import (
+    TriggerFunctionDefinition,
+)
 from tests.utils.utils import unwrap_first_match
 
 

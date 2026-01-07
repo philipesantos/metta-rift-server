@@ -17,7 +17,7 @@ class TriggerFunctionDefinition(FunctionDefinition):
         return "\n".join(
             (
                 f"(= (trigger {self.event.to_metta()})\n"
-                f"{indent_block(side_effect.to_metta())}\n"
+                f"{indent_block(side_effect.to_metta(self.event))}\n"
                 f")"
             )
             for side_effect in self.side_effects

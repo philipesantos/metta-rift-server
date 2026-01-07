@@ -1,11 +1,11 @@
-from metta.patterns.fact_pattern import FactPattern
+from metta.patterns.event_pattern import EventPattern
 from metta.patterns.wrapper_pattern import WrapperPattern
 
 
 class LogWrapperPattern(WrapperPattern):
-    def __init__(self, tick: str, atom: FactPattern):
+    def __init__(self, tick: str, pattern: EventPattern):
         self.tick = tick
-        self.atom = atom
+        self.pattern = pattern
 
     def to_metta(self):
-        return f"(Log {self.tick} {self.atom.to_metta()})"
+        return f"(Log {self.tick} {self.pattern.to_metta()})"

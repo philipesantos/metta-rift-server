@@ -1,6 +1,4 @@
 from metta.patterns.event_pattern import EventPattern
-from metta.definitions.function_definition import FunctionDefinition
-from metta.definitions.side_effect_definition import SideEffectDefinition
 from metta.patterns.function_pattern import FunctionPattern
 
 

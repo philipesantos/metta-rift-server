@@ -8,7 +8,6 @@ from utils.direction import Direction
 
 
 class TestRouteFactDefinition(unittest.TestCase):
-
     def test_to_metta(self):
         metta = get_test_metta()
 
@@ -23,7 +22,9 @@ class TestRouteFactDefinition(unittest.TestCase):
         self.assertEqual(unwrap_first_match(result_from), location_from)
 
         route_direction = RouteFactPattern(location_from, "$direction", location_to)
-        result_direction = metta.run(f"!(match &self {route_direction.to_metta()} $direction)")
+        result_direction = metta.run(
+            f"!(match &self {route_direction.to_metta()} $direction)"
+        )
         self.assertEqual(unwrap_first_match(result_direction), direction)
 
         route_to = RouteFactPattern(location_from, direction, "$to")

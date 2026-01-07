@@ -8,7 +8,6 @@ from tests.utils.utils import unwrap_first_match
 
 
 class TestAtFactDefinition(unittest.TestCase):
-
     def test_to_metta(self):
         metta = get_test_metta()
 

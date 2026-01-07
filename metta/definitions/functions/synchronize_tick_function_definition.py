@@ -3,7 +3,6 @@ from metta.patterns.wrappers.stale_wrapper_pattern import StaleWrapperPattern
 from metta.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
 from metta.patterns.facts.tick_fact_pattern import TickFactPattern
 from metta.definitions.function_definition import FunctionDefinition
-from metta.definitions.functions.exists_function_definition import ExistsFunctionDefinition
 
 
 class SynchronizeTickFunctionDefinition(FunctionDefinition):

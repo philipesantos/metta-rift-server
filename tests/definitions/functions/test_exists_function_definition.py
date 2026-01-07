@@ -5,12 +5,13 @@ from metta.patterns.functions.exists_function_pattern import ExistsFunctionPatte
 from tests.utils.metta import get_test_metta
 
 from metta.patterns.facts.at_fact_pattern import AtFactPattern
-from metta.definitions.functions.exists_function_definition import ExistsFunctionDefinition
+from metta.definitions.functions.exists_function_definition import (
+    ExistsFunctionDefinition,
+)
 from tests.utils.utils import unwrap_first_match
 
 
 class TestExistsFunctionDefinition(unittest.TestCase):
-
     def test_to_metta(self):
         metta = get_test_metta()
 
@@ -22,11 +23,15 @@ class TestExistsFunctionDefinition(unittest.TestCase):
         at_2 = AtFactDefinition("1", "player", "cave")
         metta.run(at_2.to_metta())
 
-        exists_at_1 = ExistsFunctionPattern(AtFactPattern(at_1.tick, at_1.what, at_1.where))
+        exists_at_1 = ExistsFunctionPattern(
+            AtFactPattern(at_1.tick, at_1.what, at_1.where)
+        )
         result_exists_at_1 = metta.run(f"!{exists_at_1.to_metta()}")
         self.assertEqual(unwrap_first_match(result_exists_at_1), True)
 
-        exists_at_2 = ExistsFunctionPattern(AtFactPattern(at_2.tick, at_2.what, at_2.where))
+        exists_at_2 = ExistsFunctionPattern(
+            AtFactPattern(at_2.tick, at_2.what, at_2.where)
+        )
         result_exists_at_2 = metta.run(f"!{exists_at_2.to_metta()}")
         self.assertEqual(unwrap_first_match(result_exists_at_2), True)
 

@@ -8,7 +8,6 @@ from tests.utils.utils import unwrap_first_match
 
 
 class TestCurrentAtFactDefinition(unittest.TestCase):
-
     def test_to_metta(self):
         metta = get_test_metta()
 
@@ -22,9 +21,7 @@ class TestCurrentAtFactDefinition(unittest.TestCase):
         self.assertEqual(unwrap_first_match(result_what), what)
 
         current_at_where = CurrentAtFactPattern(what, "$where")
-        result_where = metta.run(
-            f"!(match &self {current_at_where.to_metta()} $where)"
-        )
+        result_where = metta.run(f"!(match &self {current_at_where.to_metta()} $where)")
         self.assertEqual(unwrap_first_match(result_where), where)
 
         current_at_no_match = CurrentAtFactPattern(what, "cave")

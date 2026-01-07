@@ -3,14 +3,15 @@ import unittest
 from metta.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
 from tests.utils.metta import get_test_metta
 
-from metta.definitions.functions.trigger_function_definition import TriggerFunctionDefinition
+from metta.definitions.functions.trigger_function_definition import (
+    TriggerFunctionDefinition,
+)
 from tests.utils.some_event import SomeEventPattern
 from tests.utils.text_side_effect import TextSideEffectDefinition
 from tests.utils.utils import unwrap_first_match
 
 
 class TestTriggerFunctionDefinition(unittest.TestCase):
-
     def test_to_metta(self):
         metta = get_test_metta()
 
