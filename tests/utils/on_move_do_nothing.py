@@ -1,6 +1,6 @@
-from metta.side_effect import SideEffect
+from metta.definitions.side_effect_definition import SideEffectDefinition
 
 
-class OnMoveDoNothing(SideEffect):
-    def to_metta_definition(self) -> str:
+class OnMoveDoNothing(SideEffectDefinition):
+    def to_metta(self) -> str:
         return "Empty"

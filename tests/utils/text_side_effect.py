@@ -1,9 +1,9 @@
-from metta.side_effect import SideEffect
+from metta.definitions.side_effect_definition import SideEffectDefinition
 
 
-class TextSideEffect(SideEffect):
+class TextSideEffectDefinition(SideEffectDefinition):
     def __init__(self, text: str):
         self.text = text
 
-    def to_metta_definition(self) -> str:
+    def to_metta(self) -> str:
         return f'"{self.text}"'
