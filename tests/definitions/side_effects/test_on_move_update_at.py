@@ -1,7 +1,6 @@
 import unittest
 
-from metta.definitions.facts.current_at_fact_definition import CurrentAtFactDefinition
-from metta.definitions.wrappers.log_wrapper_definition import LogWrapperDefinition
+from metta.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from metta.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
 from metta.patterns.wrappers.log_wrapper_pattern import LogWrapperPattern
 from metta.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
@@ -10,7 +9,6 @@ from tests.utils.metta import get_test_metta
 
 from metta.patterns.facts.at_fact_pattern import AtFactPattern
 from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
-from metta.patterns.facts.current_at_fact_pattern import CurrentAtFactPattern
 from metta.patterns.events.move_event_pattern import MoveEventPattern
 from metta.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
@@ -27,7 +25,9 @@ class TestOnMoveUpdateAt(unittest.TestCase):
         tick_state = StateWrapperPattern(TickFactPattern("0"))
 
         metta.run(tick_state.to_metta())
-        metta.run(CurrentAtFactDefinition(character.key, "glade").to_metta())
+        metta.run(
+            StateWrapperDefinition(AtFactPattern(character.key, "glade")).to_metta()
+        )
 
         trigger = TriggerFunctionDefinition(
             MoveEventPattern("$from", "$to"), [OnMoveUpdateAt(character)]
@@ -35,7 +35,7 @@ class TestOnMoveUpdateAt(unittest.TestCase):
         metta.run(trigger.to_metta())
 
         log_move = LogWrapperPattern("$tick", MoveEventPattern("$from", "$to"))
-        current_at = CurrentAtFactPattern(character.key, "$where")
+        state_at = StateWrapperPattern(AtFactPattern(character.key, "$where"))
 
         trigger_1 = TriggerFunctionPattern(MoveEventPattern("glade", "cave"))
         metta.run(f"!{trigger_1.to_metta()}")
@@ -50,11 +50,11 @@ class TestOnMoveUpdateAt(unittest.TestCase):
         self.assertEqual(count_atoms(result_1_1), 1)
 
         result_1_2 = metta.run(
-            f"!(match &self {current_at.to_metta()} {current_at.to_metta()})"
+            f"!(match &self {state_at.to_metta()} {state_at.to_metta()})"
         )
         self.assertEqual(
             unwrap_first_match(result_1_2),
-            CurrentAtFactPattern(character.key, "cave").to_metta(),
+            StateWrapperPattern(AtFactPattern(character.key, "cave")).to_metta(),
         )
         self.assertEqual(count_atoms(result_1_2), 1)
 
@@ -88,11 +88,11 @@ class TestOnMoveUpdateAt(unittest.TestCase):
         self.assertEqual(count_atoms(result_2_1), 2)
 
         result_2_2 = metta.run(
-            f"!(match &self {current_at.to_metta()} {current_at.to_metta()})"
+            f"!(match &self {state_at.to_metta()} {state_at.to_metta()})"
         )
         self.assertEqual(
             unwrap_first_match(result_2_2),
-            CurrentAtFactPattern(character.key, "beach").to_metta(),
+            StateWrapperPattern(AtFactPattern(character.key, "beach")).to_metta(),
         )
         self.assertEqual(count_atoms(result_2_2), 1)
 
