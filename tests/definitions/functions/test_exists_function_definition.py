@@ -17,25 +17,21 @@ class TestExistsFunctionDefinition(unittest.TestCase):
 
         metta.run(ExistsFunctionDefinition().to_metta())
 
-        at_1 = AtFactDefinition("0", "player", "glade")
+        at_1 = AtFactDefinition("player", "glade")
         metta.run(at_1.to_metta())
 
-        at_2 = AtFactDefinition("1", "player", "cave")
+        at_2 = AtFactDefinition("player", "cave")
         metta.run(at_2.to_metta())
 
-        exists_at_1 = ExistsFunctionPattern(
-            AtFactPattern(at_1.tick, at_1.what, at_1.where)
-        )
+        exists_at_1 = ExistsFunctionPattern(AtFactPattern(at_1.what, at_1.where))
         result_exists_at_1 = metta.run(f"!{exists_at_1.to_metta()}")
         self.assertEqual(unwrap_first_match(result_exists_at_1), True)
 
-        exists_at_2 = ExistsFunctionPattern(
-            AtFactPattern(at_2.tick, at_2.what, at_2.where)
-        )
+        exists_at_2 = ExistsFunctionPattern(AtFactPattern(at_2.what, at_2.where))
         result_exists_at_2 = metta.run(f"!{exists_at_2.to_metta()}")
         self.assertEqual(unwrap_first_match(result_exists_at_2), True)
 
-        exists_not_exists = ExistsFunctionPattern(AtFactPattern("1", "player", "beach"))
+        exists_not_exists = ExistsFunctionPattern(AtFactPattern("player", "beach"))
         result_not_exists = metta.run(f"!{exists_not_exists.to_metta()}")
         self.assertEqual(unwrap_first_match(result_not_exists), False)
 

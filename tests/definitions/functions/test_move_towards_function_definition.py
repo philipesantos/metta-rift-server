@@ -1,17 +1,15 @@
 import unittest
 
 from metta.definitions.facts.at_fact_definition import AtFactDefinition
-from metta.definitions.facts.current_at_fact_definition import CurrentAtFactDefinition
 from metta.definitions.facts.route_fact_definition import RouteFactDefinition
+from metta.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
+from metta.patterns.facts.at_fact_pattern import AtFactPattern
 from metta.patterns.functions.move_towards_function_pattern import (
     MoveTowardsFunctionPattern,
 )
 from tests.utils.metta import get_test_metta
 
-from metta.patterns.facts.at_fact_pattern import AtFactPattern
 from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
-from metta.patterns.facts.current_at_fact_pattern import CurrentAtFactPattern
-from metta.patterns.facts.route_fact_pattern import RouteFactPattern
 from metta.patterns.events.move_event_pattern import MoveEventPattern
 from metta.definitions.functions.move_towards_function_definition import (
     MoveTowardsFunctionDefinition,
@@ -53,11 +51,13 @@ class TestMoveTowardsFunctionDefinition(unittest.TestCase):
             RouteFactDefinition("cave", Direction.SOUTH.value, "plane").to_metta()
         )
 
-        metta.run(AtFactDefinition("0", character.key, "cave").to_metta())
-        metta.run(AtFactDefinition("1", character.key, "beach").to_metta())
-        metta.run(AtFactDefinition("2", character.key, "glade").to_metta())
+        metta.run(AtFactDefinition(character.key, "cave").to_metta())
+        metta.run(AtFactDefinition(character.key, "beach").to_metta())
+        metta.run(AtFactDefinition(character.key, "glade").to_metta())
 
-        metta.run(CurrentAtFactDefinition(character.key, "glade").to_metta())
+        metta.run(
+            StateWrapperDefinition(AtFactPattern(character.key, "glade")).to_metta()
+        )
 
         move_towards_west = MoveTowardsFunctionPattern(Direction.WEST)
         result_move_towards_west = metta.run(f"!{move_towards_west.to_metta()}")

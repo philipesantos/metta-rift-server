@@ -1,8 +1,9 @@
 import unittest
 
-from metta.definitions.facts.current_at_fact_definition import CurrentAtFactDefinition
 from metta.definitions.facts.route_fact_definition import RouteFactDefinition
 from metta.definitions.wrappers.log_wrapper_definition import LogWrapperDefinition
+from metta.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
+from metta.patterns.facts.at_fact_pattern import AtFactPattern
 from metta.patterns.functions.move_to_function_pattern import MoveToFunctionPattern
 from tests.utils.metta import get_test_metta
 
@@ -62,8 +63,8 @@ class TestMoveToFunctionDefinition(unittest.TestCase):
             LogWrapperDefinition("2", MoveEventPattern("beach", "glade")).to_metta()
         )
 
-        current_at = CurrentAtFactDefinition(character.key, "glade")
-        metta.run(current_at.to_metta())
+        state_at = StateWrapperDefinition(AtFactPattern(character.key, "glade"))
+        metta.run(state_at.to_metta())
 
         move_to_cave = MoveToFunctionPattern("cave")
         result_move_to_cave = metta.run(f"!{move_to_cave.to_metta()}")
