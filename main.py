@@ -3,7 +3,9 @@ from hyperon import MeTTa
 from metta.definitions.facts.character_fact_definition import CharacterFactDefinition
 from metta.definitions.facts.location_fact_definition import LocationFactDefinition
 from metta.definitions.facts.route_fact_definition import RouteFactDefinition
-from metta.definitions.facts.tick_fact_definition import TickFactDefinition
+from metta.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
+from metta.patterns.facts.at_fact_pattern import AtFactPattern
+from metta.patterns.facts.tick_fact_pattern import TickFactPattern
 from metta.patterns.functions.synchronize_tick_function_pattern import (
     SynchronizeTickFunctionPattern,
 )
@@ -140,9 +142,10 @@ def build_world():
     add_route(world, location_path_8, Direction.WEST, location_cabin)
     add_route(world, location_path_7, Direction.NORTH, location_camping_site)
 
-    world.add_definition(TickFactDefinition("1"))
-
-    # TODO: Adicionar local atual do jogador
+    world.add_definition(StateWrapperDefinition(TickFactPattern("1")))
+    world.add_definition(
+        StateWrapperDefinition(AtFactPattern(character_player.key, location_glade.key))
+    )
 
     return world
 

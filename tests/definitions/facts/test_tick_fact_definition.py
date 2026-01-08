@@ -1,5 +1,6 @@
 import unittest
 
+from metta.definitions.facts.tick_fact_definition import TickFactDefinition
 from metta.patterns.facts.tick_fact_pattern import TickFactPattern
 from tests.utils.metta import get_test_metta
 
@@ -12,7 +13,7 @@ class TestTickFactDefinition(unittest.TestCase):
 
         tick = 0
 
-        metta.run(TickFactPattern(str(tick)).to_metta())
+        metta.run(TickFactDefinition(str(tick)).to_metta())
 
         result_tick = metta.run(
             f"!(match &self {TickFactPattern('$tick').to_metta()} $tick)"
