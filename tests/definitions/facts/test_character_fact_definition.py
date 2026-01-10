@@ -5,6 +5,7 @@ from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
 from tests.utils.metta import get_test_metta
 
 from tests.utils.utils import unwrap_first_match
+from utils.type import Type
 
 
 class TestCharacterFactDefinition(unittest.TestCase):
@@ -17,7 +18,7 @@ class TestCharacterFactDefinition(unittest.TestCase):
         metta.run(CharacterFactDefinition(key, name).to_metta())
 
         result_type = metta.run(f"!(get-type {key})")
-        self.assertEqual(unwrap_first_match(result_type), "Character")
+        self.assertEqual(unwrap_first_match(result_type), Type.CHARACTER.value)
 
         character_key = CharacterFactPattern("$key", name)
         result_key = metta.run(f"!(match &self {character_key.to_metta()} $key)")

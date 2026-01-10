@@ -1,4 +1,5 @@
 from metta.patterns.fact_pattern import FactPattern
+from utils.type import Type
 
 
 class CharacterFactPattern(FactPattern):
@@ -10,4 +11,4 @@ class CharacterFactPattern(FactPattern):
         formatted_name = self.name
         if " " in formatted_name:
             formatted_name = f'"{formatted_name}"'
-        return f"(Character {self.key} {formatted_name})"
+        return f"({Type.CHARACTER.value} {self.key} {formatted_name})"

@@ -1,5 +1,6 @@
 from metta.definitions.fact_definition import FactDefinition
 from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
+from utils.type import Type
 
 
 class CharacterFactDefinition(FactDefinition):
@@ -11,4 +12,4 @@ class CharacterFactDefinition(FactDefinition):
         return CharacterFactPattern(self.key, self.name)
 
     def to_metta(self) -> str:
-        return f"(: {self.key} Character){self.to_pattern().to_metta()}"
+        return f"(: {self.key} {Type.CHARACTER.value}){self.to_pattern().to_metta()}"
