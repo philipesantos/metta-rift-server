@@ -7,6 +7,7 @@ from metta.definitions.side_effects.on_move_describe_location import (
     OnMoveDescribeLocation,
 )
 from metta.patterns.facts.location_fact_pattern import LocationFactPattern
+from utils.type import Type
 
 
 class LocationFactDefinition(FactDefinition):
@@ -19,7 +20,7 @@ class LocationFactDefinition(FactDefinition):
             MoveEventPattern("$from", self.key), [OnMoveDescribeLocation(self.desc)]
         )
         return (
-            f"(: {self.key} Location)\n"
+            f"(: {self.key} {Type.LOCATION.value})\n"
             f"{LocationFactPattern(self.key).to_metta()}\n"
             f"{trigger.to_metta()}"
         )

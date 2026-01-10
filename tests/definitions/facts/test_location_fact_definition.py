@@ -10,6 +10,7 @@ from metta.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
 from tests.utils.utils import unwrap_first_match
+from utils.type import Type
 
 
 class TestLocationFactDefinition(unittest.TestCase):
@@ -22,7 +23,7 @@ class TestLocationFactDefinition(unittest.TestCase):
         metta.run(LocationFactDefinition(key, description).to_metta())
 
         result_type = metta.run(f"!(get-type {key})")
-        self.assertEqual(unwrap_first_match(result_type), "Location")
+        self.assertEqual(unwrap_first_match(result_type), Type.LOCATION.value)
 
         location_key = LocationFactPattern("$key")
         result_key = metta.run(f"!(match &self {location_key.to_metta()} $key)")

@@ -12,6 +12,7 @@ from metta.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
 from tests.utils.utils import unwrap_first_match
+from utils.type import Type
 
 
 class TestItemFactDefinition(unittest.TestCase):
@@ -23,7 +24,7 @@ class TestItemFactDefinition(unittest.TestCase):
         metta.run(ItemFactDefinition(key).to_metta())
 
         result_type = metta.run(f"!(get-type {key})")
-        self.assertEqual(unwrap_first_match(result_type), "Item")
+        self.assertEqual(unwrap_first_match(result_type), Type.ITEM.value)
 
         item_key = ItemFactPattern("$key")
         result_key = metta.run(f"!(match &self {item_key.to_metta()} $key)")

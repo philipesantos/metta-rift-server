@@ -3,6 +3,7 @@ import unittest
 from tests.utils.metta import get_test_metta
 
 from metta.patterns.facts.location_fact_pattern import LocationFactPattern
+from utils.type import Type
 from metta.patterns.events.move_event_pattern import MoveEventPattern
 from metta.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
@@ -14,7 +15,7 @@ class TestLocationFactPattern(unittest.TestCase):
     def test_to_metta(self):
         key = "glade"
         location = LocationFactPattern(key)
-        self.assertEqual(location.to_metta(), f"(Location {key})")
+        self.assertEqual(location.to_metta(), f"({Type.LOCATION.value} {key})")
 
 
 if __name__ == "__main__":

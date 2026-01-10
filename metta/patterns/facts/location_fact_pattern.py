@@ -1,4 +1,5 @@
 from metta.patterns.fact_pattern import FactPattern
+from utils.type import Type
 
 
 class LocationFactPattern(FactPattern):
@@ -6,4 +7,4 @@ class LocationFactPattern(FactPattern):
         self.key = f"{key}"
 
     def to_metta(self) -> str:
-        return f"(Location {self.key})"
+        return f"({Type.LOCATION.value} {self.key})"
