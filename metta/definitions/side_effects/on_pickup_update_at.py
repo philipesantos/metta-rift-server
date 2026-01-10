@@ -25,7 +25,7 @@ class OnPickUpUpdateAt(SideEffectDefinition):
         return (
             f"(let* (($current_tick (match &self {tick_state_match.to_metta()} $tick))\n"
             f"    ( ()  (add-atom &self {log_pickup_add_atom.to_metta()}))\n"
-            f"    ( ()  (match &self {state_at_match.to_metta()} "
+            f"    ( ()  (match &self {state_at_match.to_metta()}\n"
             f"        (remove-atom &self {state_at_match.to_metta()})))\n"
             f"    ( ()  (add-atom &self {state_at_add_atom.to_metta()})))\n"
             f"    Empty\n"
