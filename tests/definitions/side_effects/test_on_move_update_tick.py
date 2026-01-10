@@ -1,18 +1,18 @@
 import unittest
 
-from metta.definitions.wrappers.stale_wrapper_definition import StaleWrapperDefinition
-from metta.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
-from metta.patterns.wrappers.stale_wrapper_pattern import StaleWrapperPattern
+from core.definitions.wrappers.stale_wrapper_definition import StaleWrapperDefinition
+from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
+from core.patterns.wrappers.stale_wrapper_pattern import StaleWrapperPattern
 from tests.utils.metta import get_test_metta
 
-from metta.patterns.events.move_event_pattern import MoveEventPattern
-from metta.definitions.functions.exists_function_definition import (
+from core.patterns.events.move_event_pattern import MoveEventPattern
+from core.definitions.functions.exists_function_definition import (
     ExistsFunctionDefinition,
 )
-from metta.definitions.functions.trigger_function_definition import (
+from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
-from metta.definitions.side_effects.on_move_update_tick import OnMoveUpdateTick
+from core.definitions.side_effects.on_move_update_tick import OnMoveUpdateTick
 from tests.utils.utils import unwrap_first_match, count_atoms
 
 

@@ -1,6 +1,6 @@
 import unittest
 
-from metta.patterns.functions.location_path_function_pattern import (
+from core.patterns.functions.location_path_function_pattern import (
     LocationPathFunctionPattern,
 )
 

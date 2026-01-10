@@ -1,4 +1,4 @@
-from metta.patterns.event_pattern import EventPattern
+from core.patterns.event_pattern import EventPattern
 
 
 class SomeEventPattern(EventPattern):

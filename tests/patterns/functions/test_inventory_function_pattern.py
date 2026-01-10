@@ -1,6 +1,6 @@
 import unittest
 
-from metta.patterns.functions.inventory_function_pattern import (
+from core.patterns.functions.inventory_function_pattern import (
     InventoryFunctionPattern,
 )
 

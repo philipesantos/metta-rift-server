@@ -1,8 +1,8 @@
 import unittest
 
-from metta.definitions.wrappers.stale_wrapper_definition import StaleWrapperDefinition
-from metta.patterns.facts.tick_fact_pattern import TickFactPattern
-from metta.patterns.wrappers.stale_wrapper_pattern import StaleWrapperPattern
+from core.definitions.wrappers.stale_wrapper_definition import StaleWrapperDefinition
+from core.patterns.facts.tick_fact_pattern import TickFactPattern
+from core.patterns.wrappers.stale_wrapper_pattern import StaleWrapperPattern
 from tests.utils.metta import get_test_metta
 
 from tests.utils.utils import unwrap_first_match

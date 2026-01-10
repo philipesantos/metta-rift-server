@@ -1,11 +1,11 @@
 import unittest
 
-from metta.patterns.facts.tick_fact_pattern import TickFactPattern
-from metta.patterns.functions.exists_function_pattern import ExistsFunctionPattern
+from core.patterns.facts.tick_fact_pattern import TickFactPattern
+from core.patterns.functions.exists_function_pattern import ExistsFunctionPattern
 from tests.utils.metta import get_test_metta
 
-from metta.patterns.facts.at_fact_pattern import AtFactPattern
-from metta.definitions.functions.exists_function_definition import (
+from core.patterns.facts.at_fact_pattern import AtFactPattern
+from core.definitions.functions.exists_function_definition import (
     ExistsFunctionDefinition,
 )
 from tests.utils.utils import unwrap_first_match

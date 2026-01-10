@@ -1,26 +1,26 @@
 import unittest
 
-from metta.definitions.facts.location_fact_definition import LocationFactDefinition
-from metta.definitions.functions.first_function_definition import (
+from core.definitions.facts.location_fact_definition import LocationFactDefinition
+from core.definitions.functions.first_function_definition import (
     FirstFunctionDefinition,
 )
-from metta.definitions.functions.last_function_definition import (
+from core.definitions.functions.last_function_definition import (
     LastFunctionDefinition,
 )
-from metta.definitions.functions.location_path_function_definition import (
+from core.definitions.functions.location_path_function_definition import (
     LocationPathFunctionDefinition,
 )
-from metta.definitions.functions.pickup_function_definition import (
+from core.definitions.functions.pickup_function_definition import (
     PickUpFunctionDefinition,
 )
-from metta.definitions.functions.trigger_function_definition import (
+from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
-from metta.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
-from metta.patterns.events.pickup_event_pattern import PickUpEventPattern
-from metta.patterns.facts.at_fact_pattern import AtFactPattern
-from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
-from metta.patterns.functions.pickup_function_pattern import PickUpFunctionPattern
+from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
+from core.patterns.events.pickup_event_pattern import PickUpEventPattern
+from core.patterns.facts.at_fact_pattern import AtFactPattern
+from core.patterns.facts.character_fact_pattern import CharacterFactPattern
+from core.patterns.functions.pickup_function_pattern import PickUpFunctionPattern
 from tests.utils.metta import get_test_metta
 
 from tests.utils.text_side_effect import TextSideEffectDefinition

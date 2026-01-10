@@ -1,6 +1,6 @@
 import unittest
 
-from metta.patterns.functions.pickup_function_pattern import PickUpFunctionPattern
+from core.patterns.functions.pickup_function_pattern import PickUpFunctionPattern
 
 
 class TestPickUpFunctionPattern(unittest.TestCase):

@@ -1,6 +1,6 @@
 import unittest
 
-from metta.patterns.facts.tick_fact_pattern import TickFactPattern
+from core.patterns.facts.tick_fact_pattern import TickFactPattern
 from tests.utils.metta import get_test_metta
 
 from tests.utils.utils import unwrap_first_match

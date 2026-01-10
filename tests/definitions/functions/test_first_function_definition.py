@@ -1,9 +1,9 @@
 import unittest
 
-from metta.definitions.functions.first_function_definition import (
+from core.definitions.functions.first_function_definition import (
     FirstFunctionDefinition,
 )
-from metta.patterns.functions.first_function_pattern import FirstFunctionPattern
+from core.patterns.functions.first_function_pattern import FirstFunctionPattern
 from tests.utils.metta import get_test_metta
 
 from tests.utils.utils import unwrap_first_match

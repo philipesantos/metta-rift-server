@@ -1,6 +1,6 @@
 import unittest
 
-from metta.patterns.functions.move_towards_function_pattern import (
+from core.patterns.functions.move_towards_function_pattern import (
     MoveTowardsFunctionPattern,
 )
 

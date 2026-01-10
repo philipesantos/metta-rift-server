@@ -1,19 +1,19 @@
 import unittest
 
-from metta.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
-from metta.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
-from metta.patterns.wrappers.log_wrapper_pattern import LogWrapperPattern
-from metta.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
-from metta.patterns.facts.tick_fact_pattern import TickFactPattern
+from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
+from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
+from core.patterns.wrappers.log_wrapper_pattern import LogWrapperPattern
+from core.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
+from core.patterns.facts.tick_fact_pattern import TickFactPattern
 from tests.utils.metta import get_test_metta
 
-from metta.patterns.facts.at_fact_pattern import AtFactPattern
-from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
-from metta.patterns.events.move_event_pattern import MoveEventPattern
-from metta.definitions.functions.trigger_function_definition import (
+from core.patterns.facts.at_fact_pattern import AtFactPattern
+from core.patterns.facts.character_fact_pattern import CharacterFactPattern
+from core.patterns.events.move_event_pattern import MoveEventPattern
+from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
-from metta.definitions.side_effects.on_move_update_at import OnMoveUpdateAt
+from core.definitions.side_effects.on_move_update_at import OnMoveUpdateAt
 from tests.utils.utils import unwrap_first_match, count_atoms, unwrap_match
 
 

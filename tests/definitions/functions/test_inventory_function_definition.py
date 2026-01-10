@@ -1,12 +1,12 @@
 import unittest
 
-from metta.definitions.functions.inventory_function_definition import (
+from core.definitions.functions.inventory_function_definition import (
     InventoryFunctionPattern as InventoryFunctionDefinition,
 )
-from metta.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
-from metta.patterns.facts.at_fact_pattern import AtFactPattern
-from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
-from metta.patterns.functions.inventory_function_pattern import (
+from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
+from core.patterns.facts.at_fact_pattern import AtFactPattern
+from core.patterns.facts.character_fact_pattern import CharacterFactPattern
+from core.patterns.functions.inventory_function_pattern import (
     InventoryFunctionPattern,
 )
 from tests.utils.metta import get_test_metta

@@ -1,0 +1,12 @@
+from core.patterns.function_pattern import FunctionPattern
+from core.patterns.pattern import Pattern
+
+
+class LocationPathFunctionPattern(FunctionPattern):
+    def __init__(self, what: str):
+        self.what = what
+
+    def to_metta(self) -> str:
+        # fmt: off
+        return f"(location-path ({self.what}))"
+        # fmt: on

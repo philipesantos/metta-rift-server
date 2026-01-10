@@ -28,7 +28,7 @@ The game includes a built-in console where players can observe all actions taken
 ```sh
 # Clone the repository
 git clone https://github.com/fluidity-labs/metta-rift-server.git
-cd metta-rift-server
+cd core-rift-server
 
 # Install dependencies
 pip install -r requirements.txt

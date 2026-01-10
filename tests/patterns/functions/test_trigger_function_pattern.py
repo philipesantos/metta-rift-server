@@ -1,7 +1,7 @@
 import unittest
 
-from metta.patterns.events.move_event_pattern import MoveEventPattern
-from metta.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
+from core.patterns.events.move_event_pattern import MoveEventPattern
+from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
 
 
 class TestTriggerFunctionPattern(unittest.TestCase):

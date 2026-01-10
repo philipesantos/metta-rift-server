@@ -1,7 +1,7 @@
 import unittest
 
-from metta.definitions.facts.character_fact_definition import CharacterFactDefinition
-from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
+from core.definitions.facts.character_fact_definition import CharacterFactDefinition
+from core.patterns.facts.character_fact_pattern import CharacterFactPattern
 from tests.utils.metta import get_test_metta
 
 from tests.utils.utils import unwrap_first_match

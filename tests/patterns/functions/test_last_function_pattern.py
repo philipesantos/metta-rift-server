@@ -1,6 +1,6 @@
 import unittest
 
-from metta.patterns.functions.last_function_pattern import LastFunctionPattern
+from core.patterns.functions.last_function_pattern import LastFunctionPattern
 
 
 class TestLastFunctionPattern(unittest.TestCase):

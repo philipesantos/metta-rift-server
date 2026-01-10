@@ -1,6 +1,6 @@
 import unittest
 
-from metta.patterns.events.move_event_pattern import MoveEventPattern
+from core.patterns.events.move_event_pattern import MoveEventPattern
 
 
 class TestMoveEventPattern(unittest.TestCase):

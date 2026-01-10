@@ -1,9 +1,9 @@
 import unittest
 
-from metta.definitions.facts.at_fact_definition import AtFactDefinition
+from core.definitions.facts.at_fact_definition import AtFactDefinition
 from tests.utils.metta import get_test_metta
 
-from metta.patterns.facts.at_fact_pattern import AtFactPattern
+from core.patterns.facts.at_fact_pattern import AtFactPattern
 from tests.utils.utils import unwrap_first_match
 
 

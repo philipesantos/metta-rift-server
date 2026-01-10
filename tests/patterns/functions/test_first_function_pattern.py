@@ -1,6 +1,6 @@
 import unittest
 
-from metta.patterns.functions.first_function_pattern import FirstFunctionPattern
+from core.patterns.functions.first_function_pattern import FirstFunctionPattern
 
 
 class TestFirstFunctionPattern(unittest.TestCase):

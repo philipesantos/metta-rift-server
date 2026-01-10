@@ -1,6 +1,6 @@
 import unittest
 
-from metta.patterns.functions.move_to_function_pattern import MoveToFunctionPattern
+from core.patterns.functions.move_to_function_pattern import MoveToFunctionPattern
 
 
 class TestMoveToFunctionPattern(unittest.TestCase):
