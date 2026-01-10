@@ -18,20 +18,36 @@ from metta.patterns.events.move_event_pattern import MoveEventPattern
 from metta.definitions.functions.exists_function_definition import (
     ExistsFunctionDefinition,
 )
+from metta.definitions.functions.first_function_definition import (
+    FirstFunctionDefinition,
+)
+from metta.definitions.functions.last_function_definition import LastFunctionDefinition
+from metta.definitions.functions.inventory_function_definition import (
+    InventoryFunctionPattern as InventoryFunctionDefinition,
+)
+from metta.definitions.functions.location_path_function_definition import (
+    LocationPathFunctionDefinition,
+)
 from metta.definitions.functions.move_to_function_definition import (
     MoveToFunctionDefinition,
 )
 from metta.definitions.functions.move_towards_function_definition import (
     MoveTowardsFunctionDefinition,
 )
+from metta.definitions.functions.pickup_function_definition import (
+    PickUpFunctionDefinition,
+)
+from metta.definitions.functions.drop_function_definition import DropFunctionDefinition
 from metta.definitions.functions.synchronize_tick_function_definition import (
     SynchronizeTickFunctionDefinition,
 )
 from metta.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
+from metta.definitions.side_effects.on_drop_update_at import OnDropUpdateAt
 from metta.definitions.side_effects.on_move_update_at import OnMoveUpdateAt
 from metta.definitions.side_effects.on_move_update_tick import OnMoveUpdateTick
+from metta.definitions.side_effects.on_pickup_update_at import OnPickUpUpdateAt
 from utils.direction import Direction
 
 
@@ -100,14 +116,32 @@ def build_world():
     world = World()
 
     world.add_definition(ExistsFunctionDefinition())
+    world.add_definition(FirstFunctionDefinition())
+    world.add_definition(LastFunctionDefinition())
+    world.add_definition(LocationPathFunctionDefinition())
+    world.add_definition(InventoryFunctionDefinition(character_player.to_pattern()))
     world.add_definition(MoveToFunctionDefinition(character_player.to_pattern()))
     world.add_definition(MoveTowardsFunctionDefinition(character_player.to_pattern()))
+    world.add_definition(PickUpFunctionDefinition(character_player.to_pattern()))
+    world.add_definition(DropFunctionDefinition(character_player.to_pattern()))
     world.add_definition(SynchronizeTickFunctionDefinition())
 
     world.add_definition(
         TriggerFunctionDefinition(
             MoveEventPattern("$from", "$to"),
             [OnMoveUpdateAt(character_player.to_pattern()), OnMoveUpdateTick()],
+        )
+    )
+    world.add_definition(
+        TriggerFunctionDefinition(
+            PickUpEventPattern("$what", "$where"),
+            [OnPickUpUpdateAt(character_player.to_pattern())],
+        )
+    )
+    world.add_definition(
+        TriggerFunctionDefinition(
+            DropEventPattern("$what", "$where"),
+            [OnDropUpdateAt(character_player.to_pattern())],
         )
     )
 

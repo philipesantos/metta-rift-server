@@ -12,5 +12,5 @@ class InventoryFunctionPattern(FunctionDefinition):
             f"    (match &self (State (At $what {self.character.key}))\n"
             f"        $what\n"
             f"    )\n"
-            f")\n"
+            f")"
         )
