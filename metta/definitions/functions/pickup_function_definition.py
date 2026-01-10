@@ -1,6 +1,7 @@
 from metta.definitions.function_definition import FunctionDefinition
 from metta.patterns.events.pickup_event_pattern import PickUpEventPattern
 from metta.patterns.facts.at_fact_pattern import AtFactPattern
+from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
 from metta.patterns.functions.first_function_pattern import FirstFunctionPattern
 from metta.patterns.functions.last_function_pattern import LastFunctionPattern
 from metta.patterns.functions.location_path_function_pattern import (
@@ -11,11 +12,16 @@ from metta.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
 
 
 class PickUpFunctionDefinition(FunctionDefinition):
+    def __init__(self, character: CharacterFactPattern):
+        self.character = character
+
     def to_metta(self) -> str:
         location_path = LocationPathFunctionPattern("$what")
         first_location = FirstFunctionPattern("$location_path")
         last_location = LastFunctionPattern("$location_path")
-        state_at_match = StateWrapperPattern(AtFactPattern("player", "$last_location"))
+        state_at_match = StateWrapperPattern(
+            AtFactPattern(self.character.key, "$last_location")
+        )
         pickup_event = PickUpEventPattern("$what", "$first_location")
         pickup_trigger = TriggerFunctionPattern(pickup_event)
         return (

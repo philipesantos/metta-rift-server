@@ -1,12 +1,16 @@
 from metta.definitions.side_effect_definition import SideEffectDefinition
 from metta.patterns.events.pickup_event_pattern import PickUpEventPattern
 from metta.patterns.facts.at_fact_pattern import AtFactPattern
+from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
 from metta.patterns.facts.tick_fact_pattern import TickFactPattern
 from metta.patterns.wrappers.log_wrapper_pattern import LogWrapperPattern
 from metta.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
 
 
 class OnPickUpUpdateAt(SideEffectDefinition):
+    def __init__(self, character: CharacterFactPattern):
+        self.character = character
+
     def to_metta(self, event: PickUpEventPattern) -> str:
         tick_state_match = StateWrapperPattern(TickFactPattern("$tick"))
         log_pickup_add_atom = LogWrapperPattern(
@@ -15,7 +19,9 @@ class OnPickUpUpdateAt(SideEffectDefinition):
         state_at_match = StateWrapperPattern(
             AtFactPattern(event.what, "$where_match")
         )
-        state_at_add_atom = StateWrapperPattern(AtFactPattern(event.what, "player"))
+        state_at_add_atom = StateWrapperPattern(
+            AtFactPattern(event.what, self.character.key)
+        )
         return (
             f"(let* (($current_tick (match &self {tick_state_match.to_metta()} $tick))\n"
             f"    ( ()  (add-atom &self {log_pickup_add_atom.to_metta()}))\n"

@@ -8,6 +8,7 @@ from metta.patterns.facts.tick_fact_pattern import TickFactPattern
 from tests.utils.metta import get_test_metta
 
 from metta.patterns.facts.at_fact_pattern import AtFactPattern
+from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
 from metta.patterns.events.pickup_event_pattern import PickUpEventPattern
 from metta.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
@@ -20,6 +21,8 @@ class TestOnPickUpUpdateAt(unittest.TestCase):
     def test_to_metta(self):
         metta = get_test_metta()
 
+        character = CharacterFactPattern("player", "John")
+
         tick_state = StateWrapperPattern(TickFactPattern("0"))
         metta.run(tick_state.to_metta())
         metta.run(
@@ -27,7 +30,7 @@ class TestOnPickUpUpdateAt(unittest.TestCase):
         )
 
         trigger = TriggerFunctionDefinition(
-            PickUpEventPattern("$what", "$where"), [OnPickUpUpdateAt()]
+            PickUpEventPattern("$what", "$where"), [OnPickUpUpdateAt(character)]
         )
         metta.run(trigger.to_metta())
 
@@ -51,7 +54,7 @@ class TestOnPickUpUpdateAt(unittest.TestCase):
         )
         self.assertEqual(
             unwrap_first_match(result_state),
-            StateWrapperPattern(AtFactPattern("coin", "player")).to_metta(),
+            StateWrapperPattern(AtFactPattern("coin", character.key)).to_metta(),
         )
         self.assertEqual(count_atoms(result_state), 1)
 

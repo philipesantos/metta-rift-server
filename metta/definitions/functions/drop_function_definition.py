@@ -1,6 +1,7 @@
 from metta.definitions.function_definition import FunctionDefinition
 from metta.patterns.events.drop_event_pattern import DropEventPattern
 from metta.patterns.facts.at_fact_pattern import AtFactPattern
+from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
 from metta.patterns.functions.last_function_pattern import LastFunctionPattern
 from metta.patterns.functions.location_path_function_pattern import (
     LocationPathFunctionPattern,
@@ -10,9 +11,14 @@ from metta.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
 
 
 class DropFunctionDefinition(FunctionDefinition):
+    def __init__(self, character: CharacterFactPattern):
+        self.character = character
+
     def to_metta(self) -> str:
-        state_at_match = StateWrapperPattern(AtFactPattern("$what", "player"))
-        location_path = LocationPathFunctionPattern("player")
+        state_at_match = StateWrapperPattern(
+            AtFactPattern("$what", self.character.key)
+        )
+        location_path = LocationPathFunctionPattern(self.character.key)
         last_location = LastFunctionPattern(location_path.to_metta())
         drop_event = DropEventPattern("$what", last_location.to_metta())
         drop_trigger = TriggerFunctionPattern(drop_event)

@@ -146,16 +146,11 @@ def build_world():
     add_route(world, location_path_8, Direction.WEST, location_cabin)
     add_route(world, location_path_7, Direction.NORTH, location_camping_site)
 
-    world.add_definition(StateWrapperDefinition(TickFactPattern("1")))
     world.add_definition(
         StateWrapperDefinition(AtFactPattern(character_player.key, location_glade.key))
     )
 
-    compass = ItemFactDefinition("compass")
-    world.add_definition(compass)
-    world.add_definition(StateWrapperDefinition(AtFactPattern(compass.key, location_glade.key)))
-    world.add_definition(LogWrapperDefinition("1", PickUpEventPattern(compass.key, location_cave.key)))
-    world.add_definition(LogWrapperDefinition("3", DropEventPattern(compass.key, location_plane.key)))
+    world.add_definition(StateWrapperDefinition(TickFactPattern("1")))
 
     return world
 

@@ -8,6 +8,7 @@ from metta.patterns.facts.tick_fact_pattern import TickFactPattern
 from tests.utils.metta import get_test_metta
 
 from metta.patterns.facts.at_fact_pattern import AtFactPattern
+from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
 from metta.patterns.events.drop_event_pattern import DropEventPattern
 from metta.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
@@ -20,14 +21,16 @@ class TestOnDropUpdateAt(unittest.TestCase):
     def test_to_metta(self):
         metta = get_test_metta()
 
+        character = CharacterFactPattern("player", "John")
+
         tick_state = StateWrapperPattern(TickFactPattern("0"))
         metta.run(tick_state.to_metta())
         metta.run(
-            StateWrapperDefinition(AtFactPattern("coin", "player")).to_metta()
+            StateWrapperDefinition(AtFactPattern("coin", character.key)).to_metta()
         )
 
         trigger = TriggerFunctionDefinition(
-            DropEventPattern("$what", "$where"), [OnDropUpdateAt()]
+            DropEventPattern("$what", "$where"), [OnDropUpdateAt(character)]
         )
         metta.run(trigger.to_metta())
 
@@ -56,7 +59,7 @@ class TestOnDropUpdateAt(unittest.TestCase):
         self.assertEqual(count_atoms(result_state), 1)
 
         result_old_state = metta.run(
-            f"!(match &self {StateWrapperPattern(AtFactPattern('coin', 'player')).to_metta()} True)"
+            f"!(match &self {StateWrapperPattern(AtFactPattern('coin', character.key)).to_metta()} True)"
         )
         self.assertEqual(result_old_state, [[]])
 
