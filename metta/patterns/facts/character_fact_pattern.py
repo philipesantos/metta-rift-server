@@ -11,4 +11,6 @@ class CharacterFactPattern(FactPattern):
         formatted_name = self.name
         if " " in formatted_name:
             formatted_name = f'"{formatted_name}"'
+        # fmt: off
         return f"({Type.CHARACTER.value} {self.key} {formatted_name})"
+        # fmt: on

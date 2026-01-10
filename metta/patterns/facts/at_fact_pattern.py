@@ -7,4 +7,6 @@ class AtFactPattern(FactPattern):
         self.where = where
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"(At {self.what} {self.where})"
+        # fmt: on

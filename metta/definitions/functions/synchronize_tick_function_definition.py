@@ -11,6 +11,7 @@ class SynchronizeTickFunctionDefinition(FunctionDefinition):
         tick_state_match = StateWrapperPattern(TickFactPattern("$tick"))
         tick_state_remove = StateWrapperPattern(TickFactPattern("$current_tick"))
         tick_state_add = StateWrapperPattern(TickFactPattern("$new_tick"))
+        # fmt: off
         return (
             f"(= (synchronize-tick)\n"
             f"    (if {ExistsFunctionPattern(stale_tick).to_metta()}\n"
@@ -24,3 +25,4 @@ class SynchronizeTickFunctionDefinition(FunctionDefinition):
             f"    )\n"
             f")"
         )
+        # fmt: on

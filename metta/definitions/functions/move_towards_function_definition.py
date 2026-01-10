@@ -15,6 +15,7 @@ class MoveTowardsFunctionDefinition(FunctionDefinition):
         state_at_match = StateWrapperPattern(AtFactPattern(self.character.key, "$from"))
         route_match = RouteFactPattern("$from", "$direction", "$to")
         move_event = MoveEventPattern("$from", "$to")
+        # fmt: off
         return (
             f"(= (move-towards ($direction))\n"
             f"    (match &self {state_at_match.to_metta()}\n"
@@ -26,3 +27,4 @@ class MoveTowardsFunctionDefinition(FunctionDefinition):
             f"    )\n"
             f")"
         )
+        # fmt: on

@@ -9,7 +9,9 @@ class RouteFactPattern(FactPattern):
         self.location_to = location_to
 
     def to_metta(self) -> str:
+        # fmt: off
         return (
             f"({Type.ROUTE.value} {self.location_from} {self.direction} "
             f"{self.location_to})"
         )
+        # fmt: on

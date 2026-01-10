@@ -7,4 +7,6 @@ class LocationPathFunctionPattern(FunctionPattern):
         self.what = what
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"(location-path ({self.what}))"
+        # fmt: on

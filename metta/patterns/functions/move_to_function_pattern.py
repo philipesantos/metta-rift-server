@@ -6,4 +6,6 @@ class MoveToFunctionPattern(FunctionPattern):
         self.where = where
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"(move-to ({self.where}))"
+        # fmt: on

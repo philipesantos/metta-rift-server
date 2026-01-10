@@ -7,4 +7,6 @@ class ExistsFunctionPattern(FunctionPattern):
         self.pattern = pattern
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"(exists {self.pattern.to_metta()})"
+        # fmt: on

@@ -7,4 +7,6 @@ class DropEventPattern(EventPattern):
         self.where = where
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"(Drop {self.what} {self.where})"
+        # fmt: on

@@ -20,6 +20,7 @@ class OnDropUpdateAt(SideEffectDefinition):
             AtFactPattern(event.what, self.character.key)
         )
         state_at_add_atom = StateWrapperPattern(AtFactPattern(event.what, event.where))
+        # fmt: off
         return (
             f"(let* (($current_tick (match &self {tick_state_match.to_metta()} $tick))\n"
             f"    ( ()  (add-atom &self {log_drop_add_atom.to_metta()}))\n"
@@ -28,3 +29,4 @@ class OnDropUpdateAt(SideEffectDefinition):
             f"    Empty\n"
             f")\n"
         )
+        # fmt: on

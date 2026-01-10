@@ -25,9 +25,7 @@ class TestOnPickUpUpdateAt(unittest.TestCase):
 
         tick_state = StateWrapperPattern(TickFactPattern("0"))
         metta.run(tick_state.to_metta())
-        metta.run(
-            StateWrapperDefinition(AtFactPattern("coin", "glade")).to_metta()
-        )
+        metta.run(StateWrapperDefinition(AtFactPattern("coin", "glade")).to_metta())
 
         trigger = TriggerFunctionDefinition(
             PickUpEventPattern("$what", "$where"), [OnPickUpUpdateAt(character)]

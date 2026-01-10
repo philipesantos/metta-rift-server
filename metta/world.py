@@ -14,4 +14,6 @@ class World:
         definitions_metta = line_break.join(
             [definition.to_metta() for definition in self.definitions]
         )
+        # fmt: off
         return f"{definitions_metta}{line_break}"
+        # fmt: on

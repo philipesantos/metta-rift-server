@@ -16,6 +16,7 @@ class MoveToFunctionDefinition(FunctionDefinition):
         state_at_match = StateWrapperPattern(AtFactPattern(self.character.key, "$from"))
         log_move_event_match = LogWrapperPattern("$tick", MoveEventPattern("$_", "$to"))
         move_event_trigger = MoveEventPattern("$from", "$to")
+        # fmt: off
         return (
             f"(= (move-to ($to))\n"
             f"    (match &self {state_at_match.to_metta()}\n"
@@ -26,3 +27,4 @@ class MoveToFunctionDefinition(FunctionDefinition):
             f"    )\n"
             f")"
         )
+        # fmt: on

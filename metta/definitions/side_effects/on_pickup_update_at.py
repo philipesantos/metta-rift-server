@@ -16,12 +16,11 @@ class OnPickUpUpdateAt(SideEffectDefinition):
         log_pickup_add_atom = LogWrapperPattern(
             "$current_tick", PickUpEventPattern(event.what, event.where)
         )
-        state_at_match = StateWrapperPattern(
-            AtFactPattern(event.what, "$where_match")
-        )
+        state_at_match = StateWrapperPattern(AtFactPattern(event.what, "$where_match"))
         state_at_add_atom = StateWrapperPattern(
             AtFactPattern(event.what, self.character.key)
         )
+        # fmt: off
         return (
             f"(let* (($current_tick (match &self {tick_state_match.to_metta()} $tick))\n"
             f"    ( ()  (add-atom &self {log_pickup_add_atom.to_metta()}))\n"
@@ -31,3 +30,4 @@ class OnPickUpUpdateAt(SideEffectDefinition):
             f"    Empty\n"
             f")\n"
         )
+        # fmt: on

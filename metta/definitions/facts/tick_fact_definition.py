@@ -7,4 +7,6 @@ class TickFactDefinition(FactDefinition):
         self.tick = tick
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"{TickFactPattern(self.tick).to_metta()}"
+        # fmt: on

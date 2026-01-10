@@ -22,6 +22,7 @@ class OnMoveUpdateAt(SideEffectDefinition):
         state_at_add_atom = StateWrapperPattern(
             AtFactPattern(self.character.key, event.to_location)
         )
+        # fmt: off
         return (
             f"(let* (($current_tick (match &self {tick_state_match.to_metta()} $tick))\n"
             f"    ( ()  (add-atom &self {log_move_add_atom.to_metta()}))\n"
@@ -30,3 +31,4 @@ class OnMoveUpdateAt(SideEffectDefinition):
             f"    Empty\n"
             f")\n"
         )
+        # fmt: on

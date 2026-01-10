@@ -7,4 +7,6 @@ class MoveEventPattern(EventPattern):
         self.to_location = to_location
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"(Move {self.from_location} {self.to_location})"
+        # fmt: on

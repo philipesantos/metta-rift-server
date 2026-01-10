@@ -15,13 +15,12 @@ class DropFunctionDefinition(FunctionDefinition):
         self.character = character
 
     def to_metta(self) -> str:
-        state_at_match = StateWrapperPattern(
-            AtFactPattern("$what", self.character.key)
-        )
+        state_at_match = StateWrapperPattern(AtFactPattern("$what", self.character.key))
         location_path = LocationPathFunctionPattern(self.character.key)
         last_location = LastFunctionPattern(location_path.to_metta())
         drop_event = DropEventPattern("$what", last_location.to_metta())
         drop_trigger = TriggerFunctionPattern(drop_event)
+        # fmt: off
         return (
             f"(= (drop ($what))\n"
             f"    (match &self {state_at_match.to_metta()}\n"
@@ -29,3 +28,4 @@ class DropFunctionDefinition(FunctionDefinition):
             f"    )\n"
             f")"
         )
+        # fmt: on

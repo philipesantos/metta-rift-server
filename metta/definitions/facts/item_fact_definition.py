@@ -8,7 +8,9 @@ class ItemFactDefinition(FactDefinition):
         self.key = f"{key}"
 
     def to_metta(self) -> str:
+        # fmt: off
         return (
             f"(: {self.key} {Type.ITEM.value})\n"
             f"{ItemFactPattern(self.key).to_metta()}\n"
         )
+        # fmt: on

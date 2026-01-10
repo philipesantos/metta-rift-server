@@ -8,4 +8,6 @@ class AtFactDefinition(FactDefinition):
         self.where = where
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"{AtFactPattern(self.what, self.where).to_metta()}"
+        # fmt: on

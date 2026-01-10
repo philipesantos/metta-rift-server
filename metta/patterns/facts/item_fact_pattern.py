@@ -7,4 +7,6 @@ class ItemFactPattern(FactPattern):
         self.key = f"{key}"
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"({Type.ITEM.value} {self.key})"
+        # fmt: on
