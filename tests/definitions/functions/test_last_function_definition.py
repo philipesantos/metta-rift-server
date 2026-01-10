@@ -1,9 +1,9 @@
 import unittest
 
-from metta.definitions.functions.last_function_definition import (
+from core.definitions.functions.last_function_definition import (
     LastFunctionDefinition,
 )
-from metta.patterns.functions.last_function_pattern import LastFunctionPattern
+from core.patterns.functions.last_function_pattern import LastFunctionPattern
 from tests.utils.metta import get_test_metta
 
 from tests.utils.utils import unwrap_first_match

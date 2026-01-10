@@ -1,8 +1,8 @@
 import unittest
 
-from metta.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
-from metta.patterns.facts.tick_fact_pattern import TickFactPattern
-from metta.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
+from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
+from core.patterns.facts.tick_fact_pattern import TickFactPattern
+from core.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
 from tests.utils.metta import get_test_metta
 
 from tests.utils.utils import unwrap_first_match

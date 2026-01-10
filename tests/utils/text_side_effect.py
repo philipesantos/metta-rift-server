@@ -1,5 +1,5 @@
-from metta.definitions.side_effect_definition import SideEffectDefinition
-from metta.patterns.event_pattern import EventPattern
+from core.definitions.side_effect_definition import SideEffectDefinition
+from core.patterns.event_pattern import EventPattern
 
 
 class TextSideEffectDefinition(SideEffectDefinition):

@@ -2,7 +2,7 @@ import unittest
 
 from tests.utils.metta import get_test_metta
 
-from metta.patterns.facts.route_fact_pattern import RouteFactPattern
+from core.patterns.facts.route_fact_pattern import RouteFactPattern
 from tests.utils.utils import unwrap_first_match
 from utils.direction import Direction
 

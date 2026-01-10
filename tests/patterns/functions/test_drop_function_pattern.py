@@ -1,6 +1,6 @@
 import unittest
 
-from metta.patterns.functions.drop_function_pattern import DropFunctionPattern
+from core.patterns.functions.drop_function_pattern import DropFunctionPattern
 
 
 class TestDropFunctionPattern(unittest.TestCase):

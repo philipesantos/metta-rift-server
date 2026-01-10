@@ -1,17 +1,17 @@
 import unittest
 
-from metta.patterns.functions.synchronize_tick_function_pattern import (
+from core.patterns.functions.synchronize_tick_function_pattern import (
     SynchronizeTickFunctionPattern,
 )
-from metta.patterns.wrappers.stale_wrapper_pattern import StaleWrapperPattern
-from metta.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
-from metta.patterns.facts.tick_fact_pattern import TickFactPattern
+from core.patterns.wrappers.stale_wrapper_pattern import StaleWrapperPattern
+from core.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
+from core.patterns.facts.tick_fact_pattern import TickFactPattern
 from tests.utils.metta import get_test_metta
 
-from metta.definitions.functions.exists_function_definition import (
+from core.definitions.functions.exists_function_definition import (
     ExistsFunctionDefinition,
 )
-from metta.definitions.functions.synchronize_tick_function_definition import (
+from core.definitions.functions.synchronize_tick_function_definition import (
     SynchronizeTickFunctionDefinition,
 )
 from tests.utils.utils import unwrap_first_match

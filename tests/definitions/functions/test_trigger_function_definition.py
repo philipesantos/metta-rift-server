@@ -1,9 +1,9 @@
 import unittest
 
-from metta.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
+from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
 from tests.utils.metta import get_test_metta
 
-from metta.definitions.functions.trigger_function_definition import (
+from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
 from tests.utils.some_event import SomeEventPattern

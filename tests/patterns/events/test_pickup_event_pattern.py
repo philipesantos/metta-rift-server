@@ -1,7 +1,7 @@
 import unittest
 
-from metta.patterns.events.move_event_pattern import MoveEventPattern
-from metta.patterns.events.pickup_event_pattern import PickUpEventPattern
+from core.patterns.events.move_event_pattern import MoveEventPattern
+from core.patterns.events.pickup_event_pattern import PickUpEventPattern
 
 
 class TestPickUpEventPattern(unittest.TestCase):

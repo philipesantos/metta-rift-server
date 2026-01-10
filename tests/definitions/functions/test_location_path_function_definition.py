@@ -1,12 +1,12 @@
 import unittest
 
-from metta.definitions.facts.location_fact_definition import LocationFactDefinition
-from metta.definitions.functions.location_path_function_definition import (
+from core.definitions.facts.location_fact_definition import LocationFactDefinition
+from core.definitions.functions.location_path_function_definition import (
     LocationPathFunctionDefinition,
 )
-from metta.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
-from metta.patterns.facts.at_fact_pattern import AtFactPattern
-from metta.patterns.functions.location_path_function_pattern import (
+from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
+from core.patterns.facts.at_fact_pattern import AtFactPattern
+from core.patterns.functions.location_path_function_pattern import (
     LocationPathFunctionPattern,
 )
 from tests.utils.metta import get_test_metta

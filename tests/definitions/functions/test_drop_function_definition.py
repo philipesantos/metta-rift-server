@@ -1,23 +1,23 @@
 import unittest
 
-from metta.definitions.facts.location_fact_definition import LocationFactDefinition
-from metta.definitions.functions.drop_function_definition import (
+from core.definitions.facts.location_fact_definition import LocationFactDefinition
+from core.definitions.functions.drop_function_definition import (
     DropFunctionDefinition,
 )
-from metta.definitions.functions.last_function_definition import (
+from core.definitions.functions.last_function_definition import (
     LastFunctionDefinition,
 )
-from metta.definitions.functions.location_path_function_definition import (
+from core.definitions.functions.location_path_function_definition import (
     LocationPathFunctionDefinition,
 )
-from metta.definitions.functions.trigger_function_definition import (
+from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
-from metta.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
-from metta.patterns.events.drop_event_pattern import DropEventPattern
-from metta.patterns.facts.at_fact_pattern import AtFactPattern
-from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
-from metta.patterns.functions.drop_function_pattern import DropFunctionPattern
+from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
+from core.patterns.events.drop_event_pattern import DropEventPattern
+from core.patterns.facts.at_fact_pattern import AtFactPattern
+from core.patterns.facts.character_fact_pattern import CharacterFactPattern
+from core.patterns.functions.drop_function_pattern import DropFunctionPattern
 from tests.utils.metta import get_test_metta
 
 from tests.utils.text_side_effect import TextSideEffectDefinition

@@ -1,5 +1,5 @@
-from metta.definitions.side_effect_definition import SideEffectDefinition
-from metta.patterns.events.move_event_pattern import MoveEventPattern
+from core.definitions.side_effect_definition import SideEffectDefinition
+from core.patterns.events.move_event_pattern import MoveEventPattern
 
 
 class OnMoveDoNothing(SideEffectDefinition):

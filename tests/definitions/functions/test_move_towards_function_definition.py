@@ -1,20 +1,20 @@
 import unittest
 
-from metta.definitions.facts.at_fact_definition import AtFactDefinition
-from metta.definitions.facts.route_fact_definition import RouteFactDefinition
-from metta.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
-from metta.patterns.facts.at_fact_pattern import AtFactPattern
-from metta.patterns.functions.move_towards_function_pattern import (
+from core.definitions.facts.at_fact_definition import AtFactDefinition
+from core.definitions.facts.route_fact_definition import RouteFactDefinition
+from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
+from core.patterns.facts.at_fact_pattern import AtFactPattern
+from core.patterns.functions.move_towards_function_pattern import (
     MoveTowardsFunctionPattern,
 )
 from tests.utils.metta import get_test_metta
 
-from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
-from metta.patterns.events.move_event_pattern import MoveEventPattern
-from metta.definitions.functions.move_towards_function_definition import (
+from core.patterns.facts.character_fact_pattern import CharacterFactPattern
+from core.patterns.events.move_event_pattern import MoveEventPattern
+from core.definitions.functions.move_towards_function_definition import (
     MoveTowardsFunctionDefinition,
 )
-from metta.definitions.functions.trigger_function_definition import (
+from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
 from tests.utils.on_move_do_nothing import OnMoveDoNothing

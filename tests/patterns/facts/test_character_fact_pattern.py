@@ -2,7 +2,7 @@ import unittest
 
 from tests.utils.metta import get_test_metta
 
-from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
+from core.patterns.facts.character_fact_pattern import CharacterFactPattern
 from utils.type import Type
 from tests.utils.utils import unwrap_first_match
 

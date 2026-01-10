@@ -1,53 +1,51 @@
 from hyperon import MeTTa
 
-from metta.definitions.facts.character_fact_definition import CharacterFactDefinition
-from metta.definitions.facts.item_fact_definition import ItemFactDefinition
-from metta.definitions.facts.location_fact_definition import LocationFactDefinition
-from metta.definitions.facts.route_fact_definition import RouteFactDefinition
-from metta.definitions.wrappers.log_wrapper_definition import LogWrapperDefinition
-from metta.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
-from metta.patterns.events.drop_event_pattern import DropEventPattern
-from metta.patterns.events.pickup_event_pattern import PickUpEventPattern
-from metta.patterns.facts.at_fact_pattern import AtFactPattern
-from metta.patterns.facts.tick_fact_pattern import TickFactPattern
-from metta.patterns.functions.synchronize_tick_function_pattern import (
+from core.definitions.facts.character_fact_definition import CharacterFactDefinition
+from core.definitions.facts.location_fact_definition import LocationFactDefinition
+from core.definitions.facts.route_fact_definition import RouteFactDefinition
+from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
+from core.patterns.events.drop_event_pattern import DropEventPattern
+from core.patterns.events.pickup_event_pattern import PickUpEventPattern
+from core.patterns.facts.at_fact_pattern import AtFactPattern
+from core.patterns.facts.tick_fact_pattern import TickFactPattern
+from core.patterns.functions.synchronize_tick_function_pattern import (
     SynchronizeTickFunctionPattern,
 )
-from metta.world import World
-from metta.patterns.events.move_event_pattern import MoveEventPattern
-from metta.definitions.functions.exists_function_definition import (
+from core.world import World
+from core.patterns.events.move_event_pattern import MoveEventPattern
+from core.definitions.functions.exists_function_definition import (
     ExistsFunctionDefinition,
 )
-from metta.definitions.functions.first_function_definition import (
+from core.definitions.functions.first_function_definition import (
     FirstFunctionDefinition,
 )
-from metta.definitions.functions.last_function_definition import LastFunctionDefinition
-from metta.definitions.functions.inventory_function_definition import (
+from core.definitions.functions.last_function_definition import LastFunctionDefinition
+from core.definitions.functions.inventory_function_definition import (
     InventoryFunctionPattern as InventoryFunctionDefinition,
 )
-from metta.definitions.functions.location_path_function_definition import (
+from core.definitions.functions.location_path_function_definition import (
     LocationPathFunctionDefinition,
 )
-from metta.definitions.functions.move_to_function_definition import (
+from core.definitions.functions.move_to_function_definition import (
     MoveToFunctionDefinition,
 )
-from metta.definitions.functions.move_towards_function_definition import (
+from core.definitions.functions.move_towards_function_definition import (
     MoveTowardsFunctionDefinition,
 )
-from metta.definitions.functions.pickup_function_definition import (
+from core.definitions.functions.pickup_function_definition import (
     PickUpFunctionDefinition,
 )
-from metta.definitions.functions.drop_function_definition import DropFunctionDefinition
-from metta.definitions.functions.synchronize_tick_function_definition import (
+from core.definitions.functions.drop_function_definition import DropFunctionDefinition
+from core.definitions.functions.synchronize_tick_function_definition import (
     SynchronizeTickFunctionDefinition,
 )
-from metta.definitions.functions.trigger_function_definition import (
+from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
-from metta.definitions.side_effects.on_drop_update_at import OnDropUpdateAt
-from metta.definitions.side_effects.on_move_update_at import OnMoveUpdateAt
-from metta.definitions.side_effects.on_move_update_tick import OnMoveUpdateTick
-from metta.definitions.side_effects.on_pickup_update_at import OnPickUpUpdateAt
+from core.definitions.side_effects.on_drop_update_at import OnDropUpdateAt
+from core.definitions.side_effects.on_move_update_at import OnMoveUpdateAt
+from core.definitions.side_effects.on_move_update_tick import OnMoveUpdateTick
+from core.definitions.side_effects.on_pickup_update_at import OnPickUpUpdateAt
 from utils.direction import Direction
 
 

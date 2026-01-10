@@ -2,10 +2,10 @@ import unittest
 
 from tests.utils.metta import get_test_metta
 
-from metta.patterns.facts.location_fact_pattern import LocationFactPattern
+from core.patterns.facts.location_fact_pattern import LocationFactPattern
 from utils.type import Type
-from metta.patterns.events.move_event_pattern import MoveEventPattern
-from metta.definitions.functions.trigger_function_definition import (
+from core.patterns.events.move_event_pattern import MoveEventPattern
+from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
 from tests.utils.utils import unwrap_first_match
