@@ -16,6 +16,7 @@ from metta.definitions.functions.trigger_function_definition import (
 from metta.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from metta.patterns.events.drop_event_pattern import DropEventPattern
 from metta.patterns.facts.at_fact_pattern import AtFactPattern
+from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
 from metta.patterns.functions.drop_function_pattern import DropFunctionPattern
 from tests.utils.metta import get_test_metta
 
@@ -27,6 +28,8 @@ class TestDropFunctionDefinition(unittest.TestCase):
     def test_drop(self):
         metta = get_test_metta()
 
+        character = CharacterFactPattern("player", "John")
+
         metta.run(LocationPathFunctionDefinition().to_metta())
         metta.run(LastFunctionDefinition().to_metta())
         metta.run(
@@ -35,14 +38,14 @@ class TestDropFunctionDefinition(unittest.TestCase):
                 [TextSideEffectDefinition("Dropped")],
             ).to_metta()
         )
-        metta.run(DropFunctionDefinition().to_metta())
+        metta.run(DropFunctionDefinition(character).to_metta())
 
         metta.run(LocationFactDefinition("glade", "A quiet glade.").to_metta())
         metta.run(
-            StateWrapperDefinition(AtFactPattern("player", "glade")).to_metta()
+            StateWrapperDefinition(AtFactPattern(character.key, "glade")).to_metta()
         )
         metta.run(
-            StateWrapperDefinition(AtFactPattern("coin", "player")).to_metta()
+            StateWrapperDefinition(AtFactPattern("coin", character.key)).to_metta()
         )
 
         drop = DropFunctionPattern("coin")

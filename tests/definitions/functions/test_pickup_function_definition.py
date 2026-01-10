@@ -19,6 +19,7 @@ from metta.definitions.functions.trigger_function_definition import (
 from metta.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from metta.patterns.events.pickup_event_pattern import PickUpEventPattern
 from metta.patterns.facts.at_fact_pattern import AtFactPattern
+from metta.patterns.facts.character_fact_pattern import CharacterFactPattern
 from metta.patterns.functions.pickup_function_pattern import PickUpFunctionPattern
 from tests.utils.metta import get_test_metta
 
@@ -30,6 +31,8 @@ class TestPickUpFunctionDefinition(unittest.TestCase):
     def test_pickup(self):
         metta = get_test_metta()
 
+        character = CharacterFactPattern("player", "John")
+
         metta.run(LocationPathFunctionDefinition().to_metta())
         metta.run(FirstFunctionDefinition().to_metta())
         metta.run(LastFunctionDefinition().to_metta())
@@ -39,11 +42,11 @@ class TestPickUpFunctionDefinition(unittest.TestCase):
                 [TextSideEffectDefinition("Picked up")],
             ).to_metta()
         )
-        metta.run(PickUpFunctionDefinition().to_metta())
+        metta.run(PickUpFunctionDefinition(character).to_metta())
 
         metta.run(LocationFactDefinition("glade", "A quiet glade.").to_metta())
         metta.run(
-            StateWrapperDefinition(AtFactPattern("player", "glade")).to_metta()
+            StateWrapperDefinition(AtFactPattern(character.key, "glade")).to_metta()
         )
         metta.run(
             StateWrapperDefinition(AtFactPattern("coin", "chest")).to_metta()
