@@ -6,4 +6,6 @@ class FirstFunctionPattern(FunctionPattern):
         self.value = value
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"(first {self.value})"
+        # fmt: on

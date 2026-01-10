@@ -20,9 +20,7 @@ class TestLocationPathFunctionDefinition(unittest.TestCase):
 
         metta.run(LocationPathFunctionDefinition().to_metta())
         metta.run(LocationFactDefinition("glade", "A quiet glade.").to_metta())
-        metta.run(
-            StateWrapperDefinition(AtFactPattern("player", "glade")).to_metta()
-        )
+        metta.run(StateWrapperDefinition(AtFactPattern("player", "glade")).to_metta())
 
         location_path = LocationPathFunctionPattern("player")
         result_path = metta.run(f"!{location_path.to_metta()}")
@@ -33,12 +31,8 @@ class TestLocationPathFunctionDefinition(unittest.TestCase):
 
         metta.run(LocationPathFunctionDefinition().to_metta())
         metta.run(LocationFactDefinition("glade", "A quiet glade.").to_metta())
-        metta.run(
-            StateWrapperDefinition(AtFactPattern("coin", "chest")).to_metta()
-        )
-        metta.run(
-            StateWrapperDefinition(AtFactPattern("chest", "glade")).to_metta()
-        )
+        metta.run(StateWrapperDefinition(AtFactPattern("coin", "chest")).to_metta())
+        metta.run(StateWrapperDefinition(AtFactPattern("chest", "glade")).to_metta())
 
         location_path = LocationPathFunctionPattern("coin")
         result_path = metta.run(f"!{location_path.to_metta()}")

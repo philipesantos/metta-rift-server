@@ -19,8 +19,10 @@ class LocationFactDefinition(FactDefinition):
         trigger = TriggerFunctionDefinition(
             MoveEventPattern("$from", self.key), [OnMoveDescribeLocation(self.desc)]
         )
+        # fmt: off
         return (
             f"(: {self.key} {Type.LOCATION.value})\n"
             f"{LocationFactPattern(self.key).to_metta()}\n"
             f"{trigger.to_metta()}"
         )
+        # fmt: on

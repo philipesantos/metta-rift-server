@@ -6,4 +6,6 @@ class TickFactPattern(FactPattern):
         self.tick = tick
 
     def to_metta(self):
+        # fmt: off
         return f"(Tick {self.tick})"
+        # fmt: on

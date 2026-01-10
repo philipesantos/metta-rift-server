@@ -6,4 +6,6 @@ class LastFunctionPattern(FunctionPattern):
         self.value = value
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"(last {self.value})"
+        # fmt: on

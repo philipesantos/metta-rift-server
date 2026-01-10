@@ -7,4 +7,6 @@ class MoveTowardsFunctionPattern(FunctionPattern):
         self.direction = direction
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"(move-towards ({self.direction.value}))"
+        # fmt: on

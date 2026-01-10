@@ -7,4 +7,6 @@ class LocationFactPattern(FactPattern):
         self.key = f"{key}"
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"({Type.LOCATION.value} {self.key})"
+        # fmt: on

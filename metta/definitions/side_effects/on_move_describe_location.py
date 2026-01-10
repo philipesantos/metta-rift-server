@@ -7,4 +7,6 @@ class OnMoveDescribeLocation(SideEffectDefinition):
         self.description = description
 
     def to_metta(self, event: MoveEventPattern) -> str:
+        # fmt: off
         return f'"{self.description}"'
+        # fmt: on

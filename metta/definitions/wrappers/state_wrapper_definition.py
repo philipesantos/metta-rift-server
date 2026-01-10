@@ -8,4 +8,6 @@ class StateWrapperDefinition(WrapperDefinition):
         self.pattern = pattern
 
     def to_metta(self):
+        # fmt: off
         return StateWrapperPattern(self.pattern).to_metta()
+        # fmt: on

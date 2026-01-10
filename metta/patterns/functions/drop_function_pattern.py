@@ -6,4 +6,6 @@ class DropFunctionPattern(FunctionPattern):
         self.what = what
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"(drop ({self.what}))"
+        # fmt: on

@@ -7,6 +7,7 @@ class InventoryFunctionPattern(FunctionDefinition):
         self.character = character
 
     def to_metta(self) -> str:
+        # fmt: off
         return (
             f"(= (inventory)\n"
             f"    (match &self (State (At $what {self.character.key}))\n"
@@ -14,3 +15,4 @@ class InventoryFunctionPattern(FunctionDefinition):
             f"    )\n"
             f")"
         )
+        # fmt: on

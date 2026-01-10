@@ -7,4 +7,6 @@ class TriggerFunctionPattern(FunctionPattern):
         self.event = event
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"(trigger {self.event.to_metta()})"
+        # fmt: on

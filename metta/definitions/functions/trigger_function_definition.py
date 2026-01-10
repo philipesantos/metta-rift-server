@@ -14,6 +14,7 @@ class TriggerFunctionDefinition(FunctionDefinition):
                 (indent + line) if line else line for line in text.splitlines()
             )
 
+        # fmt: off
         return "\n".join(
             (
                 f"(= (trigger {self.event.to_metta()})\n"
@@ -22,3 +23,4 @@ class TriggerFunctionDefinition(FunctionDefinition):
             )
             for side_effect in self.side_effects
         )
+        # fmt: on

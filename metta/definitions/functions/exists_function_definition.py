@@ -3,6 +3,7 @@ from metta.definitions.function_definition import FunctionDefinition
 
 class ExistsFunctionDefinition(FunctionDefinition):
     def to_metta(self) -> str:
+        # fmt: off
         return (
             f"(= (exists $atom)\n"
             f"    (let $result\n"
@@ -15,3 +16,4 @@ class ExistsFunctionDefinition(FunctionDefinition):
             f"    )\n"
             f")"
         )
+        # fmt: on

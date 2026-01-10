@@ -3,6 +3,7 @@ from metta.definitions.function_definition import FunctionDefinition
 
 class LastFunctionDefinition(FunctionDefinition):
     def to_metta(self) -> str:
+        # fmt: off
         return (
             f"(= (last (Cons $x (Nil)))\n"
             f"   $x\n"
@@ -11,3 +12,4 @@ class LastFunctionDefinition(FunctionDefinition):
             f"   (last (Cons $y $tail))\n"
             f")"
         )
+        # fmt: on

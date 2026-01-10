@@ -6,4 +6,6 @@ class PickUpFunctionPattern(FunctionPattern):
         self.what = what
 
     def to_metta(self) -> str:
+        # fmt: off
         return f"(pickup ({self.what}))"
+        # fmt: on

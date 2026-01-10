@@ -7,4 +7,6 @@ class StaleWrapperDefinition(WrapperDefinition):
         self.what = what
 
     def to_metta(self):
+        # fmt: off
         return StaleWrapperPattern(self.what).to_metta()
+        # fmt: on

@@ -24,6 +24,7 @@ class PickUpFunctionDefinition(FunctionDefinition):
         )
         pickup_event = PickUpEventPattern("$what", "$first_location")
         pickup_trigger = TriggerFunctionPattern(pickup_event)
+        # fmt: off
         return (
             f"(= (pickup ($what))\n"
             f"    (let $location_path {location_path.to_metta()}\n"
@@ -37,3 +38,4 @@ class PickUpFunctionDefinition(FunctionDefinition):
             f"    )\n"
             f")"
         )
+        # fmt: on

@@ -32,9 +32,7 @@ class TestInventoryFunctionDefinition(unittest.TestCase):
         metta.run(
             StateWrapperDefinition(AtFactPattern("apple", character.key)).to_metta()
         )
-        metta.run(
-            StateWrapperDefinition(AtFactPattern("coin", "cave")).to_metta()
-        )
+        metta.run(StateWrapperDefinition(AtFactPattern("coin", "cave")).to_metta())
 
         result_inventory = metta.run(f"!{inventory.to_metta()}")
         items = {unwrap_atom(atom) for atom in result_inventory[0]}

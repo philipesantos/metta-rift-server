@@ -31,9 +31,7 @@ class TestItemFactDefinition(unittest.TestCase):
         self.assertEqual(unwrap_first_match(result_key), key)
 
         item_no_match = LocationFactPattern("bottle")
-        result_no_match = metta.run(
-            f"!(match &self {item_no_match.to_metta()} True)"
-        )
+        result_no_match = metta.run(f"!(match &self {item_no_match.to_metta()} True)")
         self.assertEqual(result_no_match, [[]])
 
 

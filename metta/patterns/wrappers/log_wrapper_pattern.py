@@ -8,4 +8,6 @@ class LogWrapperPattern(WrapperPattern):
         self.pattern = pattern
 
     def to_metta(self):
+        # fmt: off
         return f"(Log {self.tick} {self.pattern.to_metta()})"
+        # fmt: on
