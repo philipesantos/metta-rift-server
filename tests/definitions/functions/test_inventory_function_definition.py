@@ -1,6 +1,6 @@
 import unittest
 
-from metta.definitions.facts.inventory_function_definition import (
+from metta.definitions.functions.inventory_function_definition import (
     InventoryFunctionPattern as InventoryFunctionDefinition,
 )
 from metta.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
