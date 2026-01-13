@@ -1,5 +1,6 @@
 import unittest
 
+from core.definitions.side_effects.on_event_print import OnEventPrint
 from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
 from tests.utils.metta import get_test_metta
 
@@ -7,18 +8,15 @@ from core.patterns.events.move_event_pattern import MoveEventPattern
 from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
-from core.definitions.side_effects.on_move_describe_location import (
-    OnMoveDescribeLocation,
-)
 from tests.utils.utils import unwrap_first_match
 
 
-class TestOnMoveDescribeLocation(unittest.TestCase):
+class TestOnEventPrint(unittest.TestCase):
     def test_to_metta(self):
         metta = get_test_metta()
 
         text = "Location description"
-        side_effect = OnMoveDescribeLocation(text)
+        side_effect = OnEventPrint(text)
 
         trigger = TriggerFunctionDefinition(
             MoveEventPattern("$from", "glade"), [side_effect]
