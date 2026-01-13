@@ -46,6 +46,7 @@ from core.definitions.side_effects.on_drop_update_at import OnDropUpdateAt
 from core.definitions.side_effects.on_move_update_at import OnMoveUpdateAt
 from core.definitions.side_effects.on_move_update_tick import OnMoveUpdateTick
 from core.definitions.side_effects.on_pickup_update_at import OnPickUpUpdateAt
+from modules.compass.compass_module import CompassModule
 from utils.direction import Direction
 
 
@@ -183,6 +184,8 @@ def build_world():
     )
 
     world.add_definition(StateWrapperDefinition(TickFactPattern("1")))
+
+    CompassModule(location_glade.key).apply(world)
 
     return world
 

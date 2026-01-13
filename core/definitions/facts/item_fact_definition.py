@@ -11,6 +11,6 @@ class ItemFactDefinition(FactDefinition):
         # fmt: off
         return (
             f"(: {self.key} {Type.ITEM.value})\n"
-            f"{ItemFactPattern(self.key).to_metta()}\n"
+            f"{ItemFactPattern(self.key).to_metta()}"
         )
         # fmt: on
