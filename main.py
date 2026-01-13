@@ -73,11 +73,21 @@ def main():
 def build_world():
     character_player = CharacterFactDefinition(key="player", name="John")
 
-    location_glade = LocationFactDefinition(key="glade", text_move_to="You are in the Glade.")
-    location_cave = LocationFactDefinition(key="cave", text_move_to="You are in the cave.")
-    location_boat = LocationFactDefinition(key="boat", text_move_to="You are in the boat.")
-    location_plane = LocationFactDefinition(key="plane", text_move_to="You are in the plane.")
-    location_cabin = LocationFactDefinition(key="cabin", text_move_to="You are in the cabin.")
+    location_glade = LocationFactDefinition(
+        key="glade", text_move_to="You are in the Glade."
+    )
+    location_cave = LocationFactDefinition(
+        key="cave", text_move_to="You are in the cave."
+    )
+    location_boat = LocationFactDefinition(
+        key="boat", text_move_to="You are in the boat."
+    )
+    location_plane = LocationFactDefinition(
+        key="plane", text_move_to="You are in the plane."
+    )
+    location_cabin = LocationFactDefinition(
+        key="cabin", text_move_to="You are in the cabin."
+    )
     location_camping_site = LocationFactDefinition(
         key="camping_site", text_move_to="You are in the camping site."
     )

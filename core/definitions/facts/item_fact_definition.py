@@ -1,5 +1,7 @@
 from core.definitions.fact_definition import FactDefinition
-from core.definitions.functions.trigger_function_definition import TriggerFunctionDefinition
+from core.definitions.functions.trigger_function_definition import (
+    TriggerFunctionDefinition,
+)
 from core.definitions.side_effects.on_event_print import OnEventPrint
 from core.patterns.events.drop_event_pattern import DropEventPattern
 from core.patterns.events.pickup_event_pattern import PickUpEventPattern
@@ -15,14 +17,10 @@ class ItemFactDefinition(FactDefinition):
 
     def to_metta(self) -> str:
         trigger_pickup = TriggerFunctionDefinition(
-            PickUpEventPattern(self.key, "$where"), [
-                OnEventPrint(self.text_pickup)
-            ]
+            PickUpEventPattern(self.key, "$where"), [OnEventPrint(self.text_pickup)]
         )
         trigger_drop = TriggerFunctionDefinition(
-            DropEventPattern(self.key, "$where"), [
-                OnEventPrint(self.text_drop)
-            ]
+            DropEventPattern(self.key, "$where"), [OnEventPrint(self.text_drop)]
         )
         # fmt: off
         return (
