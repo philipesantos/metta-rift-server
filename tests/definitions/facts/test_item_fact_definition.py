@@ -28,9 +28,7 @@ class TestItemFactDefinition(unittest.TestCase):
         result_key = metta.run(f"!(match &self {item_key.to_metta()} $key)")
         self.assertEqual(unwrap_first_match(result_key), key)
 
-        item_pickup_trigger = TriggerFunctionPattern(
-            PickUpEventPattern(key, "glade")
-        )
+        item_pickup_trigger = TriggerFunctionPattern(PickUpEventPattern(key, "glade"))
         result_pickup_trigger = metta.run(f"!{item_pickup_trigger.to_metta()}")
         self.assertEqual(unwrap_first_match(result_pickup_trigger), text_pickup)
 

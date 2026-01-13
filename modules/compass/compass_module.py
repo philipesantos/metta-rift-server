@@ -10,6 +10,10 @@ class CompassModule(Module):
         self.compass_where: str = compass_where
 
     def apply(self, world: World) -> None:
-        item_compass = ItemFactDefinition("compass")
+        item_compass = ItemFactDefinition(
+            "compass", "You got the compass", "You dropped the compass"
+        )
         world.add_definition(item_compass)
-        world.add_definition(StateWrapperDefinition(AtFactPattern(item_compass.key, self.compass_where)))
+        world.add_definition(
+            StateWrapperDefinition(AtFactPattern(item_compass.key, self.compass_where))
+        )
