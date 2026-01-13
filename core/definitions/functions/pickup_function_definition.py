@@ -30,8 +30,9 @@ class PickUpFunctionDefinition(FunctionDefinition):
             f"    (let $location_path {location_path.to_metta()}\n"
             f"        (let $first_location {first_location.to_metta()}\n"
             f"            (let $last_location {last_location.to_metta()}\n"
-            f"                (match &self {state_at_match.to_metta()}\n"
+            f"                (if (exists {state_at_match.to_metta()})\n"
             f"                    {pickup_trigger.to_metta()}\n"
+            f'                    "There is no such item"\n'
             f"                )\n"
             f"            )\n"
             f"        )\n"

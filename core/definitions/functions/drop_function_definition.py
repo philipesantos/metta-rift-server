@@ -2,6 +2,7 @@ from core.definitions.function_definition import FunctionDefinition
 from core.patterns.events.drop_event_pattern import DropEventPattern
 from core.patterns.facts.at_fact_pattern import AtFactPattern
 from core.patterns.facts.character_fact_pattern import CharacterFactPattern
+from core.patterns.functions.exists_function_pattern import ExistsFunctionPattern
 from core.patterns.functions.last_function_pattern import LastFunctionPattern
 from core.patterns.functions.location_path_function_pattern import (
     LocationPathFunctionPattern,
@@ -16,6 +17,7 @@ class DropFunctionDefinition(FunctionDefinition):
 
     def to_metta(self) -> str:
         state_at_match = StateWrapperPattern(AtFactPattern("$what", self.character.key))
+        state_at_exists = ExistsFunctionPattern(state_at_match)
         location_path = LocationPathFunctionPattern(self.character.key)
         last_location = LastFunctionPattern(location_path.to_metta())
         drop_event = DropEventPattern("$what", last_location.to_metta())
@@ -23,8 +25,9 @@ class DropFunctionDefinition(FunctionDefinition):
         # fmt: off
         return (
             f"(= (drop ($what))\n"
-            f"    (match &self {state_at_match.to_metta()}\n"
+            f"    (if {state_at_exists.to_metta()}\n"
             f"        {drop_trigger.to_metta()}\n"
+            f'        "You do not have that item"\n'
             f"    )\n"
             f")"
         )
