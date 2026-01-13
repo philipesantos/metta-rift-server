@@ -73,43 +73,43 @@ def main():
 def build_world():
     character_player = CharacterFactDefinition(key="player", name="John")
 
-    location_glade = LocationFactDefinition(key="glade", desc="You are in the Glade.")
-    location_cave = LocationFactDefinition(key="cave", desc="You are in the cave.")
-    location_boat = LocationFactDefinition(key="boat", desc="You are in the boat.")
-    location_plane = LocationFactDefinition(key="plane", desc="You are in the plane.")
-    location_cabin = LocationFactDefinition(key="cabin", desc="You are in the cabin.")
+    location_glade = LocationFactDefinition(key="glade", text_move_to="You are in the Glade.")
+    location_cave = LocationFactDefinition(key="cave", text_move_to="You are in the cave.")
+    location_boat = LocationFactDefinition(key="boat", text_move_to="You are in the boat.")
+    location_plane = LocationFactDefinition(key="plane", text_move_to="You are in the plane.")
+    location_cabin = LocationFactDefinition(key="cabin", text_move_to="You are in the cabin.")
     location_camping_site = LocationFactDefinition(
-        key="camping_site", desc="You are in the camping site."
+        key="camping_site", text_move_to="You are in the camping site."
     )
     location_monolith = LocationFactDefinition(
-        key="monolith", desc="You are in the monolith."
+        key="monolith", text_move_to="You are in the monolith."
     )
     location_path_1 = LocationFactDefinition(
-        key="path_1", desc="You are in the path 1."
+        key="path_1", text_move_to="You are in the path 1."
     )
     location_path_2 = LocationFactDefinition(
-        key="path_2", desc="You are in the path 2."
+        key="path_2", text_move_to="You are in the path 2."
     )
     location_path_3 = LocationFactDefinition(
-        key="path_3", desc="You are in the path 3."
+        key="path_3", text_move_to="You are in the path 3."
     )
     location_path_4 = LocationFactDefinition(
-        key="path_4", desc="You are in the path 4."
+        key="path_4", text_move_to="You are in the path 4."
     )
     location_path_5 = LocationFactDefinition(
-        key="path_5", desc="You are in the path 5."
+        key="path_5", text_move_to="You are in the path 5."
     )
     location_path_6 = LocationFactDefinition(
-        key="path_6", desc="You are in the path 6."
+        key="path_6", text_move_to="You are in the path 6."
     )
     location_path_7 = LocationFactDefinition(
-        key="path_7", desc="You are in the path 7."
+        key="path_7", text_move_to="You are in the path 7."
     )
     location_path_8 = LocationFactDefinition(
-        key="path_8", desc="You are in the path 8."
+        key="path_8", text_move_to="You are in the path 8."
     )
     location_path_9 = LocationFactDefinition(
-        key="path_9", desc="You are in the path 9."
+        key="path_9", text_move_to="You are in the path 9."
     )
 
     world = World()
