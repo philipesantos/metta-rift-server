@@ -195,7 +195,7 @@ def build_world():
 
     world.add_definition(StateWrapperDefinition(TickFactPattern("1")))
 
-    CompassModule(location_glade.key).apply(world)
+    CompassModule(character_player.to_pattern(), location_glade.key).apply(world)
 
     return world
 
