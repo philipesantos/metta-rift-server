@@ -45,9 +45,11 @@ from core.definitions.functions.trigger_function_definition import (
 )
 from core.definitions.side_effects.on_drop_update_at import OnDropUpdateAt
 from core.definitions.side_effects.on_event_print import OnEventPrint
+from core.definitions.side_effects.on_move_show_items import OnMoveShowItems
 from core.definitions.side_effects.on_move_update_at import OnMoveUpdateAt
 from core.definitions.side_effects.on_move_update_tick import OnMoveUpdateTick
 from core.definitions.side_effects.on_pickup_update_at import OnPickUpUpdateAt
+from core.definitions.side_effects.on_startup_show_items import OnStartupShowItems
 from modules.compass.compass_module import CompassModule
 from utils.direction import Direction
 from core.patterns.events.startup_event_pattern import StartupEventPattern
@@ -142,7 +144,11 @@ def build_world():
     world.add_definition(
         TriggerFunctionDefinition(
             MoveEventPattern("$from", "$to"),
-            [OnMoveUpdateAt(character_player.to_pattern()), OnMoveUpdateTick()],
+            [
+                OnMoveUpdateAt(character_player.to_pattern()),
+                OnMoveUpdateTick(),
+                OnMoveShowItems(),
+            ],
         )
     )
     world.add_definition(
@@ -160,7 +166,10 @@ def build_world():
     world.add_definition(
         TriggerFunctionDefinition(
             StartupEventPattern(),
-            [OnEventPrint("You awaken in a glade.")],
+            [
+                OnEventPrint("You awaken in a glade."),
+                OnStartupShowItems(character_player.to_pattern()),
+            ],
         )
     )
 
