@@ -51,6 +51,7 @@ from core.definitions.side_effects.on_move_update_tick import OnMoveUpdateTick
 from core.definitions.side_effects.on_pickup_update_at import OnPickUpUpdateAt
 from core.definitions.side_effects.on_startup_show_items import OnStartupShowItems
 from modules.compass.compass_module import CompassModule
+from modules.cave_entrance.cave_entrance_module import CaveEntranceModule
 from utils.direction import Direction
 from core.patterns.events.startup_event_pattern import StartupEventPattern
 
@@ -215,6 +216,7 @@ def build_world():
     world.add_definition(StateWrapperDefinition(TickFactPattern("1")))
 
     CompassModule(character_player.to_pattern(), location_glade.key).apply(world)
+    CaveEntranceModule(location_path_2.key).apply(world)
 
     return world
 
