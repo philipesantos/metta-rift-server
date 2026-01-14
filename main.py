@@ -6,6 +6,7 @@ from core.definitions.facts.route_fact_definition import RouteFactDefinition
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.events.drop_event_pattern import DropEventPattern
 from core.patterns.events.pickup_event_pattern import PickUpEventPattern
+from core.patterns.events.use_event_pattern import UseEventPattern
 from core.patterns.facts.at_fact_pattern import AtFactPattern
 from core.patterns.facts.tick_fact_pattern import TickFactPattern
 from core.patterns.functions.synchronize_tick_function_pattern import (
@@ -51,6 +52,7 @@ from core.definitions.side_effects.on_move_update_at import OnMoveUpdateAt
 from core.definitions.side_effects.on_move_update_tick import OnMoveUpdateTick
 from core.definitions.side_effects.on_pickup_update_at import OnPickUpUpdateAt
 from core.definitions.side_effects.on_startup_show_items import OnStartupShowItems
+from core.definitions.side_effects.on_use_do_nothing import OnUseDoNothing
 from modules.compass.compass_module import CompassModule
 from modules.cave_entrance.cave_entrance_module import CaveEntranceModule
 from utils.direction import Direction
@@ -168,6 +170,12 @@ def build_world():
     )
     world.add_definition(
         TriggerFunctionDefinition(
+            UseEventPattern("$what", "$with_what"),
+            [OnUseDoNothing()],
+        )
+    )
+    world.add_definition(
+        TriggerFunctionDefinition(
             StartupEventPattern(),
             [
                 OnEventPrint("You awaken in a glade."),
@@ -218,7 +226,7 @@ def build_world():
     world.add_definition(StateWrapperDefinition(TickFactPattern("1")))
 
     CompassModule(character_player.to_pattern(), location_glade.key).apply(world)
-    CaveEntranceModule(location_path_2.key).apply(world)
+    CaveEntranceModule(location_path_2.key, location_cave.key).apply(world)
 
     return world
 
