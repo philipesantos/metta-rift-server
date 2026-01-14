@@ -40,6 +40,7 @@ from core.definitions.functions.drop_function_definition import DropFunctionDefi
 from core.definitions.functions.synchronize_tick_function_definition import (
     SynchronizeTickFunctionDefinition,
 )
+from core.definitions.functions.use_function_definition import UseFunctionDefinition
 from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
@@ -140,6 +141,7 @@ def build_world():
     world.add_definition(MoveTowardsFunctionDefinition(character_player.to_pattern()))
     world.add_definition(PickUpFunctionDefinition(character_player.to_pattern()))
     world.add_definition(DropFunctionDefinition(character_player.to_pattern()))
+    world.add_definition(UseFunctionDefinition(character_player.to_pattern()))
     world.add_definition(SynchronizeTickFunctionDefinition())
 
     world.add_definition(
