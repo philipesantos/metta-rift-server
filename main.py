@@ -11,6 +11,7 @@ from core.patterns.facts.tick_fact_pattern import TickFactPattern
 from core.patterns.functions.synchronize_tick_function_pattern import (
     SynchronizeTickFunctionPattern,
 )
+from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
 from core.world import World
 from core.patterns.events.move_event_pattern import MoveEventPattern
 from core.definitions.functions.exists_function_definition import (
@@ -43,11 +44,13 @@ from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
 from core.definitions.side_effects.on_drop_update_at import OnDropUpdateAt
+from core.definitions.side_effects.on_event_print import OnEventPrint
 from core.definitions.side_effects.on_move_update_at import OnMoveUpdateAt
 from core.definitions.side_effects.on_move_update_tick import OnMoveUpdateTick
 from core.definitions.side_effects.on_pickup_update_at import OnPickUpUpdateAt
 from modules.compass.compass_module import CompassModule
 from utils.direction import Direction
+from core.patterns.events.startup_event_pattern import StartupEventPattern
 
 
 def main():
@@ -56,6 +59,7 @@ def main():
 
     print(metta_code)
     print(metta.run(metta_code))
+    print(metta.run(f"!{TriggerFunctionPattern(StartupEventPattern()).to_metta()}"))
 
     print("\n--- MeTTa Console ---")
     print("Type 'exit' to quit.")
@@ -151,6 +155,12 @@ def build_world():
         TriggerFunctionDefinition(
             DropEventPattern("$what", "$where"),
             [OnDropUpdateAt(character_player.to_pattern())],
+        )
+    )
+    world.add_definition(
+        TriggerFunctionDefinition(
+            StartupEventPattern(),
+            [OnEventPrint("You awaken in a glade.")],
         )
     )
 
