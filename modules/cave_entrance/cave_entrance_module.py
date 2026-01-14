@@ -1,5 +1,7 @@
 from core.definitions.facts.item_fact_definition import ItemFactDefinition
-from core.definitions.functions.trigger_function_definition import TriggerFunctionDefinition
+from core.definitions.functions.trigger_function_definition import (
+    TriggerFunctionDefinition,
+)
 from core.definitions.side_effects.on_event_print import OnEventPrint
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.events.use_event_pattern import UseEventPattern

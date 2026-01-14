@@ -36,7 +36,9 @@ class TestUseFunctionDefinition(unittest.TestCase):
             StateWrapperDefinition(AtFactPattern(character.key, "glade")).to_metta()
         )
         metta.run(
-            StateWrapperDefinition(AtFactPattern("crescent_rock", character.key)).to_metta()
+            StateWrapperDefinition(
+                AtFactPattern("crescent_rock", character.key)
+            ).to_metta()
         )
         metta.run(
             StateWrapperDefinition(AtFactPattern("cave_door", "glade")).to_metta()
@@ -77,7 +79,9 @@ class TestUseFunctionDefinition(unittest.TestCase):
             StateWrapperDefinition(AtFactPattern(character.key, "glade")).to_metta()
         )
         metta.run(
-            StateWrapperDefinition(AtFactPattern("crescent_rock", character.key)).to_metta()
+            StateWrapperDefinition(
+                AtFactPattern("crescent_rock", character.key)
+            ).to_metta()
         )
 
         use_action = UseFunctionPattern("crescent_rock", "cave_door")
