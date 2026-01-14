@@ -14,7 +14,9 @@ class CompassModuleOnMovePrintDirections(SideEffectDefinition):
         self.character = character
 
     def to_metta(self, event: MoveEventPattern) -> str:
-        state_at_compass = StateWrapperPattern(AtFactPattern("compass", self.character.key))
+        state_at_compass = StateWrapperPattern(
+            AtFactPattern("compass", self.character.key)
+        )
         directions = CompassDirectionsFunctionPattern("$to")
         # fmt: off
         return (

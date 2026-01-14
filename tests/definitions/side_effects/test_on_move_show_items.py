@@ -18,9 +18,7 @@ class TestOnMoveShowItems(unittest.TestCase):
         metta = get_test_metta()
 
         metta.run(ItemFactDefinition("coin", "picked", "dropped").to_metta())
-        metta.run(
-            StateWrapperDefinition(AtFactPattern("coin", "glade")).to_metta()
-        )
+        metta.run(StateWrapperDefinition(AtFactPattern("coin", "glade")).to_metta())
         metta.run(
             TriggerFunctionDefinition(
                 MoveEventPattern("$from", "$to"), [OnMoveShowItems()]

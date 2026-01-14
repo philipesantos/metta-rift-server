@@ -73,7 +73,9 @@ class TestPickUpFunctionDefinition(unittest.TestCase):
 
         metta.run(LocationFactDefinition("glade", "A quiet glade.").to_metta())
         metta.run(LocationFactDefinition("cave", "A dark cave.").to_metta())
-        metta.run(StateWrapperDefinition(AtFactPattern(character.key, "cave")).to_metta())
+        metta.run(
+            StateWrapperDefinition(AtFactPattern(character.key, "cave")).to_metta()
+        )
         metta.run(StateWrapperDefinition(AtFactPattern("coin", "chest")).to_metta())
         metta.run(StateWrapperDefinition(AtFactPattern("chest", "glade")).to_metta())
 

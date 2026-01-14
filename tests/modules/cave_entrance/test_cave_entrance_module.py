@@ -50,7 +50,9 @@ class TestCaveEntranceModule(unittest.TestCase):
             StateWrapperDefinition(AtFactPattern(character.key, "cave")).to_metta()
         )
         metta.run(
-            StateWrapperDefinition(AtFactPattern("crescent_rock", character.key)).to_metta()
+            StateWrapperDefinition(
+                AtFactPattern("crescent_rock", character.key)
+            ).to_metta()
         )
 
         use_action = UseFunctionPattern("crescent_rock", "cave_door")

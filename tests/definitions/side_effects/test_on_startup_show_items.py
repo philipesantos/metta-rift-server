@@ -24,9 +24,7 @@ class TestOnStartupShowItems(unittest.TestCase):
         metta.run(
             StateWrapperDefinition(AtFactPattern(character.key, "glade")).to_metta()
         )
-        metta.run(
-            StateWrapperDefinition(AtFactPattern("coin", "glade")).to_metta()
-        )
+        metta.run(StateWrapperDefinition(AtFactPattern("coin", "glade")).to_metta())
         metta.run(
             TriggerFunctionDefinition(
                 StartupEventPattern(), [OnStartupShowItems(character)]
