@@ -9,6 +9,7 @@ from core.patterns.functions.location_path_function_pattern import (
 )
 from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
 from core.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
+from core.nlp.nl_spec import NLSpec, SlotSpec
 
 
 class DropFunctionDefinition(FunctionDefinition):
@@ -32,3 +33,11 @@ class DropFunctionDefinition(FunctionDefinition):
             f")"
         )
         # fmt: on
+
+    def nl_spec(self):
+        return NLSpec(
+            intent="drop",
+            templates=("drop {item}", "leave {item}"),
+            metta="(drop ({item}))",
+            slots={"item": SlotSpec("item")},
+        )

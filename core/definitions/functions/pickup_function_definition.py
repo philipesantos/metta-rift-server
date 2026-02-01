@@ -9,6 +9,7 @@ from core.patterns.functions.location_path_function_pattern import (
 )
 from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
 from core.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
+from core.nlp.nl_spec import NLSpec, SlotSpec
 
 
 class PickUpFunctionDefinition(FunctionDefinition):
@@ -40,3 +41,11 @@ class PickUpFunctionDefinition(FunctionDefinition):
             f")"
         )
         # fmt: on
+
+    def nl_spec(self):
+        return NLSpec(
+            intent="pickup",
+            templates=("pickup {item}", "pick up {item}", "grab {item}"),
+            metta="(pickup ({item}))",
+            slots={"item": SlotSpec("item")},
+        )

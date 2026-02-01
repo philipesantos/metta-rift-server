@@ -1,5 +1,6 @@
 from core.definitions.function_definition import FunctionDefinition
 from core.patterns.facts.character_fact_pattern import CharacterFactPattern
+from core.nlp.nl_spec import NLSpec
 
 
 class InventoryFunctionPattern(FunctionDefinition):
@@ -16,3 +17,11 @@ class InventoryFunctionPattern(FunctionDefinition):
             f")"
         )
         # fmt: on
+
+    def nl_spec(self):
+        return NLSpec(
+            intent="inventory",
+            templates=("inventory", "show inventory", "what do i have"),
+            metta="(inventory)",
+            slots={},
+        )
