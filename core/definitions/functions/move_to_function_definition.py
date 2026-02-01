@@ -6,6 +6,7 @@ from core.patterns.functions.exists_function_pattern import ExistsFunctionPatter
 from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
 from core.patterns.wrappers.log_wrapper_pattern import LogWrapperPattern
 from core.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
+from core.nlp.nl_spec import NLSpec, SlotSpec
 
 
 class MoveToFunctionDefinition(FunctionDefinition):
@@ -28,3 +29,11 @@ class MoveToFunctionDefinition(FunctionDefinition):
             f")"
         )
         # fmt: on
+
+    def nl_spec(self):
+        return NLSpec(
+            intent="move_to",
+            templates=("go to {location}", "move to {location}", "walk to {location}"),
+            metta="(move-to ({location}))",
+            slots={"location": SlotSpec("location")},
+        )

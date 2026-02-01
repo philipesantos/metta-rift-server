@@ -57,15 +57,24 @@ from modules.compass.compass_module import CompassModule
 from modules.cave_entrance.cave_entrance_module import CaveEntranceModule
 from utils.direction import Direction
 from core.patterns.events.startup_event_pattern import StartupEventPattern
+from core.nlp import EmbeddingIndex, build_command_catalog
 
 
 def main():
     metta = MeTTa()
-    metta_code = build_world().to_metta()
+    world = build_world()
+    metta_code = world.to_metta()
+    command_catalog = build_command_catalog(world)
+    embedding_index = EmbeddingIndex(
+        command_catalog, model_name="BAAI/bge-small-en-v1.5"
+    )
 
     print(metta_code)
     print(metta.run(metta_code))
     print(metta.run(f"!{TriggerFunctionPattern(StartupEventPattern()).to_metta()}"))
+    print(f"\n--- Command Catalog ({len(command_catalog)}) ---")
+    for entry in command_catalog:
+        print(f"{entry.utterance} -> {entry.metta}")
 
     print("\n--- MeTTa Console ---")
     print("Type 'exit' to quit.")
@@ -76,7 +85,18 @@ def main():
         if user_query.strip().lower() in ("exit", "quit"):
             break
 
-        print(metta.run(user_query))
+        stripped = user_query.strip()
+        if stripped.startswith("!") or stripped.startswith("("):
+            metta_query = stripped
+        else:
+            match = embedding_index.match(stripped)
+            if match is None:
+                print("No commands available.")
+                continue
+            print(f"[NL] {stripped} -> {match.entry.metta} ({match.score:.3f})")
+            metta_query = f"!{match.entry.metta}"
+
+        print(metta.run(metta_query))
         print(metta.run(f"!{SynchronizeTickFunctionPattern().to_metta()}"))
 
 

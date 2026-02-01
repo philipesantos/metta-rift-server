@@ -5,6 +5,7 @@ from core.patterns.events.move_event_pattern import MoveEventPattern
 from core.definitions.function_definition import FunctionDefinition
 from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
 from core.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
+from core.nlp.nl_spec import NLSpec, SlotSpec
 
 
 class MoveTowardsFunctionDefinition(FunctionDefinition):
@@ -28,3 +29,11 @@ class MoveTowardsFunctionDefinition(FunctionDefinition):
             f")"
         )
         # fmt: on
+
+    def nl_spec(self):
+        return NLSpec(
+            intent="move_towards",
+            templates=("go {direction}", "move {direction}", "head {direction}"),
+            metta="(move-towards ({direction}))",
+            slots={"direction": SlotSpec("direction")},
+        )

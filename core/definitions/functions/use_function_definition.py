@@ -5,6 +5,7 @@ from core.patterns.facts.character_fact_pattern import CharacterFactPattern
 from core.patterns.functions.exists_function_pattern import ExistsFunctionPattern
 from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
 from core.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
+from core.nlp.nl_spec import NLSpec, SlotSpec
 
 
 class UseFunctionDefinition(FunctionDefinition):
@@ -34,3 +35,14 @@ class UseFunctionDefinition(FunctionDefinition):
             f")"
         )
         # fmt: on
+
+    def nl_spec(self):
+        return NLSpec(
+            intent="use",
+            templates=(
+                "use {item} on {target}",
+                "use {item} with {target}",
+            ),
+            metta="(use ({item} {target}))",
+            slots={"item": SlotSpec("item"), "target": SlotSpec("item")},
+        )
