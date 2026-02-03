@@ -5,11 +5,15 @@ from core.definitions.facts.location_fact_definition import LocationFactDefiniti
 from core.definitions.functions.inventory_function_definition import (
     InventoryFunctionPattern,
 )
-from core.definitions.functions.move_to_function_definition import MoveToFunctionDefinition
+from core.definitions.functions.move_to_function_definition import (
+    MoveToFunctionDefinition,
+)
 from core.definitions.functions.move_towards_function_definition import (
     MoveTowardsFunctionDefinition,
 )
-from core.definitions.functions.pickup_function_definition import PickUpFunctionDefinition
+from core.definitions.functions.pickup_function_definition import (
+    PickUpFunctionDefinition,
+)
 from core.definitions.functions.use_function_definition import UseFunctionDefinition
 from core.nlp import build_command_catalog
 from core.patterns.facts.character_fact_pattern import CharacterFactPattern

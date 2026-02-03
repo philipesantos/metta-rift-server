@@ -28,7 +28,9 @@ class _FakeAtom:
 class TestResponseParser(unittest.TestCase):
     def test_parse_response_atom_from_string(self):
         response = parse_response_atom('(Response 42 "Hello")')
-        self.assertEqual(response, ResponseText(priority=42, text="Hello", raw='"Hello"'))
+        self.assertEqual(
+            response, ResponseText(priority=42, text="Hello", raw='"Hello"')
+        )
 
     def test_parse_response_atom_from_children(self):
         response_atom = _FakeAtom(
@@ -39,7 +41,9 @@ class TestResponseParser(unittest.TestCase):
             ]
         )
         response = parse_response_atom(response_atom)
-        self.assertEqual(response, ResponseText(priority=7, text="Hi there", raw="Hi there"))
+        self.assertEqual(
+            response, ResponseText(priority=7, text="Hi there", raw="Hi there")
+        )
 
 
 if __name__ == "__main__":

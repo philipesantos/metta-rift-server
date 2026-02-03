@@ -26,7 +26,9 @@ def _humanize_key(value: str) -> str:
 
 
 def _resolve_items(world) -> list[SlotValue]:
-    keys = sorted({d.key for d in world.definitions if isinstance(d, ItemFactDefinition)})
+    keys = sorted(
+        {d.key for d in world.definitions if isinstance(d, ItemFactDefinition)}
+    )
     return [SlotValue(key=k, text=_humanize_key(k)) for k in keys]
 
 
