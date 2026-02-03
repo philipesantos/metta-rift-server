@@ -154,6 +154,7 @@ from core.definitions.functions.drop_function_definition import DropFunctionDefi
 from core.definitions.functions.synchronize_tick_function_definition import (
     SynchronizeTickFunctionDefinition,
 )
+from core.definitions.functions.text_function_definition import TextFunctionDefinition
 from core.definitions.functions.use_function_definition import UseFunctionDefinition
 from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
@@ -274,6 +275,7 @@ def build_world():
     world.add_definition(ExistsFunctionDefinition())
     world.add_definition(FirstFunctionDefinition())
     world.add_definition(LastFunctionDefinition())
+    world.add_definition(TextFunctionDefinition())
     world.add_definition(LocationPathFunctionDefinition())
     world.add_definition(InventoryFunctionDefinition(character_player.to_pattern()))
     world.add_definition(MoveToFunctionDefinition(character_player.to_pattern()))

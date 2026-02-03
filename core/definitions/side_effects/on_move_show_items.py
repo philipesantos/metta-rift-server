@@ -18,7 +18,7 @@ class OnMoveShowItems(SideEffectDefinition):
             f"    (case $result\n"
             f"    (\n"
             f"        (() Empty)\n"
-            f"        ($_ {ResponseFactPattern(20, '("You see: " $result)').to_metta()})\n"
+            f"        ($_ {ResponseFactPattern(20, '(Text \"You see: \" $result)').to_metta()})\n"
             f"    ))\n"
             f")"
         )
