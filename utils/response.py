@@ -195,3 +195,111 @@ def _split_first_token(text: str) -> tuple[str, str]:
     while index < length and not text[index].isspace() and text[index] != ")":
         index += 1
     return text[start:index], text[index:].strip()
+
+
+def format_metta_output(output: Any) -> str:
+    if isinstance(output, str):
+        atoms = _find_response_atoms(output)
+        if not atoms:
+            return output
+        responses: list[ResponseText] = []
+        for atom in atoms:
+            response = parse_response_atom(atom)
+            if response and response.text:
+                responses.append(response)
+        responses.sort(key=lambda item: (-item.priority, item.text))
+        return "\n".join(item.text for item in responses)
+
+    responses: list[ResponseText] = []
+    for atom in _iter_metta_atoms(output):
+        response = parse_response_atom(atom)
+        if response and response.text:
+            responses.append(response)
+    if not responses:
+        return str(output)
+    responses.sort(key=lambda item: (-item.priority, item.text))
+    return "\n".join(item.text for item in responses)
+
+
+def _find_response_atoms(output: str) -> list[str]:
+    atoms = []
+    index = 0
+    length = len(output)
+    in_string = False
+    escape = False
+
+    while index < length:
+        char = output[index]
+        if in_string:
+            if escape:
+                escape = False
+            elif char == "\\":
+                escape = True
+            elif char == '"':
+                in_string = False
+            index += 1
+            continue
+
+        if char == '"':
+            in_string = True
+            index += 1
+            continue
+
+        if output.startswith("(Response", index):
+            atom, next_index = _extract_sexpr(output, index)
+            if atom:
+                atoms.append(atom)
+                index = next_index
+                continue
+
+        index += 1
+
+    return atoms
+
+
+def _extract_sexpr(text: str, start_index: int) -> tuple[str | None, int]:
+    depth = 0
+    index = start_index
+    length = len(text)
+    in_string = False
+    escape = False
+
+    while index < length:
+        char = text[index]
+        if in_string:
+            if escape:
+                escape = False
+            elif char == "\\":
+                escape = True
+            elif char == '"':
+                in_string = False
+            index += 1
+            continue
+
+        if char == '"':
+            in_string = True
+            index += 1
+            continue
+
+        if char == "(":
+            depth += 1
+        elif char == ")":
+            depth -= 1
+            if depth == 0:
+                return text[start_index : index + 1], index + 1
+
+        index += 1
+
+    return None, start_index
+
+
+def _iter_metta_atoms(output: Any):
+    if isinstance(output, list):
+        for row in output:
+            if isinstance(row, list):
+                for atom in row:
+                    yield atom
+            else:
+                yield row
+        return
+    yield output
