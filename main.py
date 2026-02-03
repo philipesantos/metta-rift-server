@@ -1,5 +1,64 @@
 from hyperon import MeTTa
 from utils.response import ResponseText, parse_response_atom
+from core.definitions.facts.character_fact_definition import CharacterFactDefinition
+from core.definitions.facts.location_fact_definition import LocationFactDefinition
+from core.definitions.facts.route_fact_definition import RouteFactDefinition
+from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
+from core.patterns.events.drop_event_pattern import DropEventPattern
+from core.patterns.events.pickup_event_pattern import PickUpEventPattern
+from core.patterns.events.use_event_pattern import UseEventPattern
+from core.patterns.facts.at_fact_pattern import AtFactPattern
+from core.patterns.facts.tick_fact_pattern import TickFactPattern
+from core.patterns.functions.synchronize_tick_function_pattern import (
+    SynchronizeTickFunctionPattern,
+)
+from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
+from core.world import World
+from core.patterns.events.move_event_pattern import MoveEventPattern
+from core.definitions.functions.exists_function_definition import (
+    ExistsFunctionDefinition,
+)
+from core.definitions.functions.first_function_definition import (
+    FirstFunctionDefinition,
+)
+from core.definitions.functions.last_function_definition import LastFunctionDefinition
+from core.definitions.functions.inventory_function_definition import (
+    InventoryFunctionPattern as InventoryFunctionDefinition,
+)
+from core.definitions.functions.location_path_function_definition import (
+    LocationPathFunctionDefinition,
+)
+from core.definitions.functions.move_to_function_definition import (
+    MoveToFunctionDefinition,
+)
+from core.definitions.functions.move_towards_function_definition import (
+    MoveTowardsFunctionDefinition,
+)
+from core.definitions.functions.pickup_function_definition import (
+    PickUpFunctionDefinition,
+)
+from core.definitions.functions.drop_function_definition import DropFunctionDefinition
+from core.definitions.functions.synchronize_tick_function_definition import (
+    SynchronizeTickFunctionDefinition,
+)
+from core.definitions.functions.text_function_definition import TextFunctionDefinition
+from core.definitions.functions.use_function_definition import UseFunctionDefinition
+from core.definitions.functions.trigger_function_definition import (
+    TriggerFunctionDefinition,
+)
+from core.definitions.side_effects.on_drop_update_at import OnDropUpdateAt
+from core.definitions.side_effects.on_event_print import OnEventPrint
+from core.definitions.side_effects.on_move_show_items import OnMoveShowItems
+from core.definitions.side_effects.on_move_update_at import OnMoveUpdateAt
+from core.definitions.side_effects.on_move_update_tick import OnMoveUpdateTick
+from core.definitions.side_effects.on_pickup_update_at import OnPickUpUpdateAt
+from core.definitions.side_effects.on_startup_show_items import OnStartupShowItems
+from core.definitions.side_effects.on_use_do_nothing import OnUseDoNothing
+from modules.compass.compass_module import CompassModule
+from modules.cave_entrance.cave_entrance_module import CaveEntranceModule
+from utils.direction import Direction
+from core.patterns.events.startup_event_pattern import StartupEventPattern
+from core.nlp import EmbeddingIndex, build_command_catalog
 
 
 def _find_response_atoms(output: str) -> list[str]:
@@ -112,66 +171,6 @@ def _iter_metta_atoms(output):
                 yield row
         return
     yield output
-
-from core.definitions.facts.character_fact_definition import CharacterFactDefinition
-from core.definitions.facts.location_fact_definition import LocationFactDefinition
-from core.definitions.facts.route_fact_definition import RouteFactDefinition
-from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
-from core.patterns.events.drop_event_pattern import DropEventPattern
-from core.patterns.events.pickup_event_pattern import PickUpEventPattern
-from core.patterns.events.use_event_pattern import UseEventPattern
-from core.patterns.facts.at_fact_pattern import AtFactPattern
-from core.patterns.facts.tick_fact_pattern import TickFactPattern
-from core.patterns.functions.synchronize_tick_function_pattern import (
-    SynchronizeTickFunctionPattern,
-)
-from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
-from core.world import World
-from core.patterns.events.move_event_pattern import MoveEventPattern
-from core.definitions.functions.exists_function_definition import (
-    ExistsFunctionDefinition,
-)
-from core.definitions.functions.first_function_definition import (
-    FirstFunctionDefinition,
-)
-from core.definitions.functions.last_function_definition import LastFunctionDefinition
-from core.definitions.functions.inventory_function_definition import (
-    InventoryFunctionPattern as InventoryFunctionDefinition,
-)
-from core.definitions.functions.location_path_function_definition import (
-    LocationPathFunctionDefinition,
-)
-from core.definitions.functions.move_to_function_definition import (
-    MoveToFunctionDefinition,
-)
-from core.definitions.functions.move_towards_function_definition import (
-    MoveTowardsFunctionDefinition,
-)
-from core.definitions.functions.pickup_function_definition import (
-    PickUpFunctionDefinition,
-)
-from core.definitions.functions.drop_function_definition import DropFunctionDefinition
-from core.definitions.functions.synchronize_tick_function_definition import (
-    SynchronizeTickFunctionDefinition,
-)
-from core.definitions.functions.text_function_definition import TextFunctionDefinition
-from core.definitions.functions.use_function_definition import UseFunctionDefinition
-from core.definitions.functions.trigger_function_definition import (
-    TriggerFunctionDefinition,
-)
-from core.definitions.side_effects.on_drop_update_at import OnDropUpdateAt
-from core.definitions.side_effects.on_event_print import OnEventPrint
-from core.definitions.side_effects.on_move_show_items import OnMoveShowItems
-from core.definitions.side_effects.on_move_update_at import OnMoveUpdateAt
-from core.definitions.side_effects.on_move_update_tick import OnMoveUpdateTick
-from core.definitions.side_effects.on_pickup_update_at import OnPickUpUpdateAt
-from core.definitions.side_effects.on_startup_show_items import OnStartupShowItems
-from core.definitions.side_effects.on_use_do_nothing import OnUseDoNothing
-from modules.compass.compass_module import CompassModule
-from modules.cave_entrance.cave_entrance_module import CaveEntranceModule
-from utils.direction import Direction
-from core.patterns.events.startup_event_pattern import StartupEventPattern
-from core.nlp import EmbeddingIndex, build_command_catalog
 
 
 def main():
