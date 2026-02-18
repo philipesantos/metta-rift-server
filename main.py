@@ -23,10 +23,10 @@ def main():
     startup_output = metta.run(
         f"!{TriggerFunctionPattern(StartupEventPattern()).to_metta()}"
     )
-    print(format_metta_output(startup_output))
     print(f"\n--- Command Catalog ({len(command_catalog)}) ---")
     for entry in command_catalog:
         print(f"{entry.utterance} -> {entry.metta}")
+    print(format_metta_output(startup_output))
 
     print("\n--- MeTTa Console ---")
     print("Type 'exit' to quit.")

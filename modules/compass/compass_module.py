@@ -1,4 +1,6 @@
 from core.definitions.facts.item_fact_definition import ItemFactDefinition
+from core.definitions.facts.route_block_fact_definition import RouteBlockFactDefinition
+from core.definitions.facts.route_fact_definition import RouteFactDefinition
 from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
@@ -16,6 +18,9 @@ from modules.compass.side_effects.compass_module_on_move_print_directions import
 )
 from modules.compass.side_effects.compass_module_on_pickup_print_directions import (
     CompassModuleOnPickupPrintDirections,
+)
+from modules.compass.side_effects.compass_module_on_pickup_remove_route_blocks import (
+    CompassModuleOnPickupRemoveRouteBlocks,
 )
 from modules.module import Module
 
@@ -45,6 +50,29 @@ class CompassModule(Module):
         world.add_definition(
             TriggerFunctionDefinition(
                 PickUpEventPattern(item_compass.key, "$where"),
-                [CompassModuleOnPickupPrintDirections(self.character)],
+                [
+                    CompassModuleOnPickupPrintDirections(self.character),
+                    CompassModuleOnPickupRemoveRouteBlocks(),
+                ],
             )
         )
+        self._add_route_blocks_for_compass_location(world)
+
+    def _add_route_blocks_for_compass_location(self, world: World) -> None:
+        route_block_reason = "You hesitate. This isn’t a place to wander blindly."
+        destinations: set[str] = set()
+        for definition in world.definitions:
+            if (
+                isinstance(definition, RouteFactDefinition)
+                and definition.location_from == self.compass_where
+            ):
+                destinations.add(definition.location_to)
+
+        for destination in destinations:
+            world.add_definition(
+                RouteBlockFactDefinition(
+                    self.compass_where,
+                    destination,
+                    route_block_reason,
+                )
+            )
