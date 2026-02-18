@@ -1,5 +1,6 @@
 from core.patterns.facts.at_fact_pattern import AtFactPattern
 from core.patterns.facts.character_fact_pattern import CharacterFactPattern
+from core.patterns.facts.route_block_fact_pattern import RouteBlockFactPattern
 from core.patterns.events.move_event_pattern import MoveEventPattern
 from core.definitions.function_definition import FunctionDefinition
 from core.patterns.facts.response_fact_pattern import ResponseFactPattern
@@ -16,16 +17,21 @@ class MoveToFunctionDefinition(FunctionDefinition):
 
     def to_metta(self) -> str:
         state_at_match = StateWrapperPattern(AtFactPattern(self.character.key, "$from"))
+        route_block_match = RouteBlockFactPattern("$from", "$to", "$reason")
         log_move_event_match = LogWrapperPattern("$tick", MoveEventPattern("$_", "$to"))
         move_event_trigger = MoveEventPattern("$from", "$to")
         # fmt: off
         return (
             f"(= (move-to ($to))\n"
             f"    (match &self {state_at_match.to_metta()}\n"
-            f"        (if {ExistsFunctionPattern(log_move_event_match).to_metta()}\n"
-            f"            {TriggerFunctionPattern(move_event_trigger).to_metta()}\n"
-            f"            {ResponseFactPattern(100, '"No way to go there"').to_metta()}\n"
-            f"        )\n"
+            f"        (case (match &self {route_block_match.to_metta()} $reason)\n"
+            f"        (\n"
+            f"            (Empty (if {ExistsFunctionPattern(log_move_event_match).to_metta()}\n"
+            f"                {TriggerFunctionPattern(move_event_trigger).to_metta()}\n"
+            f"                {ResponseFactPattern(100, '\"No way to go there\"').to_metta()}\n"
+            f"            ))\n"
+            f"            ($reason {ResponseFactPattern(100, '$reason').to_metta()})\n"
+            f"        ))\n"
             f"    )\n"
             f")"
         )

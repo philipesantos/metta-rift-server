@@ -6,3 +6,4 @@ class Type(Enum):
     LOCATION = "Location"
     ITEM = "Item"
     ROUTE = "Route"
+    ROUTE_BLOCK = "RouteBlock"

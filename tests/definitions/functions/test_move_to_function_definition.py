@@ -1,6 +1,7 @@
 import unittest
 
 from core.definitions.facts.route_fact_definition import RouteFactDefinition
+from core.definitions.facts.route_block_fact_definition import RouteBlockFactDefinition
 from core.definitions.wrappers.log_wrapper_definition import LogWrapperDefinition
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.facts.at_fact_pattern import AtFactPattern
@@ -52,6 +53,9 @@ class TestMoveToFunctionDefinition(unittest.TestCase):
         metta.run(
             RouteFactDefinition("cave", Direction.SOUTH.value, "plane").to_metta()
         )
+        metta.run(
+            RouteBlockFactDefinition("glade", "cave", "The road is blocked by rubble.").to_metta()
+        )
 
         metta.run(
             LogWrapperDefinition("0", MoveEventPattern("plane", "cave")).to_metta()
@@ -68,7 +72,10 @@ class TestMoveToFunctionDefinition(unittest.TestCase):
 
         move_to_cave = MoveToFunctionPattern("cave")
         result_move_to_cave = metta.run(f"!{move_to_cave.to_metta()}")
-        self.assertEqual(result_move_to_cave, [[]])
+        self.assertEqual(
+            unwrap_first_match(result_move_to_cave).text,
+            "The road is blocked by rubble.",
+        )
 
         move_to_plane = MoveToFunctionPattern("plane")
         result_move_to_plane = metta.run(f"!{move_to_plane.to_metta()}")

@@ -1,6 +1,7 @@
 import unittest
 
 from core.definitions.facts.at_fact_definition import AtFactDefinition
+from core.definitions.facts.route_block_fact_definition import RouteBlockFactDefinition
 from core.definitions.facts.route_fact_definition import RouteFactDefinition
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.facts.at_fact_pattern import AtFactPattern
@@ -50,6 +51,9 @@ class TestMoveTowardsFunctionDefinition(unittest.TestCase):
         metta.run(
             RouteFactDefinition("cave", Direction.SOUTH.value, "plane").to_metta()
         )
+        metta.run(
+            RouteBlockFactDefinition("glade", "beach", "A fallen tree blocks the path.").to_metta()
+        )
 
         metta.run(AtFactDefinition(character.key, "cave").to_metta())
         metta.run(AtFactDefinition(character.key, "beach").to_metta())
@@ -67,7 +71,10 @@ class TestMoveTowardsFunctionDefinition(unittest.TestCase):
 
         move_towards_south = MoveTowardsFunctionPattern(Direction.SOUTH)
         result_move_towards_south = metta.run(f"!{move_towards_south.to_metta()}")
-        self.assertEqual(result_move_towards_south, [[]])
+        self.assertEqual(
+            unwrap_first_match(result_move_towards_south).text,
+            "A fallen tree blocks the path.",
+        )
 
 
 if __name__ == "__main__":
