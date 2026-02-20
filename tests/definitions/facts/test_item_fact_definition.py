@@ -6,6 +6,7 @@ from core.patterns.events.examine_event_pattern import ExamineEventPattern
 from core.patterns.events.pickup_event_pattern import PickUpEventPattern
 from core.patterns.facts.item_fact_pattern import ItemFactPattern
 from core.patterns.facts.location_fact_pattern import LocationFactPattern
+from core.patterns.facts.pickupable_fact_pattern import PickupableFactPattern
 from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
 from tests.utils.metta import get_test_metta
 from tests.utils.utils import unwrap_first_match
@@ -30,6 +31,10 @@ class TestItemFactDefinition(unittest.TestCase):
         result_key = metta.run(f"!(match &self {item_key.to_metta()} $key)")
         self.assertEqual(unwrap_first_match(result_key), key)
 
+        pickupable_item = PickupableFactPattern("$key")
+        result_pickupable = metta.run(f"!(match &self {pickupable_item.to_metta()} $key)")
+        self.assertEqual(unwrap_first_match(result_pickupable), key)
+
         item_pickup_trigger = TriggerFunctionPattern(PickUpEventPattern(key, "glade"))
         result_pickup_trigger = metta.run(f"!{item_pickup_trigger.to_metta()}")
         self.assertEqual(unwrap_first_match(result_pickup_trigger).text, text_pickup)
@@ -45,6 +50,16 @@ class TestItemFactDefinition(unittest.TestCase):
         item_no_match = LocationFactPattern("bottle")
         result_no_match = metta.run(f"!(match &self {item_no_match.to_metta()} True)")
         self.assertEqual(result_no_match, [[]])
+
+    def test_to_metta_non_pickupable_item(self):
+        metta = get_test_metta()
+
+        key = "cave_door"
+        metta.run(ItemFactDefinition(key, "", "", "A carved door.", can_pickup=False).to_metta())
+
+        pickupable_item = PickupableFactPattern("$key")
+        result_pickupable = metta.run(f"!(match &self {pickupable_item.to_metta()} $key)")
+        self.assertEqual(result_pickupable, [[]])
 
 
 if __name__ == "__main__":

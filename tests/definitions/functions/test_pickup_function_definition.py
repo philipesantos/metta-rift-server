@@ -24,6 +24,7 @@ from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefin
 from core.patterns.events.pickup_event_pattern import PickUpEventPattern
 from core.patterns.facts.at_fact_pattern import AtFactPattern
 from core.patterns.facts.character_fact_pattern import CharacterFactPattern
+from core.patterns.facts.pickupable_fact_pattern import PickupableFactPattern
 from core.patterns.functions.pickup_function_pattern import PickUpFunctionPattern
 from tests.utils.metta import get_test_metta
 
@@ -58,6 +59,7 @@ class TestPickUpFunctionDefinition(unittest.TestCase):
         )
         metta.run(StateWrapperDefinition(AtFactPattern("coin", "chest")).to_metta())
         metta.run(StateWrapperDefinition(AtFactPattern("chest", "glade")).to_metta())
+        metta.run(PickupableFactPattern("coin").to_metta())
 
         pickup = PickUpFunctionPattern("coin")
         result_pickup = metta.run(f"!{pickup.to_metta()}")
@@ -84,6 +86,28 @@ class TestPickUpFunctionDefinition(unittest.TestCase):
         self.assertEqual(
             unwrap_first_match(result_pickup).text,
             "There is no such item",
+        )
+
+    def test_pickup_non_pickupable_item(self):
+        metta = get_test_metta()
+
+        character = CharacterFactPattern("player", "John")
+
+        self._register_pickup_functions(metta)
+        metta.run(PickUpFunctionDefinition(character).to_metta())
+
+        metta.run(LocationFactDefinition("glade", "A quiet glade.").to_metta())
+        metta.run(
+            StateWrapperDefinition(AtFactPattern(character.key, "glade")).to_metta()
+        )
+        metta.run(StateWrapperDefinition(AtFactPattern("coin", "chest")).to_metta())
+        metta.run(StateWrapperDefinition(AtFactPattern("chest", "glade")).to_metta())
+
+        pickup = PickUpFunctionPattern("coin")
+        result_pickup = metta.run(f"!{pickup.to_metta()}")
+        self.assertEqual(
+            unwrap_first_match(result_pickup).text,
+            "You cannot pick that up",
         )
 
 
