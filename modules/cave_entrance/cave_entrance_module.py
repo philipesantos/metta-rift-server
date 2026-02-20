@@ -27,6 +27,7 @@ class CaveEntranceModule(Module):
             text_pickup="",
             text_drop="",
             text_examine="A carved door with a crescent-shaped recess.",
+            can_pickup=False,
         )
         world.add_definition(crescent_rock)
         world.add_definition(cave_door)
