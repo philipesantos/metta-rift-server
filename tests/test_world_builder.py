@@ -4,6 +4,7 @@ from core.definitions.facts.item_fact_definition import ItemFactDefinition
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.events.look_in_event_pattern import LookInEventPattern
 from core.patterns.facts.at_fact_pattern import AtFactPattern
+from core.patterns.functions.move_towards_function_pattern import MoveTowardsFunctionPattern
 from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
 from core.patterns.functions.use_function_pattern import UseFunctionPattern
 from core.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
@@ -68,6 +69,27 @@ class TestWorldBuilder(unittest.TestCase):
             f"!(match &self {soil_state.to_metta()} {soil_state.to_metta()})"
         )
         self.assertEqual(soil_result, [[]])
+
+    def test_using_cabin_key_on_cabin_unlocks_path_to_cabin(self):
+        metta = get_test_metta()
+        metta.run(build_world().to_metta())
+
+        metta.run(StateWrapperDefinition(AtFactPattern("player", "path_5")).to_metta())
+        blocked_result = metta.run(f"!{MoveTowardsFunctionPattern('west').to_metta()}")
+        self.assertEqual(
+            unwrap_first_match(blocked_result).text,
+            "The cabin is locked. You need a key.",
+        )
+
+        metta.run(
+            StateWrapperDefinition(AtFactPattern("cabin_key", "player")).to_metta()
+        )
+        metta.run(f"!{UseFunctionPattern('cabin_key', 'cabin').to_metta()}")
+
+        metta.run(StateWrapperDefinition(AtFactPattern("player", "path_5")).to_metta())
+        unlocked_result = metta.run(f"!{MoveTowardsFunctionPattern('west').to_metta()}")
+        output_lines = format_metta_output(unlocked_result).splitlines()
+        self.assertIn("You are in the cabin.", output_lines)
 
 
 if __name__ == "__main__":

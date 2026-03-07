@@ -59,6 +59,7 @@ from core.patterns.events.look_in_event_pattern import LookInEventPattern
 from core.patterns.facts.at_fact_pattern import AtFactPattern
 from core.patterns.facts.tick_fact_pattern import TickFactPattern
 from core.world import World
+from modules.cabin.cabin_module import CabinModule
 from modules.compass.compass_module import CompassModule
 from modules.statues.statues_module import StatuesModule
 from utils.direction import Direction
@@ -413,22 +414,6 @@ def build_world() -> World:
         )
     )
 
-    cabin_key = ItemFactDefinition(
-        key="cabin_key",
-        name="Cabin key",
-        text_enter="You see a small metal key.",
-        text_examine="A small iron key with the word 'Cabin' faintly etched into its surface.",
-        text_look="Inside, a small metal key.",
-        text_drop="You drop the cabin key.",
-        text_pickup="You pick up the cabin key.",
-    )
-    world.add_definition(cabin_key)
-    world.add_definition(
-        StateWrapperDefinition(
-            AtFactPattern(cabin_key.key, seashell.key)
-        )
-    )
-
     lantern_oil = ItemFactDefinition(
         key="oil",
         name="Lantern oil",
@@ -447,6 +432,7 @@ def build_world() -> World:
     )
 
     CompassModule(character_player.to_pattern(), location_glade, unconscious_person.key).apply(world)
+    CabinModule(location_path_5, location_cabin, seashell).apply(world)
     StatuesModule(
         character_player.to_pattern(),
         location_path_1,
