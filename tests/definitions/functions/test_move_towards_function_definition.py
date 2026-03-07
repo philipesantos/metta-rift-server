@@ -52,7 +52,9 @@ class TestMoveTowardsFunctionDefinition(unittest.TestCase):
             RouteFactDefinition("cave", Direction.SOUTH.value, "plane").to_metta()
         )
         metta.run(
-            RouteBlockFactDefinition("glade", "beach", "A fallen tree blocks the path.").to_metta()
+            RouteBlockFactDefinition(
+                "glade", "beach", "A fallen tree blocks the path."
+            ).to_metta()
         )
 
         metta.run(AtFactDefinition(character.key, "cave").to_metta())

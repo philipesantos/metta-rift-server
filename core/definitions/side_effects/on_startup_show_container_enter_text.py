@@ -7,14 +7,20 @@ from core.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
 
 
 class OnStartupShowContainerEnterText(SideEffectDefinition):
-    def __init__(self, container_key: str, text_enter: str, character_key: str = "player"):
+    def __init__(
+        self, container_key: str, text_enter: str, character_key: str = "player"
+    ):
         self.container_key = container_key
         self.text_enter = text_enter
         self.character_key = character_key
 
     def to_metta(self, event: StartupEventPattern) -> str:
-        state_at_player = StateWrapperPattern(AtFactPattern(self.character_key, "$where"))
-        state_at_container = StateWrapperPattern(AtFactPattern(self.container_key, "$where"))
+        state_at_player = StateWrapperPattern(
+            AtFactPattern(self.character_key, "$where")
+        )
+        state_at_container = StateWrapperPattern(
+            AtFactPattern(self.container_key, "$where")
+        )
         return (
             f"(let $where (match &self {state_at_player.to_metta()} $where)\n"
             f"    (if {ExistsFunctionPattern(state_at_container).to_metta()}\n"

@@ -26,7 +26,8 @@ class TestCompassModule(unittest.TestCase):
             f"!(match &self {glade_to_cave.to_metta()} $reason)"
         )
         self.assertEqual(
-            unwrap_first_match(result_glade_to_cave), "You hesitate. This isn’t a place to wander blindly."
+            unwrap_first_match(result_glade_to_cave),
+            "You hesitate. This isn’t a place to wander blindly.",
         )
 
         glade_to_beach = RouteBlockFactPattern("glade", "beach", "$reason")
@@ -34,7 +35,8 @@ class TestCompassModule(unittest.TestCase):
             f"!(match &self {glade_to_beach.to_metta()} $reason)"
         )
         self.assertEqual(
-            unwrap_first_match(result_glade_to_beach), "You hesitate. This isn’t a place to wander blindly."
+            unwrap_first_match(result_glade_to_beach),
+            "You hesitate. This isn’t a place to wander blindly.",
         )
 
         cave_to_plane = RouteBlockFactPattern("cave", "plane", "$reason")

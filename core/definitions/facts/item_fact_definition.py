@@ -55,14 +55,14 @@ class ItemFactDefinition(FactDefinition):
         pickupable = (
             f"{PickupableFactPattern(self.key).to_metta()}\n" if self.can_pickup else ""
         )
-        item_name = f'({self.NAME_FACT} {self.key} {self._quote(self.name)})\n'
+        item_name = f"({self.NAME_FACT} {self.key} {self._quote(self.name)})\n"
         item_enter_text = (
-            f'({self.ENTER_TEXT_FACT} {self.key} {self._quote(self.text_enter)})\n'
+            f"({self.ENTER_TEXT_FACT} {self.key} {self._quote(self.text_enter)})\n"
             if self.text_enter is not None
             else ""
         )
         item_look_text = (
-            f'({self.LOOK_TEXT_FACT} {self.key} {self._quote(self.text_look)})\n'
+            f"({self.LOOK_TEXT_FACT} {self.key} {self._quote(self.text_look)})\n"
         )
         item_enter_priority = (
             f"({self.ENTER_PRIORITY_FACT} {self.key} {self.enter_priority})\n"
@@ -98,5 +98,5 @@ class ItemFactDefinition(FactDefinition):
 
     @staticmethod
     def _quote(text: str) -> str:
-        escaped = text.replace('\\', '\\\\').replace('"', '\\"')
+        escaped = text.replace("\\", "\\\\").replace('"', '\\"')
         return f'"{escaped}"'

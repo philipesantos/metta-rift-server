@@ -49,7 +49,9 @@ class TestItemFactDefinition(unittest.TestCase):
         self.assertEqual(unwrap_first_match(result_key), key)
 
         pickupable_item = PickupableFactPattern("$key")
-        result_pickupable = metta.run(f"!(match &self {pickupable_item.to_metta()} $key)")
+        result_pickupable = metta.run(
+            f"!(match &self {pickupable_item.to_metta()} $key)"
+        )
         self.assertEqual(unwrap_first_match(result_pickupable), key)
 
         item_pickup_trigger = TriggerFunctionPattern(PickUpEventPattern(key, "glade"))
@@ -64,7 +66,9 @@ class TestItemFactDefinition(unittest.TestCase):
         result_examine_trigger = metta.run(f"!{item_examine_trigger.to_metta()}")
         self.assertEqual(unwrap_first_match(result_examine_trigger).text, text_examine)
 
-        result_enter_text = metta.run(f"!(match &self (ItemEnterText {key} $text) $text)")
+        result_enter_text = metta.run(
+            f"!(match &self (ItemEnterText {key} $text) $text)"
+        )
         self.assertEqual(unwrap_first_match(result_enter_text), text_enter)
 
         result_look_text = metta.run(f"!(match &self (ItemLookText {key} $text) $text)")
@@ -91,10 +95,16 @@ class TestItemFactDefinition(unittest.TestCase):
         metta = get_test_metta()
 
         key = "cave_door"
-        metta.run(ItemFactDefinition(key, "", "", "A carved door.", can_pickup=False).to_metta())
+        metta.run(
+            ItemFactDefinition(
+                key, "", "", "A carved door.", can_pickup=False
+            ).to_metta()
+        )
 
         pickupable_item = PickupableFactPattern("$key")
-        result_pickupable = metta.run(f"!(match &self {pickupable_item.to_metta()} $key)")
+        result_pickupable = metta.run(
+            f"!(match &self {pickupable_item.to_metta()} $key)"
+        )
         self.assertEqual(result_pickupable, [[]])
 
 

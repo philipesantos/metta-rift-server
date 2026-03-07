@@ -55,7 +55,9 @@ class TestOnMoveShowItems(unittest.TestCase):
         metta.run(ContainerFactDefinition("hollow_tree_trunk").to_metta())
         metta.run(StateWrapperDefinition(AtFactPattern("coin", "glade")).to_metta())
         metta.run(
-            StateWrapperDefinition(AtFactPattern("hollow_tree_trunk", "glade")).to_metta()
+            StateWrapperDefinition(
+                AtFactPattern("hollow_tree_trunk", "glade")
+            ).to_metta()
         )
         metta.run(
             TriggerFunctionDefinition(

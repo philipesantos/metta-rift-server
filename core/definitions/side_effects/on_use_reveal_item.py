@@ -14,9 +14,7 @@ class OnUseRevealItem(SideEffectDefinition):
         item_state = StateWrapperPattern(AtFactPattern(self.item_key, self.where))
         if self.remove_target_key is None:
             return (
-                f"(let* ((() (add-atom &self {item_state.to_metta()})))\n"
-                f"    Empty\n"
-                f")\n"
+                f"(let* ((() (add-atom &self {item_state.to_metta()})))\n    Empty\n)\n"
             )
 
         target_state = StateWrapperPattern(
