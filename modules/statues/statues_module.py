@@ -18,15 +18,15 @@ class StatuesModule(Module):
         self,
         character: CharacterFactPattern,
         statue_location: LocationFactDefinition,
-        tablets_possible_containers: list[ContainerFactDefinition],
+        runes_possible_containers: list[ContainerFactDefinition],
     ):
-        if len(tablets_possible_containers) < 3:
+        if len(runes_possible_containers) < 3:
             raise ValueError(
-                "tablets_possible_containers must contain at least 3 containers."
+                "runes_possible_containers must contain at least 3 containers."
             )
         self.character: CharacterFactPattern = character
         self.statue_location: LocationFactDefinition = statue_location
-        self.tablets_possible_containers: list[ContainerFactDefinition] = tablets_possible_containers
+        self.runes_possible_containers: list[ContainerFactDefinition] = runes_possible_containers
 
     def apply(self, world: World) -> None:
         statues_enter_text = (
@@ -88,25 +88,25 @@ class StatuesModule(Module):
             StateWrapperDefinition(AtFactPattern(bear_statue.key, self.statue_location.key))
         )
 
-        selected_containers = random.sample(self.tablets_possible_containers, 3)
-        tablets = [
-            ("tablet_e", "Rock tablet E", "E"),
-            ("tablet_g", "Rock tablet G", "G"),
-            ("tablet_o", "Rock tablet O", "O"),
+        selected_containers = random.sample(self.runes_possible_containers, 3)
+        runes = [
+            ("epsilon_rune", "Epsilon rune", "E", "epsilon"),
+            ("gamma_rune", "Gamma rune", "G", "gamma"),
+            ("omicron_rune", "Omicron rune", "O", "omicron"),
         ]
-        for (tablet_key, tablet_name, letter), container in zip(
-            tablets, selected_containers
+        for (rune_key, rune_name, letter, greek_name), container in zip(
+            runes, selected_containers
         ):
-            tablet = ItemFactDefinition(
-                key=tablet_key,
-                name=tablet_name,
-                text_pickup=f"You pick up the rock tablet with the letter '{letter}'.",
-                text_drop=f"You set down the rock tablet with the letter '{letter}'.",
-                text_examine=f"A carved rock tablet marked with the letter '{letter}'.",
-                text_enter="",
-                text_look=f"A carved rock tablet marked with the letter '{letter}'.",
+            rune = ItemFactDefinition(
+                key=rune_key,
+                name=rune_name,
+                text_pickup=f"You pick up the {greek_name} rune.",
+                text_drop=f"You set down the {greek_name} rune.",
+                text_examine=f"A carved {greek_name} rune, marked with the letter '{letter}'.",
+                text_enter=f"You see a {greek_name} rune here.",
+                text_look=f"A {greek_name} rune rests inside.",
             )
-            world.add_definition(tablet)
+            world.add_definition(rune)
             world.add_definition(
-                StateWrapperDefinition(AtFactPattern(tablet.key, container.key))
+                StateWrapperDefinition(AtFactPattern(rune.key, container.key))
             )
