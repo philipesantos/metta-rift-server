@@ -37,7 +37,7 @@ class PickUpFunctionDefinition(FunctionDefinition):
             f"                (if (exists {state_at_match.to_metta()})\n"
             f"                    (if (exists {pickupable_match.to_metta()})\n"
             f"                        {pickup_trigger.to_metta()}\n"
-            f'                        {ResponseFactPattern(100, "You cannot pick that up").to_metta()}\n'
+            f'                        {ResponseFactPattern(100, '"You cannot pick that up"').to_metta()}\n'
             f"                    )\n"
             f'                    {ResponseFactPattern(100, '"There is no such item"').to_metta()}\n'
             f"                )\n"

@@ -47,6 +47,7 @@ from core.definitions.side_effects.on_pickup_update_at import OnPickUpUpdateAt
 from core.definitions.side_effects.on_look_in_show_items import OnLookInShowItems
 from core.definitions.side_effects.on_startup_show_items import OnStartupShowItems
 from core.definitions.side_effects.on_use_do_nothing import OnUseDoNothing
+from core.definitions.side_effects.on_use_reveal_item import OnUseRevealItem
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.events.drop_event_pattern import DropEventPattern
 from core.patterns.events.move_event_pattern import MoveEventPattern
@@ -57,7 +58,6 @@ from core.patterns.events.look_in_event_pattern import LookInEventPattern
 from core.patterns.facts.at_fact_pattern import AtFactPattern
 from core.patterns.facts.tick_fact_pattern import TickFactPattern
 from core.world import World
-from modules.cave_entrance.cave_entrance_module import CaveEntranceModule
 from modules.compass.compass_module import CompassModule
 from utils.direction import Direction
 
@@ -208,6 +208,32 @@ def build_world() -> World:
         StateWrapperDefinition(AtFactPattern(small_rock.key, location_glade.key))
     )
 
+    disturbed_soil = ItemFactDefinition(
+        key="disturbed_soil",
+        name="Disturbed soil",
+        text_pickup="",
+        text_drop="",
+        text_examine="The soil looks recently turned. It could hide something underneath.",
+        text_enter="A patch of disturbed soil stands out beside the trail.",
+        text_look="The disturbed soil is loose and shallow.",
+        can_pickup=False,
+    )
+    world.add_definition(disturbed_soil)
+    world.add_definition(
+        StateWrapperDefinition(AtFactPattern(disturbed_soil.key, location_path_2.key))
+    )
+
+    iron_box = ItemFactDefinition(
+        key="iron_box",
+        name="Iron box",
+        text_pickup="You pick up the iron box.",
+        text_drop="You drop the iron box.",
+        text_examine="A small iron box, worn by time but still tightly sealed.",
+        text_enter="A small iron box lies half-buried in fresh soil.",
+        text_look="Inside, a small iron box is wedged in the dirt.",
+    )
+    world.add_definition(iron_box)
+
     unconscious_person = ContainerFactDefinition(
         key="unconscious_person",
         name="Unconscious person",
@@ -276,7 +302,18 @@ def build_world() -> World:
     world.add_definition(shovel)
     world.add_definition(
         StateWrapperDefinition(
-            AtFactPattern(shovel.key, big_chest.key)
+            AtFactPattern(shovel.key, location_path_2.key)
+        )
+    )
+    world.add_definition(
+        TriggerFunctionDefinition(
+            UseEventPattern(shovel.key, disturbed_soil.key),
+            [
+                OnEventPrint("You dig into the disturbed soil and uncover a small iron box."),
+                OnUseRevealItem(
+                    iron_box.key, location_path_2.key, disturbed_soil.key
+                ),
+            ],
         )
     )
 
@@ -386,7 +423,6 @@ def build_world() -> World:
     )
 
     CompassModule(character_player.to_pattern(), location_glade.key, unconscious_person.key).apply(world)
-    CaveEntranceModule(location_path_2.key, location_cave.key).apply(world)
 
     world.add_definition(StateWrapperDefinition(TickFactPattern("1")))
 
