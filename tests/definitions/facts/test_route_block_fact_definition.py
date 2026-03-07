@@ -14,7 +14,9 @@ class TestRouteBlockFactDefinition(unittest.TestCase):
         location_to = "cave"
         reason = "The cave door is closed."
 
-        metta.run(RouteBlockFactDefinition(location_from, location_to, reason).to_metta())
+        metta.run(
+            RouteBlockFactDefinition(location_from, location_to, reason).to_metta()
+        )
 
         route_block_from = RouteBlockFactPattern("$from", location_to, reason)
         result_from = metta.run(f"!(match &self {route_block_from.to_metta()} $from)")
@@ -24,7 +26,9 @@ class TestRouteBlockFactDefinition(unittest.TestCase):
         result_to = metta.run(f"!(match &self {route_block_to.to_metta()} $to)")
         self.assertEqual(unwrap_first_match(result_to), location_to)
 
-        route_block_reason = RouteBlockFactPattern(location_from, location_to, "$reason")
+        route_block_reason = RouteBlockFactPattern(
+            location_from, location_to, "$reason"
+        )
         result_reason = metta.run(
             f"!(match &self {route_block_reason.to_metta()} $reason)"
         )

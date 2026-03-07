@@ -4,7 +4,9 @@ from core.definitions.facts.item_fact_definition import ItemFactDefinition
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.events.look_in_event_pattern import LookInEventPattern
 from core.patterns.facts.at_fact_pattern import AtFactPattern
-from core.patterns.functions.move_towards_function_pattern import MoveTowardsFunctionPattern
+from core.patterns.functions.move_towards_function_pattern import (
+    MoveTowardsFunctionPattern,
+)
 from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
 from core.patterns.functions.use_function_pattern import UseFunctionPattern
 from core.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
@@ -52,10 +54,13 @@ class TestWorldBuilder(unittest.TestCase):
         metta.run(StateWrapperDefinition(AtFactPattern("player", "path_2")).to_metta())
         metta.run(StateWrapperDefinition(AtFactPattern("shovel", "player")).to_metta())
 
-        result = metta.run(f"!{UseFunctionPattern('shovel', 'disturbed_soil').to_metta()}")
+        result = metta.run(
+            f"!{UseFunctionPattern('shovel', 'disturbed_soil').to_metta()}"
+        )
         output_lines = format_metta_output(result).splitlines()
         self.assertIn(
-            "You dig into the disturbed soil and uncover a small iron box.", output_lines
+            "You dig into the disturbed soil and uncover a small iron box.",
+            output_lines,
         )
 
         box_state = StateWrapperPattern(AtFactPattern("iron_box", "path_2"))

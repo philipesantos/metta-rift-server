@@ -54,7 +54,9 @@ class TestMoveToFunctionDefinition(unittest.TestCase):
             RouteFactDefinition("cave", Direction.SOUTH.value, "plane").to_metta()
         )
         metta.run(
-            RouteBlockFactDefinition("glade", "cave", "The road is blocked by rubble.").to_metta()
+            RouteBlockFactDefinition(
+                "glade", "cave", "The road is blocked by rubble."
+            ).to_metta()
         )
 
         metta.run(

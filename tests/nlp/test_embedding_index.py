@@ -133,7 +133,9 @@ class TestEmbeddingIndex(unittest.TestCase):
             "core.nlp.embedding_index.SentenceTransformer",
             return_value=_FakeSentenceTransformer(vectors),
         ):
-            index = EmbeddingIndex(entries, model_name="fake", high_confidence_score=0.9)
+            index = EmbeddingIndex(
+                entries, model_name="fake", high_confidence_score=0.9
+            )
             match = index.match("hello there")
 
         self.assertIsNone(match)
@@ -156,7 +158,9 @@ class TestEmbeddingIndex(unittest.TestCase):
             "core.nlp.embedding_index.SentenceTransformer",
             return_value=_FakeSentenceTransformer(vectors),
         ):
-            index = EmbeddingIndex(entries, model_name="fake", high_confidence_score=0.9)
+            index = EmbeddingIndex(
+                entries, model_name="fake", high_confidence_score=0.9
+            )
             match = index.match("status please")
 
         self.assertIsNotNone(match)

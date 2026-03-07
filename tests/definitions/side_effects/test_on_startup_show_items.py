@@ -37,7 +37,9 @@ class TestOnStartupShowItems(unittest.TestCase):
         )
         metta.run(StateWrapperDefinition(AtFactPattern("coin", "glade")).to_metta())
         metta.run(
-            StateWrapperDefinition(AtFactPattern("hollow_tree_trunk", "glade")).to_metta()
+            StateWrapperDefinition(
+                AtFactPattern("hollow_tree_trunk", "glade")
+            ).to_metta()
         )
         metta.run(
             TriggerFunctionDefinition(

@@ -42,10 +42,14 @@ class TestContainerFactDefinition(unittest.TestCase):
         result_key = metta.run(f"!(match &self {container_key.to_metta()} $key)")
         self.assertEqual(unwrap_first_match(result_key), key)
 
-        result_enter_text = metta.run(f"!(match &self (ContainerEnterText {key} $text) $text)")
+        result_enter_text = metta.run(
+            f"!(match &self (ContainerEnterText {key} $text) $text)"
+        )
         self.assertEqual(unwrap_first_match(result_enter_text), text_enter)
 
-        result_look_text = metta.run(f"!(match &self (ContainerLookText {key} $text) $text)")
+        result_look_text = metta.run(
+            f"!(match &self (ContainerLookText {key} $text) $text)"
+        )
         self.assertEqual(unwrap_first_match(result_look_text), text_look)
 
         result_name = metta.run(f"!(match &self (ContainerName {key} $name) $name)")

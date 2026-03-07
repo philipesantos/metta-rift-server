@@ -310,9 +310,7 @@ def build_world() -> World:
     )
     world.add_definition(big_chest)
     world.add_definition(
-        StateWrapperDefinition(
-            AtFactPattern(big_chest.key, location_camping_site.key)
-        )
+        StateWrapperDefinition(AtFactPattern(big_chest.key, location_camping_site.key))
     )
 
     shovel = ItemFactDefinition(
@@ -326,18 +324,16 @@ def build_world() -> World:
     )
     world.add_definition(shovel)
     world.add_definition(
-        StateWrapperDefinition(
-            AtFactPattern(shovel.key, location_path_2.key)
-        )
+        StateWrapperDefinition(AtFactPattern(shovel.key, location_path_2.key))
     )
     world.add_definition(
         TriggerFunctionDefinition(
             UseEventPattern(shovel.key, disturbed_soil.key),
             [
-                OnEventPrint("You dig into the disturbed soil and uncover a small iron box."),
-                OnUseRevealItem(
-                    iron_box.key, location_path_2.key, disturbed_soil.key
+                OnEventPrint(
+                    "You dig into the disturbed soil and uncover a small iron box."
                 ),
+                OnUseRevealItem(iron_box.key, location_path_2.key, disturbed_soil.key),
             ],
         )
     )
@@ -353,9 +349,7 @@ def build_world() -> World:
     )
     world.add_definition(lantern)
     world.add_definition(
-        StateWrapperDefinition(
-            AtFactPattern(lantern.key, big_chest.key)
-        )
+        StateWrapperDefinition(AtFactPattern(lantern.key, big_chest.key))
     )
 
     abandoned_well = ContainerFactDefinition(
@@ -363,13 +357,11 @@ def build_world() -> World:
         name="Abandoned well",
         text_enter="You see a abandoned well.",
         text_examine="The buckets is in there, but the well seems dry.",
-        text_look="You look inside the well."
+        text_look="You look inside the well.",
     )
     world.add_definition(abandoned_well)
     world.add_definition(
-        StateWrapperDefinition(
-            AtFactPattern(abandoned_well.key, location_path_5.key)
-        )
+        StateWrapperDefinition(AtFactPattern(abandoned_well.key, location_path_5.key))
     )
 
     fireplace = ContainerFactDefinition(
@@ -377,13 +369,11 @@ def build_world() -> World:
         name="Stone fireplace",
         text_enter="You see a stone fireplace built into the wall.",
         text_examine="A thin layer of ash rests at the bottom. The soot above suggests it hasn't been lit for quite some time.",
-        text_look="You peer inside the fireplace."
+        text_look="You peer inside the fireplace.",
     )
     world.add_definition(fireplace)
     world.add_definition(
-        StateWrapperDefinition(
-            AtFactPattern(fireplace.key, location_cabin.key)
-        )
+        StateWrapperDefinition(AtFactPattern(fireplace.key, location_cabin.key))
     )
 
     loose_board = ContainerFactDefinition(
@@ -391,13 +381,11 @@ def build_world() -> World:
         name="Loose board",
         text_enter="One of the wooden boards looks slightly out of place.",
         text_examine="The board shifts when you press it. There seems to be space beneath it.",
-        text_look="You crouch down and inspect the gap beneath the board."
+        text_look="You crouch down and inspect the gap beneath the board.",
     )
     world.add_definition(loose_board)
     world.add_definition(
-        StateWrapperDefinition(
-            AtFactPattern(loose_board.key, location_path_5.key)
-        )
+        StateWrapperDefinition(AtFactPattern(loose_board.key, location_path_5.key))
     )
 
     seashell = ContainerFactDefinition(
@@ -405,13 +393,11 @@ def build_world() -> World:
         name="Seashell",
         text_enter="A small seashell rests in the sand.",
         text_examine="Its surface is smooth and pale, shaped by the tide. The shell is slightly open, just enough to slip something inside.",
-        text_look="You gently pry the shell open and look inside."
+        text_look="You gently pry the shell open and look inside.",
     )
     world.add_definition(seashell)
     world.add_definition(
-        StateWrapperDefinition(
-            AtFactPattern(seashell.key, location_beach.key)
-        )
+        StateWrapperDefinition(AtFactPattern(seashell.key, location_beach.key))
     )
 
     lantern_oil = ItemFactDefinition(
@@ -426,12 +412,12 @@ def build_world() -> World:
 
     world.add_definition(lantern_oil)
     world.add_definition(
-        StateWrapperDefinition(
-            AtFactPattern(lantern_oil.key, fireplace.key)
-        )
+        StateWrapperDefinition(AtFactPattern(lantern_oil.key, fireplace.key))
     )
 
-    CompassModule(character_player.to_pattern(), location_glade, unconscious_person.key).apply(world)
+    CompassModule(
+        character_player.to_pattern(), location_glade, unconscious_person.key
+    ).apply(world)
     CabinModule(location_path_5, location_cabin, seashell).apply(world)
     StatuesModule(
         character_player.to_pattern(),

@@ -2,7 +2,9 @@ from core.definitions.facts.container_fact_definition import ContainerFactDefini
 from core.definitions.facts.item_fact_definition import ItemFactDefinition
 from core.definitions.facts.location_fact_definition import LocationFactDefinition
 from core.definitions.facts.route_block_fact_definition import RouteBlockFactDefinition
-from core.definitions.functions.trigger_function_definition import TriggerFunctionDefinition
+from core.definitions.functions.trigger_function_definition import (
+    TriggerFunctionDefinition,
+)
 from core.definitions.side_effects.on_event_print import OnEventPrint
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.events.use_event_pattern import UseEventPattern
@@ -56,7 +58,9 @@ class CabinModule(Module):
             TriggerFunctionDefinition(
                 UseEventPattern("cabin_key", "cabin"),
                 [
-                    CabinModuleOnUseUnlock(self.path_location.key, self.cabin_location.key),
+                    CabinModuleOnUseUnlock(
+                        self.path_location.key, self.cabin_location.key
+                    ),
                     OnEventPrint("You unlock the cabin door."),
                 ],
             )

@@ -3,7 +3,9 @@ import random
 from core.definitions.facts.container_fact_definition import ContainerFactDefinition
 from core.definitions.facts.item_fact_definition import ItemFactDefinition
 from core.definitions.facts.location_fact_definition import LocationFactDefinition
-from core.definitions.functions.trigger_function_definition import TriggerFunctionDefinition
+from core.definitions.functions.trigger_function_definition import (
+    TriggerFunctionDefinition,
+)
 from core.definitions.side_effects.on_event_print import OnEventPrint
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.events.move_event_pattern import MoveEventPattern
@@ -26,7 +28,9 @@ class StatuesModule(Module):
             )
         self.character: CharacterFactPattern = character
         self.statue_location: LocationFactDefinition = statue_location
-        self.runes_possible_containers: list[ContainerFactDefinition] = runes_possible_containers
+        self.runes_possible_containers: list[ContainerFactDefinition] = (
+            runes_possible_containers
+        )
 
     def apply(self, world: World) -> None:
         statues_enter_text = (
@@ -37,9 +41,7 @@ class StatuesModule(Module):
         world.add_definition(
             TriggerFunctionDefinition(
                 MoveEventPattern("$from", self.statue_location.key),
-                [
-                    OnEventPrint(statues_enter_text, 20)
-                ],
+                [OnEventPrint(statues_enter_text, 20)],
             )
         )
 
@@ -55,7 +57,9 @@ class StatuesModule(Module):
         )
         world.add_definition(lion_statue)
         world.add_definition(
-            StateWrapperDefinition(AtFactPattern(lion_statue.key, self.statue_location.key))
+            StateWrapperDefinition(
+                AtFactPattern(lion_statue.key, self.statue_location.key)
+            )
         )
 
         eagle_statue = ItemFactDefinition(
@@ -70,7 +74,9 @@ class StatuesModule(Module):
         )
         world.add_definition(eagle_statue)
         world.add_definition(
-            StateWrapperDefinition(AtFactPattern(eagle_statue.key, self.statue_location.key))
+            StateWrapperDefinition(
+                AtFactPattern(eagle_statue.key, self.statue_location.key)
+            )
         )
 
         bear_statue = ItemFactDefinition(
@@ -85,7 +91,9 @@ class StatuesModule(Module):
         )
         world.add_definition(bear_statue)
         world.add_definition(
-            StateWrapperDefinition(AtFactPattern(bear_statue.key, self.statue_location.key))
+            StateWrapperDefinition(
+                AtFactPattern(bear_statue.key, self.statue_location.key)
+            )
         )
 
         selected_containers = random.sample(self.runes_possible_containers, 3)

@@ -51,12 +51,12 @@ class ContainerFactDefinition(FactDefinition):
             StartupEventPattern(),
             [OnStartupShowContainerEnterText(self.key, self.text_enter)],
         )
-        container_name = f'({self.NAME_FACT} {self.key} {self._quote(self.name)})\n'
+        container_name = f"({self.NAME_FACT} {self.key} {self._quote(self.name)})\n"
         container_enter_text = (
-            f'({self.ENTER_TEXT_FACT} {self.key} {self._quote(self.text_enter)})\n'
+            f"({self.ENTER_TEXT_FACT} {self.key} {self._quote(self.text_enter)})\n"
         )
         container_look_text = (
-            f'({self.LOOK_TEXT_FACT} {self.key} {self._quote(self.text_look)})\n'
+            f"({self.LOOK_TEXT_FACT} {self.key} {self._quote(self.text_look)})\n"
         )
         # fmt: off
         return (

@@ -100,9 +100,7 @@ _STOPWORDS = {
 
 
 def _tokenize(text: str) -> set[str]:
-    words = "".join(
-        char.lower() if char.isalnum() else " " for char in text
-    ).split()
+    words = "".join(char.lower() if char.isalnum() else " " for char in text).split()
     return {word for word in words if len(word) > 1 and word not in _STOPWORDS}
 
 

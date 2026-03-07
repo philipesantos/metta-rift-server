@@ -4,7 +4,9 @@ from core.definitions.facts.container_fact_definition import ContainerFactDefini
 from core.definitions.facts.item_fact_definition import ItemFactDefinition
 from core.definitions.facts.location_fact_definition import LocationFactDefinition
 from core.definitions.facts.route_block_fact_definition import RouteBlockFactDefinition
-from core.definitions.functions.trigger_function_definition import TriggerFunctionDefinition
+from core.definitions.functions.trigger_function_definition import (
+    TriggerFunctionDefinition,
+)
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.events.use_event_pattern import UseEventPattern
 from core.patterns.facts.at_fact_pattern import AtFactPattern
@@ -25,7 +27,8 @@ class TestCabinModule(unittest.TestCase):
         cabin_keys = [
             definition
             for definition in world.definitions
-            if isinstance(definition, ItemFactDefinition) and definition.key == "cabin_key"
+            if isinstance(definition, ItemFactDefinition)
+            and definition.key == "cabin_key"
         ]
         self.assertEqual(len(cabin_keys), 1)
 
