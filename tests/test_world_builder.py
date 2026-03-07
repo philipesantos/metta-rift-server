@@ -1,10 +1,15 @@
 import unittest
 
 from core.definitions.facts.item_fact_definition import ItemFactDefinition
+from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.events.look_in_event_pattern import LookInEventPattern
+from core.patterns.facts.at_fact_pattern import AtFactPattern
 from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
+from core.patterns.functions.use_function_pattern import UseFunctionPattern
+from core.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
 from core.world_builder import build_world
 from tests.utils.metta import get_test_metta
+from tests.utils.utils import unwrap_first_match
 from utils.response import format_metta_output
 
 
@@ -38,6 +43,31 @@ class TestWorldBuilder(unittest.TestCase):
             output_lines.count("Inside, a weathered lantern lies in the chest."),
             1,
         )
+
+    def test_use_shovel_on_disturbed_soil_reveals_iron_box(self):
+        metta = get_test_metta()
+        metta.run(build_world().to_metta())
+
+        metta.run(StateWrapperDefinition(AtFactPattern("player", "path_2")).to_metta())
+        metta.run(StateWrapperDefinition(AtFactPattern("shovel", "player")).to_metta())
+
+        result = metta.run(f"!{UseFunctionPattern('shovel', 'disturbed_soil').to_metta()}")
+        output_lines = format_metta_output(result).splitlines()
+        self.assertIn(
+            "You dig into the disturbed soil and uncover a small iron box.", output_lines
+        )
+
+        box_state = StateWrapperPattern(AtFactPattern("iron_box", "path_2"))
+        box_result = metta.run(
+            f"!(match &self {box_state.to_metta()} {box_state.to_metta()})"
+        )
+        self.assertEqual(unwrap_first_match(box_result), box_state.to_metta())
+
+        soil_state = StateWrapperPattern(AtFactPattern("disturbed_soil", "path_2"))
+        soil_result = metta.run(
+            f"!(match &self {soil_state.to_metta()} {soil_state.to_metta()})"
+        )
+        self.assertEqual(soil_result, [[]])
 
 
 if __name__ == "__main__":
