@@ -48,7 +48,9 @@ class TestCompassModuleOnPickupRemoveRouteBlocks(unittest.TestCase):
         result_cave_to_plane = metta.run(
             f"!(match &self {cave_to_plane.to_metta()} $reason)"
         )
-        self.assertEqual(unwrap_first_match(result_cave_to_plane), "Temporary blockade.")
+        self.assertEqual(
+            unwrap_first_match(result_cave_to_plane), "Temporary blockade."
+        )
 
 
 if __name__ == "__main__":

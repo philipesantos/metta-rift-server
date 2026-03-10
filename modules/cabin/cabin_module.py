@@ -39,7 +39,9 @@ class CabinModule(Module):
         )
         world.add_definition(fireplace)
         world.add_definition(
-            StateWrapperDefinition(AtFactPattern(fireplace.key, self.cabin_location.key))
+            StateWrapperDefinition(
+                AtFactPattern(fireplace.key, self.cabin_location.key)
+            )
         )
         for item in self.fireplace_items:
             world.add_definition(
@@ -55,7 +57,9 @@ class CabinModule(Module):
         )
         world.add_definition(loose_board)
         world.add_definition(
-            StateWrapperDefinition(AtFactPattern(loose_board.key, self.cabin_location.key))
+            StateWrapperDefinition(
+                AtFactPattern(loose_board.key, self.cabin_location.key)
+            )
         )
 
         metal_key = ItemFactDefinition(
