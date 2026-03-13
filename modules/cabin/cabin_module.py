@@ -5,13 +5,11 @@ from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
 from core.definitions.side_effects.on_event_print import OnEventPrint
+from core.definitions.side_effects.on_use_combine_item import OnUseCombineItem
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.events.use_event_pattern import UseEventPattern
 from core.patterns.facts.at_fact_pattern import AtFactPattern
 from core.world import World
-from modules.cabin.side_effects.cabin_module_on_use_unlock import (
-    CabinModuleOnUseUnlock,
-)
 from modules.module import Module
 
 
@@ -28,7 +26,7 @@ class CabinModule(Module):
 
     def apply(self, world: World) -> None:
         locked_cabin = ContainerFactDefinition(
-            key="cabin",
+            key="locked_cabin",
             name="Locked cabin",
             text_enter="A weathered locked cabin stands just off the path.",
             text_examine="The cabin door is shut tight. A metal lock hangs from the latch.",
@@ -48,6 +46,7 @@ class CabinModule(Module):
             text_look="You look inside the cabin.",
             text_contents="A weathered cabin stands just off the path.",
         )
+        world.add_definition(cabin_container)
 
         fireplace = ContainerFactDefinition(
             key="fireplace",
@@ -94,11 +93,9 @@ class CabinModule(Module):
             )
         world.add_definition(
             TriggerFunctionDefinition(
-                UseEventPattern("metal_key", "cabin"),
+                UseEventPattern("metal_key", "locked_cabin"),
                 [
-                    CabinModuleOnUseUnlock(
-                        self.cabin_location.key, locked_cabin, cabin_container, metal_key
-                    ),
+                    OnUseCombineItem(locked_cabin, metal_key, cabin_container),
                     OnEventPrint("You unlock the cabin door."),
                 ],
             )

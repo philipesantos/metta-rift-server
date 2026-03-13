@@ -36,15 +36,15 @@ class TestCabinModule(unittest.TestCase):
             definition
             for definition in world.definitions
             if isinstance(definition, ContainerFactDefinition)
-            and definition.key in ("cabin", "fireplace", "loose_board")
+            and definition.key in ("locked_cabin", "cabin", "fireplace", "loose_board")
         ]
-        self.assertEqual(len(cabin_containers), 3)
+        self.assertEqual(len(cabin_containers), 4)
         cabin_state_defs = [
             definition
             for definition in world.definitions
             if isinstance(definition, StateWrapperDefinition)
             and isinstance(definition.pattern, AtFactPattern)
-            and definition.pattern.what == "cabin"
+            and definition.pattern.what == "locked_cabin"
             and definition.pattern.where == "path_5"
         ]
         self.assertEqual(len(cabin_state_defs), 1)
@@ -90,7 +90,7 @@ class TestCabinModule(unittest.TestCase):
             if isinstance(definition, TriggerFunctionDefinition)
             and isinstance(definition.event, UseEventPattern)
             and definition.event.what == "metal_key"
-            and definition.event.with_what == "cabin"
+            and definition.event.with_what == "locked_cabin"
         ]
         self.assertEqual(len(unlock_triggers), 1)
 

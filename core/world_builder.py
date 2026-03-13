@@ -48,8 +48,7 @@ from core.definitions.side_effects.on_pickup_update_at import OnPickUpUpdateAt
 from core.definitions.side_effects.on_look_in_show_items import OnLookInShowItems
 from core.definitions.side_effects.on_startup_show_items import OnStartupShowItems
 from core.definitions.side_effects.on_use_do_nothing import OnUseDoNothing
-from core.definitions.side_effects.on_use_reveal_item import OnUseRevealItem
-from core.definitions.side_effects.on_use_transform_item import OnUseTransformItem
+from core.definitions.side_effects.on_use_combine_item import OnUseCombineItem
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.events.drop_event_pattern import DropEventPattern
 from core.patterns.events.move_event_pattern import MoveEventPattern
@@ -319,7 +318,11 @@ def build_world() -> World:
                 OnEventPrint(
                     "You dig into the disturbed soil and uncover a small iron box."
                 ),
-                OnUseRevealItem(iron_box.key, location_path_2.key, disturbed_soil.key),
+                OnUseCombineItem(
+                    disturbed_soil,
+                    shovel,
+                    iron_box,
+                ),
             ],
         )
     )
@@ -347,6 +350,7 @@ def build_world() -> World:
         text_enter="You see a lantern filled with fresh oil.",
         text_look="Inside, a lantern filled with fresh oil rests in the chest.",
     )
+    world.add_definition(functioning_lantern)
 
     abandoned_well = ContainerFactDefinition(
         key="well",
@@ -402,7 +406,7 @@ def build_world() -> World:
         TriggerFunctionDefinition(
             UseEventPattern(lantern_oil.key, lantern.key),
             [
-                OnUseTransformItem(lantern, functioning_lantern, lantern_oil.key),
+                OnUseCombineItem(lantern, lantern_oil, functioning_lantern),
                 OnEventPrint("You pour the oil into the lantern. It is ready to use."),
             ],
         )
