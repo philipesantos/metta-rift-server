@@ -68,6 +68,22 @@ class TestWorldBuilder(unittest.TestCase):
         self.assertEqual(output_lines.count("You peer into the bucket."), 1)
         self.assertGreaterEqual(len(output_lines), 1)
 
+    def test_look_in_beach_lists_waterfall_once(self):
+        metta = get_test_metta()
+        metta.run(build_world().to_metta())
+
+        result = metta.run(
+            f"!{TriggerFunctionPattern(LookInEventPattern('beach')).to_metta()}"
+        )
+        output_lines = format_metta_output(result).splitlines()
+
+        self.assertEqual(
+            output_lines.count(
+                "A narrow waterfall spills down the rocks beside the beach."
+            ),
+            1,
+        )
+
     def test_use_shovel_on_disturbed_soil_reveals_iron_box(self):
         metta = get_test_metta()
         metta.run(build_world().to_metta())
