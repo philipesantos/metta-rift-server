@@ -391,6 +391,19 @@ def build_world() -> World:
         StateWrapperDefinition(AtFactPattern(seashell.key, location_beach.key))
     )
 
+    waterfall = ContainerFactDefinition(
+        key="waterfall",
+        name="Waterfall",
+        text_enter="A narrow waterfall spills down the rocks beside the beach.",
+        text_examine="Cold water cascades over the rock face and disappears into a shallow pool.",
+        text_look="You peer through the falling water.",
+        text_contents="A narrow waterfall spills down the rocks beside the beach.",
+    )
+    world.add_definition(waterfall)
+    world.add_definition(
+        StateWrapperDefinition(AtFactPattern(waterfall.key, location_beach.key))
+    )
+
     lantern_oil = ItemFactDefinition(
         key="oil",
         name="Lantern oil",
