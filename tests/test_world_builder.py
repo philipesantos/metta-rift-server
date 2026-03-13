@@ -94,12 +94,18 @@ class TestWorldBuilder(unittest.TestCase):
         )
         self.assertEqual(soil_result, [[]])
 
+        shovel_state = StateWrapperPattern(AtFactPattern("shovel", "player"))
+        shovel_result = metta.run(
+            f"!(match &self {shovel_state.to_metta()} {shovel_state.to_metta()})"
+        )
+        self.assertEqual(shovel_result, [[]])
+
     def test_using_key_on_cabin_reveals_cabin_contents(self):
         metta = get_test_metta()
         metta.run(build_world().to_metta())
 
         locked_result = metta.run(
-            f"!{TriggerFunctionPattern(LookInEventPattern('cabin')).to_metta()}"
+            f"!{TriggerFunctionPattern(LookInEventPattern('locked_cabin')).to_metta()}"
         )
         locked_output_lines = format_metta_output(locked_result).splitlines()
         self.assertIn("The cabin is locked.", locked_output_lines)
@@ -108,7 +114,7 @@ class TestWorldBuilder(unittest.TestCase):
         metta.run(StateWrapperDefinition(AtFactPattern("player", "path_5")).to_metta())
         metta.run(StateWrapperDefinition(AtFactPattern("metal_key", "player")).to_metta())
         unlock_result = metta.run(
-            f"!{UseFunctionPattern('metal_key', 'cabin').to_metta()}"
+            f"!{UseFunctionPattern('metal_key', 'locked_cabin').to_metta()}"
         )
         self.assertIn(
             "You unlock the cabin door.",
@@ -119,6 +125,11 @@ class TestWorldBuilder(unittest.TestCase):
             f"!(match &self {metal_key_state.to_metta()} {metal_key_state.to_metta()})"
         )
         self.assertEqual(metal_key_state_result, [[]])
+        locked_cabin_state = StateWrapperPattern(AtFactPattern("locked_cabin", "path_5"))
+        locked_cabin_state_result = metta.run(
+            f"!(match &self {locked_cabin_state.to_metta()} {locked_cabin_state.to_metta()})"
+        )
+        self.assertEqual(locked_cabin_state_result, [[]])
         cabin_state = StateWrapperPattern(AtFactPattern("cabin", "path_5"))
         cabin_state_result = metta.run(
             f"!(match &self {cabin_state.to_metta()} {cabin_state.to_metta()})"
