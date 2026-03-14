@@ -2,7 +2,6 @@ from core.definitions.facts.character_fact_definition import CharacterFactDefini
 from core.definitions.facts.container_fact_definition import ContainerFactDefinition
 from core.definitions.facts.item_fact_definition import ItemFactDefinition
 from core.definitions.facts.location_fact_definition import LocationFactDefinition
-from core.definitions.facts.route_block_fact_definition import RouteBlockFactDefinition
 from core.definitions.facts.route_fact_definition import RouteFactDefinition
 from core.definitions.functions.drop_function_definition import DropFunctionDefinition
 from core.definitions.functions.examine_function_definition import (
@@ -60,6 +59,7 @@ from core.patterns.facts.at_fact_pattern import AtFactPattern
 from core.patterns.facts.tick_fact_pattern import TickFactPattern
 from core.world import World
 from modules.cabin.cabin_module import CabinModule
+from modules.cave.cave_module import CaveModule
 from modules.compass.compass_module import CompassModule
 from modules.statues.statues_module import StatuesModule
 from utils.direction import Direction
@@ -70,9 +70,6 @@ def build_world() -> World:
 
     location_glade = LocationFactDefinition(
         key="glade", text_move_to="You are in the glade."
-    )
-    location_cave = LocationFactDefinition(
-        key="cave", text_move_to="You are in the cave."
     )
     location_beach = LocationFactDefinition(
         key="beach", text_move_to="You are in the beach."
@@ -101,6 +98,7 @@ def build_world() -> World:
     location_path_5 = LocationFactDefinition(
         key="path_5", text_move_to="You are in the path 5."
     )
+    cave_module = CaveModule(location_path_1, character_player.to_pattern())
 
     world = World()
 
@@ -166,7 +164,6 @@ def build_world() -> World:
     world.add_definition(character_player)
 
     world.add_definition(location_glade)
-    world.add_definition(location_cave)
     world.add_definition(location_beach)
     world.add_definition(location_boat)
     world.add_definition(location_plane)
@@ -176,9 +173,10 @@ def build_world() -> World:
     world.add_definition(location_path_3)
     world.add_definition(location_path_4)
     world.add_definition(location_path_5)
+    cave_module.apply(world)
 
     add_route(world, location_glade, Direction.NORTH, location_path_1)
-    add_route(world, location_path_1, Direction.NORTH, location_cave)
+    add_route(world, location_path_1, Direction.NORTH, cave_module.cave_location)
     add_route(world, location_glade, Direction.EAST, location_path_2)
     add_route(world, location_path_2, Direction.EAST, location_beach)
     add_route(world, location_beach, Direction.NORTH, location_boat)
@@ -205,28 +203,6 @@ def build_world() -> World:
     world.add_definition(disturbed_soil)
     world.add_definition(
         StateWrapperDefinition(AtFactPattern(disturbed_soil.key, location_path_2.key))
-    )
-
-    huge_rock = ItemFactDefinition(
-        key="huge_rock",
-        name="Huge rock",
-        text_pickup="",
-        text_drop="",
-        text_examine="A massive boulder blocks the cave entrance. You cannot move it by hand.",
-        text_enter="A cave entrance is here, but a huge rock blocks it.",
-        text_look="The rock is wedged tightly in place, completely sealing the path ahead.",
-        can_pickup=False,
-    )
-    world.add_definition(huge_rock)
-    world.add_definition(
-        StateWrapperDefinition(AtFactPattern(huge_rock.key, location_path_1.key))
-    )
-    world.add_definition(
-        RouteBlockFactDefinition(
-            location_path_1.key,
-            location_cave.key,
-            "A huge rock blocks the cave entrance.",
-        )
     )
 
     iron_box = ItemFactDefinition(
