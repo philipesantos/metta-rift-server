@@ -27,6 +27,9 @@ from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefin
 from core.patterns.facts.character_fact_pattern import CharacterFactPattern
 from core.patterns.facts.at_fact_pattern import AtFactPattern
 from core.world import World
+from modules.cave.functions.stay_still_function_definition import (
+    StayStillFunctionDefinition,
+)
 from tests.utils.metta import get_test_metta
 
 
@@ -58,6 +61,7 @@ class TestCommandCatalog(unittest.TestCase):
         world.add_definition(LookInFunctionDefinition(character))
         world.add_definition(ExamineFunctionDefinition(character))
         world.add_definition(UseFunctionDefinition(character))
+        world.add_definition(StayStillFunctionDefinition(character))
         world.add_definition(StateWrapperDefinition(AtFactPattern("player", "glade")))
         world.add_definition(
             StateWrapperDefinition(AtFactPattern("crescent_rock", "glade"))
@@ -85,6 +89,8 @@ class TestCommandCatalog(unittest.TestCase):
         )
         self.assertEqual(utterance_to_metta.get("go north"), "(move-towards (north))")
         self.assertEqual(utterance_to_metta.get("inventory"), "(inventory)")
+        self.assertEqual(utterance_to_metta.get("stay still"), "(stay-still)")
+        self.assertEqual(utterance_to_metta.get("wait"), "(stay-still)")
         self.assertEqual(
             utterance_to_metta.get("use compass on crescent rock"),
             "(use (compass crescent_rock))",
@@ -141,6 +147,7 @@ class TestCommandCatalog(unittest.TestCase):
         world.add_definition(LookInFunctionDefinition(character))
         world.add_definition(ExamineFunctionDefinition(character))
         world.add_definition(UseFunctionDefinition(character))
+        world.add_definition(StayStillFunctionDefinition(character))
         world.add_definition(StateWrapperDefinition(AtFactPattern("player", "glade")))
         world.add_definition(
             StateWrapperDefinition(AtFactPattern("lantern_2", "glade"))
