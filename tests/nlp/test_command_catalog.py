@@ -6,6 +6,9 @@ from core.definitions.facts.location_fact_definition import LocationFactDefiniti
 from core.definitions.functions.inventory_function_definition import (
     InventoryFunctionPattern,
 )
+from core.definitions.functions.drop_function_definition import (
+    DropFunctionDefinition,
+)
 from core.definitions.functions.look_in_function_definition import (
     LookInFunctionDefinition,
 )
@@ -22,6 +25,9 @@ from core.definitions.functions.examine_function_definition import (
     ExamineFunctionDefinition,
 )
 from core.definitions.functions.use_function_definition import UseFunctionDefinition
+from core.definitions.functions.use_item_function_definition import (
+    UseItemFunctionDefinition,
+)
 from core.nlp import build_command_catalog
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.facts.character_fact_pattern import CharacterFactPattern
@@ -65,9 +71,11 @@ class TestCommandCatalog(unittest.TestCase):
         world.add_definition(MoveToFunctionDefinition(character))
         world.add_definition(MoveTowardsFunctionDefinition(character))
         world.add_definition(PickUpFunctionDefinition(character))
+        world.add_definition(DropFunctionDefinition(character))
         world.add_definition(LookInFunctionDefinition(character))
         world.add_definition(ExamineFunctionDefinition(character))
         world.add_definition(UseFunctionDefinition(character))
+        world.add_definition(UseItemFunctionDefinition(character))
         world.add_definition(StayStillFunctionDefinition(character))
         world.add_definition(StateWrapperDefinition(AtFactPattern("player", "glade")))
         world.add_definition(
@@ -107,6 +115,14 @@ class TestCommandCatalog(unittest.TestCase):
         self.assertEqual(
             utterance_to_metta.get("use compass on crescent rock"),
             "(use (compass crescent_rock))",
+        )
+        self.assertEqual(utterance_to_metta.get("use compass"), "(use (compass))")
+        self.assertEqual(
+            utterance_to_metta.get("activate compass"), "(use (compass))"
+        )
+        self.assertEqual(utterance_to_metta.get("turn compass"), "(use (compass))")
+        self.assertEqual(
+            utterance_to_metta.get("turn on compass"), "(use (compass))"
         )
         self.assertEqual(
             utterance_to_metta.get("examine compass"),
@@ -157,9 +173,11 @@ class TestCommandCatalog(unittest.TestCase):
         world.add_definition(MoveToFunctionDefinition(character))
         world.add_definition(MoveTowardsFunctionDefinition(character))
         world.add_definition(PickUpFunctionDefinition(character))
+        world.add_definition(DropFunctionDefinition(character))
         world.add_definition(LookInFunctionDefinition(character))
         world.add_definition(ExamineFunctionDefinition(character))
         world.add_definition(UseFunctionDefinition(character))
+        world.add_definition(UseItemFunctionDefinition(character))
         world.add_definition(StayStillFunctionDefinition(character))
         world.add_definition(StateWrapperDefinition(AtFactPattern("player", "glade")))
         world.add_definition(

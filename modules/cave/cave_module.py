@@ -11,6 +11,7 @@ from core.definitions.side_effects.on_use_combine_item import OnUseCombineItem
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.events.move_event_pattern import MoveEventPattern
 from core.patterns.events.use_event_pattern import UseEventPattern
+from core.patterns.events.use_item_event_pattern import UseItemEventPattern
 from core.patterns.facts.at_fact_pattern import AtFactPattern
 from core.patterns.facts.character_fact_pattern import CharacterFactPattern
 from core.world import World
@@ -29,6 +30,9 @@ from modules.cave.side_effects.cave_module_on_bear_threat_resolve_stay_still imp
 )
 from modules.cave.side_effects.cave_module_on_stay_still_update_tick import (
     CaveModuleOnStayStillUpdateTick,
+)
+from modules.cave.side_effects.cave_module_on_use_functioning_lantern import (
+    CaveModuleOnUseFunctioningLantern,
 )
 from modules.cave.patterns.stay_still_event_pattern import StayStillEventPattern
 
@@ -172,6 +176,16 @@ class CaveModule(Module):
                         self.functioning_lantern,
                     ),
                     OnEventPrint("You pour the oil into the lantern. It is ready to use."),
+                ],
+            )
+        )
+        world.add_definition(
+            TriggerFunctionDefinition(
+                UseItemEventPattern(self.functioning_lantern.key),
+                [
+                    CaveModuleOnUseFunctioningLantern(
+                        self.character, self.cave_location.key
+                    )
                 ],
             )
         )

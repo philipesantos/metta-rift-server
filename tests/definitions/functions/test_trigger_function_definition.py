@@ -4,7 +4,11 @@ from core.definitions.functions.exists_function_definition import (
     ExistsFunctionDefinition,
 )
 from core.definitions.side_effects.on_event_print import OnEventPrint
+from core.patterns.events.use_item_event_pattern import UseItemEventPattern
 from core.patterns.events.use_event_pattern import UseEventPattern
+from core.patterns.facts.supported_single_use_fact_pattern import (
+    SupportedSingleUseFactPattern,
+)
 from core.patterns.facts.supported_use_fact_pattern import SupportedUseFactPattern
 from core.patterns.functions.exists_function_pattern import ExistsFunctionPattern
 from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
@@ -43,6 +47,22 @@ class TestTriggerFunctionDefinition(unittest.TestCase):
         )
 
         supported_use = SupportedUseFactPattern("oil", "lantern")
+        result = metta.run(f"!{ExistsFunctionPattern(supported_use).to_metta()}")
+
+        self.assertEqual(unwrap_first_match(result), True)
+
+    def test_concrete_single_use_trigger_registers_supported_single_use_fact(self):
+        metta = get_test_metta()
+
+        metta.run(ExistsFunctionDefinition().to_metta())
+        metta.run(
+            TriggerFunctionDefinition(
+                UseItemEventPattern("lantern"),
+                [OnEventPrint("Specific")],
+            ).to_metta()
+        )
+
+        supported_use = SupportedSingleUseFactPattern("lantern")
         result = metta.run(f"!{ExistsFunctionPattern(supported_use).to_metta()}")
 
         self.assertEqual(unwrap_first_match(result), True)
