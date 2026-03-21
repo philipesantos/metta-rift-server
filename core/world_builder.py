@@ -514,6 +514,7 @@ def build_world() -> World:
             container_rock_formation,
             big_chest,
             bucket,
+            waterfall,
         ],
     ).apply(world)
 
