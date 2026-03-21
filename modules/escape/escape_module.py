@@ -157,11 +157,3 @@ class EscapeModule(Module):
                 ],
             )
         )
-        if self.cave_item.key != self.propeller.key:
-            world.add_definition(
-                StateWrapperDefinition(AtFactPattern(self.propeller.key, "waterfall"))
-            )
-        if self.cave_item.key != self.battery.key:
-            world.add_definition(
-                StateWrapperDefinition(AtFactPattern(self.battery.key, "loose_board"))
-            )
