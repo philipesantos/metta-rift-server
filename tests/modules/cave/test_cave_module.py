@@ -1,6 +1,12 @@
 import unittest
 
 from core.definitions.facts.container_fact_definition import ContainerFactDefinition
+from core.definitions.functions.exists_function_definition import (
+    ExistsFunctionDefinition,
+)
+from core.definitions.functions.use_item_function_definition import (
+    UseItemFunctionDefinition,
+)
 from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
@@ -15,6 +21,7 @@ from core.patterns.facts.location_fact_pattern import LocationFactPattern
 from core.patterns.facts.route_block_fact_pattern import RouteBlockFactPattern
 from core.patterns.facts.supported_use_fact_pattern import SupportedUseFactPattern
 from core.patterns.functions.trigger_function_pattern import TriggerFunctionPattern
+from core.patterns.functions.use_item_function_pattern import UseItemFunctionPattern
 from core.patterns.wrappers.stale_wrapper_pattern import StaleWrapperPattern
 from core.patterns.wrappers.state_wrapper_pattern import StateWrapperPattern
 from core.world import World
@@ -159,6 +166,72 @@ class TestCaveModule(unittest.TestCase):
         )
         self.assertEqual(
             unwrap_first_match(supported_use_result), supported_use.to_metta()
+        )
+
+    def test_using_functioning_lantern_in_cave_prints_visibility_message(self):
+        metta = get_test_metta()
+
+        world = World()
+        cave_entrance = LocationFactDefinition(
+            "ridge", "A narrow ridge of pale stone rises above the glade."
+        )
+        character = CharacterFactPattern("player", "John")
+        chest = ContainerFactDefinition(key="chest", name="Chest")
+
+        world.add_definition(ExistsFunctionDefinition())
+        world.add_definition(UseItemFunctionDefinition(character))
+        world.add_definition(chest)
+        CaveModule(
+            cave_entrance,
+            character,
+            lantern_container=chest,
+        ).apply(world)
+        world.add_definition(
+            StateWrapperDefinition(AtFactPattern(character.key, "cave"))
+        )
+        world.add_definition(
+            StateWrapperDefinition(AtFactPattern("functioning_lantern", character.key))
+        )
+        metta.run(world.to_metta())
+
+        result = metta.run(f"!{UseItemFunctionPattern('functioning_lantern').to_metta()}")
+
+        self.assertIn(
+            "You raise the lantern and the cave comes into view.",
+            format_metta_output(result),
+        )
+
+    def test_using_functioning_lantern_outside_cave_prints_no_use_message(self):
+        metta = get_test_metta()
+
+        world = World()
+        cave_entrance = LocationFactDefinition(
+            "ridge", "A narrow ridge of pale stone rises above the glade."
+        )
+        character = CharacterFactPattern("player", "John")
+        chest = ContainerFactDefinition(key="chest", name="Chest")
+
+        world.add_definition(ExistsFunctionDefinition())
+        world.add_definition(UseItemFunctionDefinition(character))
+        world.add_definition(chest)
+        CaveModule(
+            cave_entrance,
+            character,
+            lantern_container=chest,
+        ).apply(world)
+        world.add_definition(
+            StateWrapperDefinition(AtFactPattern(character.key, "glade"))
+        )
+        world.add_definition(
+            StateWrapperDefinition(AtFactPattern("functioning_lantern", character.key))
+        )
+        metta.run(world.to_metta())
+
+        result = metta.run(f"!{UseItemFunctionPattern('functioning_lantern').to_metta()}")
+
+        self.assertIn(
+            "The lantern has no use here.",
+            format_metta_output(result),
         )
 
     def test_stay_still_prints_message_in_non_cave_location(self):

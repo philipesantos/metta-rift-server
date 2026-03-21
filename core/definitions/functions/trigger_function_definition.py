@@ -1,7 +1,11 @@
 from core.patterns.event_pattern import EventPattern
 from core.definitions.function_definition import FunctionDefinition
 from core.definitions.side_effect_definition import SideEffectDefinition
+from core.patterns.events.use_item_event_pattern import UseItemEventPattern
 from core.patterns.events.use_event_pattern import UseEventPattern
+from core.patterns.facts.supported_single_use_fact_pattern import (
+    SupportedSingleUseFactPattern,
+)
 from core.patterns.facts.supported_use_fact_pattern import SupportedUseFactPattern
 
 
@@ -33,7 +37,11 @@ class TriggerFunctionDefinition(FunctionDefinition):
 
     def _metadata(self) -> str:
         if not isinstance(self.event, UseEventPattern):
-            return ""
+            if not isinstance(self.event, UseItemEventPattern):
+                return ""
+            if self._is_variable(self.event.what):
+                return ""
+            return SupportedSingleUseFactPattern(self.event.what).to_metta()
         if self._is_variable(self.event.what) or self._is_variable(self.event.with_what):
             return ""
         return SupportedUseFactPattern(

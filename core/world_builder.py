@@ -38,6 +38,9 @@ from core.definitions.functions.trigger_function_definition import (
     TriggerFunctionDefinition,
 )
 from core.definitions.functions.use_function_definition import UseFunctionDefinition
+from core.definitions.functions.use_item_function_definition import (
+    UseItemFunctionDefinition,
+)
 from core.definitions.side_effects.on_drop_update_at import OnDropUpdateAt
 from core.definitions.side_effects.on_event_print import OnEventPrint
 from core.definitions.side_effects.on_move_show_enter_text import (
@@ -50,6 +53,9 @@ from core.definitions.side_effects.on_look_in_show_items import OnLookInShowItem
 from core.definitions.side_effects.on_startup_show_enter_text import (
     OnStartupShowEnterText,
 )
+from core.definitions.side_effects.on_use_item_fallback_print import (
+    OnUseItemFallbackPrint,
+)
 from core.definitions.side_effects.on_use_combine_item import OnUseCombineItem
 from core.definitions.side_effects.on_use_fallback_print import OnUseFallbackPrint
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
@@ -57,6 +63,7 @@ from core.patterns.events.drop_event_pattern import DropEventPattern
 from core.patterns.events.move_event_pattern import MoveEventPattern
 from core.patterns.events.pickup_event_pattern import PickUpEventPattern
 from core.patterns.events.startup_event_pattern import StartupEventPattern
+from core.patterns.events.use_item_event_pattern import UseItemEventPattern
 from core.patterns.events.use_event_pattern import UseEventPattern
 from core.patterns.events.look_in_event_pattern import LookInEventPattern
 from core.patterns.facts.at_fact_pattern import AtFactPattern
@@ -174,6 +181,7 @@ def build_world() -> World:
     world.add_definition(LookInFunctionDefinition(character_player.to_pattern()))
     world.add_definition(ExamineFunctionDefinition(character_player.to_pattern()))
     world.add_definition(UseFunctionDefinition(character_player.to_pattern()))
+    world.add_definition(UseItemFunctionDefinition(character_player.to_pattern()))
     world.add_definition(SynchronizeTickFunctionDefinition())
 
     world.add_definition(
@@ -208,6 +216,12 @@ def build_world() -> World:
         TriggerFunctionDefinition(
             UseEventPattern("$what", "$with_what"),
             [OnUseFallbackPrint()],
+        )
+    )
+    world.add_definition(
+        TriggerFunctionDefinition(
+            UseItemEventPattern("$what"),
+            [OnUseItemFallbackPrint()],
         )
     )
     world.add_definition(
