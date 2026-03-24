@@ -345,7 +345,7 @@ def build_world() -> World:
         )
     )
 
-    iron_box = ItemFactDefinition(
+    iron_box = ContainerFactDefinition(
         key="iron_box",
         name="Iron box",
         text_pickup="You pick up the iron box.",
@@ -354,8 +354,10 @@ def build_world() -> World:
             "The iron box is small and heavy in the hand, its rusted seams still "
             "clamped tightly shut."
         ),
-        text_enter=("Half-buried in the loose soil is a small iron box."),
-        text_look="Inside, a small iron box is wedged in the dirt.",
+        text_enter="Half-buried in the loose soil is a small iron box.",
+        text_look="You pry at the rusted lid and look inside the iron box.",
+        text_contents="A small iron box lies here, its lid rusted almost shut.",
+        can_pickup=True,
     )
     world.add_definition(iron_box)
 
@@ -510,6 +512,7 @@ def build_world() -> World:
         character_player.to_pattern(),
         location_ridge,
         [
+            iron_box,
             container_hollow_tree_trunk,
             container_rock_formation,
             big_chest,

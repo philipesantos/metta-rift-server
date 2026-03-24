@@ -2,6 +2,7 @@ import asyncio
 import json
 from json import JSONDecodeError
 from typing import Callable
+from uuid import UUID
 
 from core.runtime import CommandResult, GameSession
 
@@ -10,7 +11,19 @@ class InvalidWebSocketMessage(ValueError):
     pass
 
 
-def parse_websocket_message(message: str) -> tuple[str, str]:
+def _parse_message_uuid(payload: dict) -> str:
+    message_uuid = payload.get("uuid")
+    if not isinstance(message_uuid, str):
+        raise InvalidWebSocketMessage("The uuid field must be a string.")
+    try:
+        return str(UUID(message_uuid))
+    except ValueError as exc:
+        raise InvalidWebSocketMessage(
+            "The uuid field must be a valid UUID string."
+        ) from exc
+
+
+def parse_websocket_message(message: str) -> tuple[str, str, str]:
     try:
         payload = json.loads(message)
     except JSONDecodeError as exc:
@@ -36,25 +49,26 @@ def parse_websocket_message(message: str) -> tuple[str, str]:
             "The command_type field must be either 'natural_language' or 'metta'."
         )
 
-    return command, normalized_command_type
+    return command, normalized_command_type, _parse_message_uuid(payload)
 
 
-def serialize_command_result(result: CommandResult) -> str:
-    return json.dumps(
-        {
-            "event": "command_result",
-            "queries": [
-                {
-                    "command_type": query_execution.command_type,
-                    "original_input": query_execution.original_input,
-                    "matched_metta": query_execution.matched_metta,
-                    "original_responses": list(query_execution.original_responses),
-                    "responses": list(query_execution.responses),
-                }
-                for query_execution in result.queries
-            ],
-        }
-    )
+def serialize_command_result(result: CommandResult, message_uuid: str | None = None) -> str:
+    payload = {
+        "event": "command_result",
+        "queries": [
+            {
+                "command_type": query_execution.command_type,
+                "original_input": query_execution.original_input,
+                "matched_metta": query_execution.matched_metta,
+                "original_responses": list(query_execution.original_responses),
+                "responses": list(query_execution.responses),
+            }
+            for query_execution in result.queries
+        ],
+    }
+    if message_uuid is not None:
+        payload["uuid"] = message_uuid
+    return json.dumps(payload)
 
 
 def serialize_startup_event(metta_code: str) -> str:
@@ -66,12 +80,23 @@ def serialize_startup_event(metta_code: str) -> str:
     )
 
 
-def serialize_terminal_event(event_name: str) -> str:
-    return json.dumps(
-        {
-            "event": event_name,
-        }
-    )
+def serialize_terminal_event(event_name: str, message_uuid: str | None = None) -> str:
+    payload = {
+        "event": event_name,
+    }
+    if message_uuid is not None:
+        payload["uuid"] = message_uuid
+    return json.dumps(payload)
+
+
+def serialize_error_event(error: str, message_uuid: str | None = None) -> str:
+    payload = {
+        "event": "error",
+        "error": error,
+    }
+    if message_uuid is not None:
+        payload["uuid"] = message_uuid
+    return json.dumps(payload)
 
 
 async def run_websocket_server(
@@ -98,20 +123,18 @@ async def run_websocket_server(
             )
 
         async for message in websocket:
+            message_uuid = None
             try:
-                command, command_type = parse_websocket_message(message)
+                command, command_type, message_uuid = parse_websocket_message(message)
                 result = session.process_command(command, command_type=command_type)
-                response = serialize_command_result(result)
+                response = serialize_command_result(result, message_uuid)
                 terminal_response = None
                 if result.end_state_event and result.end_state_message:
-                    terminal_response = serialize_terminal_event(result.end_state_event)
+                    terminal_response = serialize_terminal_event(
+                        result.end_state_event, message_uuid
+                    )
             except (InvalidWebSocketMessage, ValueError) as exc:
-                response = json.dumps(
-                    {
-                        "event": "error",
-                        "error": str(exc),
-                    }
-                )
+                response = serialize_error_event(str(exc), message_uuid)
                 terminal_response = None
             await websocket.send(response)
             if terminal_response is not None:

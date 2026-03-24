@@ -67,6 +67,13 @@ class TestCommandCatalog(unittest.TestCase):
                 can_pickup=True,
             )
         )
+        world.add_definition(
+            ContainerFactDefinition(
+                "well",
+                name="Abandoned well",
+                text_contents="An abandoned well stands here.",
+            )
+        )
         world.add_definition(InventoryFunctionPattern(character))
         world.add_definition(MoveToFunctionDefinition(character))
         world.add_definition(MoveTowardsFunctionDefinition(character))
@@ -87,6 +94,7 @@ class TestCommandCatalog(unittest.TestCase):
             StateWrapperDefinition(AtFactPattern("wooden_chest", "glade"))
         )
         world.add_definition(StateWrapperDefinition(AtFactPattern("satchel", "glade")))
+        world.add_definition(StateWrapperDefinition(AtFactPattern("well", "glade")))
 
         metta.run(world.to_metta())
         catalog = build_command_catalog(world, metta)
@@ -135,8 +143,24 @@ class TestCommandCatalog(unittest.TestCase):
             "(look-in (wooden_chest))",
         )
         self.assertEqual(
+            utterance_to_metta.get("open wooden chest"),
+            "(look-in (wooden_chest))",
+        )
+        self.assertEqual(
             utterance_to_metta.get("search wooden chest"),
             "(look-in (wooden_chest))",
+        )
+        self.assertEqual(
+            utterance_to_metta.get("look in well"),
+            "(look-in (well))",
+        )
+        self.assertEqual(
+            utterance_to_metta.get("look in abandoned well"),
+            "(look-in (well))",
+        )
+        self.assertEqual(
+            utterance_to_metta.get("open abandoned well"),
+            "(look-in (well))",
         )
 
     def test_prefers_active_runtime_key_when_display_name_matches(self):
@@ -187,6 +211,36 @@ class TestCommandCatalog(unittest.TestCase):
         )
         self.assertEqual(
             utterance_to_metta.get("examine lantern 2"), "(examine (lantern_2))"
+        )
+
+    def test_builds_aliases_from_explicit_entity_names(self):
+        character = CharacterFactPattern("player", "John")
+        metta = get_test_metta()
+
+        world = World()
+        world.add_definition(
+            ContainerFactDefinition(
+                "well",
+                name="Abandoned well",
+                text_contents="An abandoned well stands here.",
+            )
+        )
+        world.add_definition(LookInFunctionDefinition(character))
+        world.add_definition(ExamineFunctionDefinition(character))
+        world.add_definition(StateWrapperDefinition(AtFactPattern("player", "well")))
+        world.add_definition(StateWrapperDefinition(AtFactPattern("well", "well")))
+
+        metta.run(world.to_metta())
+        catalog = build_command_catalog(world, metta)
+        utterance_to_metta = {entry.utterance: entry.metta for entry in catalog}
+
+        self.assertEqual(utterance_to_metta.get("examine well"), "(examine (well))")
+        self.assertEqual(
+            utterance_to_metta.get("examine abandoned well"), "(examine (well))"
+        )
+        self.assertEqual(utterance_to_metta.get("open well"), "(look-in (well))")
+        self.assertEqual(
+            utterance_to_metta.get("open abandoned well"), "(look-in (well))"
         )
 
 

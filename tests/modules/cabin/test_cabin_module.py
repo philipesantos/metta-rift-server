@@ -31,16 +31,16 @@ class TestCabinModule(unittest.TestCase):
             definition
             for definition in world.definitions
             if isinstance(definition, ItemFactDefinition)
-            and definition.key == "metal_key"
+            and definition.key in ("metal_key", "locked_cabin")
         ]
-        self.assertEqual(len(metal_keys), 1)
+        self.assertEqual(len(metal_keys), 2)
         cabin_containers = [
             definition
             for definition in world.definitions
             if isinstance(definition, ContainerFactDefinition)
-            and definition.key in ("locked_cabin", "cabin", "fireplace", "loose_board")
+            and definition.key in ("cabin", "fireplace", "loose_board")
         ]
-        self.assertEqual(len(cabin_containers), 4)
+        self.assertEqual(len(cabin_containers), 3)
         cabin_state_defs = [
             definition
             for definition in world.definitions

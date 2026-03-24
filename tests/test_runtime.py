@@ -50,11 +50,13 @@ class FakeMetta:
         game_over_message: str | None = None,
         responses: dict[str, object] | None = None,
         win_after_queries: set[str] | None = None,
+        errors: dict[str, Exception] | None = None,
     ):
         self.win_message = win_message
         self.game_over_message = game_over_message
         self.responses = responses or {}
         self.win_after_queries = win_after_queries or set()
+        self.errors = errors or {}
         self.calls: list[str] = []
         self._pending_win = False
 
@@ -70,6 +72,8 @@ class FakeMetta:
             if self.game_over_message is None:
                 return [[]]
             return [[FakeAtom(self.game_over_message)]]
+        if query in self.errors:
+            raise self.errors[query]
         result = self.responses.get(query, [[]])
         if query in self.win_after_queries:
             self._pending_win = True
@@ -163,6 +167,48 @@ class TestGameSession(unittest.TestCase):
         self.assertEqual(result.queries[1].original_responses, ("tick-result",))
         self.assertIsNone(result.end_state_event)
         self.assertIsNone(result.matched_metta)
+
+    @patch("core.runtime.format_metta_output", side_effect=lambda output: str(output))
+    @patch("core.runtime.build_command_catalog", return_value=[])
+    def test_rejects_malformed_explicit_metta_without_advancing_game(
+        self, _catalog, _format_output
+    ):
+        sync_query = f"!{SynchronizeTickFunctionPattern().to_metta()}"
+        metta = FakeMetta(
+            responses={
+                "WORLD": [[]],
+                "!(wait)": [["wait-result"]],
+                sync_query: [["tick-result"]],
+            },
+            errors={"!(broken": RuntimeError("unexpected end of input")},
+        )
+
+        session = GameSession(
+            metta_factory=lambda: metta,
+            world_builder=lambda: FakeWorld(),
+            embedding_index_cls=FakeEmbeddingIndex,
+        )
+
+        malformed = session.process_command("!(broken", command_type="metta")
+        valid = session.process_command("!(wait)", command_type="metta")
+
+        self.assertFalse(malformed.ok)
+        self.assertEqual(
+            malformed.error,
+            "Malformed MeTTa command: unexpected end of input",
+        )
+        self.assertEqual(malformed.metta_query, "!(broken")
+        self.assertEqual(len(malformed.queries), 1)
+        self.assertEqual(malformed.queries[0].matched_metta, "!(broken")
+        self.assertEqual(
+            malformed.queries[0].original_responses,
+            ("Malformed MeTTa command: unexpected end of input",),
+        )
+        self.assertEqual(malformed.queries[0].responses, ())
+        self.assertEqual(session.move_count, 1)
+        self.assertEqual(metta.calls.count(sync_query), 1)
+        self.assertTrue(valid.ok)
+        self.assertEqual(valid.output, "[['wait-result']]")
 
     @patch("core.runtime.format_metta_output", side_effect=lambda output: str(output))
     @patch("core.runtime.build_command_catalog", return_value=[])

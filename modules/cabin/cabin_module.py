@@ -25,16 +25,16 @@ class CabinModule(Module):
         self.fireplace_items = fireplace_items or []
 
     def apply(self, world: World) -> None:
-        locked_cabin = ContainerFactDefinition(
+        locked_cabin = ItemFactDefinition(
             key="locked_cabin",
             name="Locked cabin",
+            text_pickup="",
+            text_drop="",
             text_enter="A weathered cabin stands here, its door locked shut.",
             text_examine=(
                 "The warped door is held closed by a rusted metal lock hanging from "
                 "the latch."
             ),
-            text_look="The cabin is locked.",
-            text_contents="A weathered locked cabin stands just off the path.",
         )
         world.add_definition(locked_cabin)
         world.add_definition(

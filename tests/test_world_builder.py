@@ -1,5 +1,7 @@
 import unittest
+from unittest.mock import patch
 
+from core.definitions.facts.container_fact_definition import ContainerFactDefinition
 from core.definitions.facts.item_fact_definition import ItemFactDefinition
 from core.definitions.wrappers.state_wrapper_definition import StateWrapperDefinition
 from core.patterns.functions.examine_function_pattern import ExamineFunctionPattern
@@ -41,6 +43,17 @@ class TestWorldBuilder(unittest.TestCase):
 
         self.assertEqual(item_keys.count("shovel"), 1)
         self.assertEqual(item_keys.count("lantern"), 1)
+
+    def test_iron_box_is_defined_as_pickupable_container(self):
+        world = build_world()
+        iron_box = next(
+            definition
+            for definition in world.definitions
+            if isinstance(definition, ContainerFactDefinition)
+            and definition.key == "iron_box"
+        )
+
+        self.assertTrue(iron_box.can_pickup)
 
     def test_look_in_chest_trigger_outputs_container_and_each_item_once(self):
         metta = get_test_metta()
@@ -152,16 +165,34 @@ class TestWorldBuilder(unittest.TestCase):
         )
         self.assertEqual(shovel_result, [[]])
 
+    def test_runes_can_be_placed_in_iron_box(self):
+        with patch(
+            "modules.statues.statues_module.random.sample",
+            side_effect=lambda items, count: items[:count],
+        ):
+            world = build_world()
+
+        rune_locations = {
+            definition.pattern.what: definition.pattern.where
+            for definition in world.definitions
+            if isinstance(definition, StateWrapperDefinition)
+            and isinstance(definition.pattern, AtFactPattern)
+            and definition.pattern.what in {"epsilon_rune", "gamma_rune", "omicron_rune"}
+        }
+
+        self.assertIn("iron_box", set(rune_locations.values()))
+
     def test_using_key_on_cabin_reveals_cabin_contents(self):
         metta = get_test_metta()
         metta.run(build_world().to_metta())
 
-        locked_result = metta.run(
-            f"!{TriggerFunctionPattern(LookInEventPattern('locked_cabin')).to_metta()}"
-        )
+        locked_result = metta.run(f"!{ExamineFunctionPattern('locked_cabin').to_metta()}")
         locked_output_lines = format_metta_output(locked_result).splitlines()
-        self.assertIn("The cabin is locked.", locked_output_lines)
-        self.assertNotIn("You peer inside the fireplace.", locked_output_lines)
+        self.assertIn(
+            "The warped door is held closed by a rusted metal lock hanging from the latch.",
+            locked_output_lines,
+        )
+        self.assertNotIn("It is empty.", locked_output_lines)
 
         metta.run(
             StateWrapperDefinition(AtFactPattern("player", "hollow_path")).to_metta()

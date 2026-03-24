@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 import main
 
@@ -65,13 +65,14 @@ class TestMain(unittest.TestCase):
         self.assertIn("(GameOver $reason)", metta.calls[1])
 
     @patch.dict("os.environ", {}, clear=True)
-    def test_input_mode_defaults_to_cli(self):
-        self.assertEqual(main._input_mode(), "cli")
+    def test_input_mode_defaults_to_websocket(self):
+        self.assertEqual(main._input_mode(), "websocket")
 
     @patch.dict("os.environ", {main.INPUT_MODE_ENV_VAR: "websocket"})
     def test_input_mode_reads_websocket_env(self):
         self.assertEqual(main._input_mode(), "websocket")
 
+    @patch.dict("os.environ", {main.INPUT_MODE_ENV_VAR: "cli"})
     @patch("main._run_cli")
     @patch("main._run_websocket")
     @patch("main._print_startup")
@@ -99,6 +100,16 @@ class TestMain(unittest.TestCase):
         mock_print_startup.assert_not_called()
         mock_run_websocket.assert_called_once_with()
         mock_run_cli.assert_not_called()
+
+    @patch("main.asyncio.run", side_effect=KeyboardInterrupt)
+    @patch("main.run_websocket_server", new_callable=Mock, return_value="server")
+    def test_run_websocket_exits_cleanly_on_keyboard_interrupt(
+        self, mock_run_websocket_server, mock_asyncio_run
+    ):
+        main._run_websocket()
+
+        mock_run_websocket_server.assert_called_once_with(host="127.0.0.1", port=8765)
+        mock_asyncio_run.assert_called_once()
 
 
 if __name__ == "__main__":
