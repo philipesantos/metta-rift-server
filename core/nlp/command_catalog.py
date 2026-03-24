@@ -49,22 +49,42 @@ def _active_keys(metta) -> set[str]:
     return set(_query_values(metta, "(State (At $what $where))", "$what"))
 
 
-def _resolve_active_entities(metta, fact_name: str) -> list[SlotValue]:
+def _entity_aliases(metta, key: str, name_facts: tuple[str, ...]) -> list[str]:
+    aliases = [_humanize_key(key).lower()]
+    for fact_name in name_facts:
+        for value in _query_values(metta, f"({fact_name} {key} $name)", "$name"):
+            alias = value.strip().lower()
+            if alias and alias not in aliases:
+                aliases.append(alias)
+    return aliases
+
+
+def _resolve_active_entities(
+    metta, fact_name: str, name_facts: tuple[str, ...] = ()
+) -> list[SlotValue]:
     active_keys = _active_keys(metta)
     typed_keys = set(_query_values(metta, f"({fact_name} $key)", "$key"))
     keys = sorted(active_keys & typed_keys)
-    return [SlotValue(key=key, text=_humanize_key(key).lower()) for key in keys]
+    values: list[SlotValue] = []
+    for key in keys:
+        for alias in _entity_aliases(metta, key, name_facts):
+            values.append(SlotValue(key=key, text=alias))
+    return values
 
 
 def _resolve_items(metta, _world) -> list[SlotValue]:
-    return _resolve_active_entities(metta, "Item")
+    return _resolve_active_entities(metta, "Item", ("ItemName",))
 
 
 def _resolve_pickupables(metta, _world) -> list[SlotValue]:
     active_keys = _active_keys(metta)
     pickupable_keys = set(_query_values(metta, "(Pickupable $key)", "$key"))
     keys = sorted(active_keys & pickupable_keys)
-    return [SlotValue(key=key, text=_humanize_key(key).lower()) for key in keys]
+    values: list[SlotValue] = []
+    for key in keys:
+        for alias in _entity_aliases(metta, key, ("ItemName", "ContainerName")):
+            values.append(SlotValue(key=key, text=alias))
+    return values
 
 
 def _resolve_examinables(metta, _world) -> list[SlotValue]:
@@ -87,7 +107,7 @@ def _resolve_locations(metta, _world) -> list[SlotValue]:
 
 
 def _resolve_containers(metta, _world) -> list[SlotValue]:
-    return _resolve_active_entities(metta, "Container")
+    return _resolve_active_entities(metta, "Container", ("ContainerName",))
 
 
 def _resolve_directions(_metta, _world) -> list[SlotValue]:

@@ -33,19 +33,19 @@ cd metta-rift-server
 # Install dependencies
 pip install -r requirements.txt
 
-# Run in CLI mode
+# Run in websocket mode
 python main.py
 
-# Run in websocket mode
-METTA_RIFT_INPUT_MODE=websocket python main.py
+# Run in CLI mode
+METTA_RIFT_INPUT_MODE=cli python main.py
 ```
 
 ## Input Modes
 
 Choose the active input transport at startup with `METTA_RIFT_INPUT_MODE`:
 
-- `cli` (default): reads commands from stdin.
-- `websocket`: starts a websocket server and accepts commands from a web client.
+- `websocket` (default): starts a websocket server and accepts commands from a web client.
+- `cli`: reads commands from stdin.
 
 Optional websocket settings:
 
@@ -54,12 +54,13 @@ Optional websocket settings:
 
 ## Websocket Messages
 
-When `METTA_RIFT_INPUT_MODE=websocket`, the server accepts JSON messages only.
+When `METTA_RIFT_INPUT_MODE=websocket` or the variable is unset, the server accepts JSON messages only.
 
 Request:
 
 ```json
 {
+  "uuid": "123e4567-e89b-12d3-a456-426614174000",
   "command": "look around",
   "command_type": "natural_language"
 }
@@ -74,6 +75,7 @@ Examples:
 
 ```json
 {
+  "uuid": "123e4567-e89b-12d3-a456-426614174000",
   "command": "pick up lantern",
   "command_type": "natural_language"
 }
@@ -81,6 +83,7 @@ Examples:
 
 ```json
 {
+  "uuid": "123e4567-e89b-12d3-a456-426614174000",
   "command": "!(move player north)",
   "command_type": "metta"
 }
@@ -122,6 +125,7 @@ Command response:
 ```json
 {
   "event": "command_result",
+  "uuid": "123e4567-e89b-12d3-a456-426614174000",
   "queries": [
     {
       "command_type": "natural_language",
@@ -150,6 +154,7 @@ Error event:
 ```json
 {
   "event": "error",
+  "uuid": "123e4567-e89b-12d3-a456-426614174000",
   "error": "..."
 }
 ```
@@ -158,7 +163,8 @@ Game won event:
 
 ```json
 {
-  "event": "game_won"
+  "event": "game_won",
+  "uuid": "123e4567-e89b-12d3-a456-426614174000"
 }
 ```
 
@@ -166,7 +172,8 @@ Game over event:
 
 ```json
 {
-  "event": "game_over"
+  "event": "game_over",
+  "uuid": "123e4567-e89b-12d3-a456-426614174000"
 }
 ```
 

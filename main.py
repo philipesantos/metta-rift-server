@@ -14,7 +14,7 @@ def _end_state_message(metta) -> str | None:
 
 
 def _input_mode() -> str:
-    mode = os.getenv(INPUT_MODE_ENV_VAR, "cli").strip().lower()
+    mode = os.getenv(INPUT_MODE_ENV_VAR, "websocket").strip().lower()
     if mode not in {"cli", "websocket"}:
         raise ValueError(
             f"{INPUT_MODE_ENV_VAR} must be either 'cli' or 'websocket', got '{mode}'."
@@ -77,7 +77,10 @@ def _run_websocket() -> None:
     port = _websocket_port()
     print("\n--- Websocket Input ---")
     print(f"Listening on ws://{host}:{port}")
-    asyncio.run(run_websocket_server(host=host, port=port))
+    try:
+        asyncio.run(run_websocket_server(host=host, port=port))
+    except KeyboardInterrupt:
+        return
 
 
 def main():

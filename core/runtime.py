@@ -136,6 +136,13 @@ def _append_unique_message(responses: tuple[str, ...], message: str | None) -> t
     return responses + (message,)
 
 
+def _format_metta_error(exc: Exception) -> str:
+    detail = str(exc).strip()
+    if not detail:
+        return "Malformed MeTTa command."
+    return f"Malformed MeTTa command: {detail}"
+
+
 class GameSession:
     def __init__(
         self,
@@ -284,8 +291,30 @@ class GameSession:
                 matched_metta = match.entry.metta
                 match_score = match.score
 
+            try:
+                result_output = self.metta.run(metta_query)
+            except Exception as exc:
+                if resolved_type != "metta":
+                    raise
+                error_message = _format_metta_error(exc)
+                return CommandResult(
+                    ok=False,
+                    input_text=user_query,
+                    command_type=resolved_type,
+                    error=error_message,
+                    metta_query=metta_query,
+                    queries=(
+                        QueryExecution(
+                            command_type=resolved_type,
+                            original_input=user_query,
+                            matched_metta=metta_query,
+                            original_responses=(error_message,),
+                            responses=(),
+                        ),
+                    ),
+                )
+
             self.move_count += 1
-            result_output = self.metta.run(metta_query)
             raw_result_output = collect_raw_metta_output(result_output)
             formatted_output = format_metta_output(result_output)
             finished_state = end_state(self.metta)

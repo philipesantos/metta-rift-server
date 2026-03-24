@@ -5,6 +5,7 @@ from core.websocket_input import (
     InvalidWebSocketMessage,
     parse_websocket_message,
     serialize_command_result,
+    serialize_error_event,
     serialize_startup_event,
     serialize_terminal_event,
 )
@@ -12,29 +13,50 @@ from core.websocket_input import (
 
 class TestWebSocketInput(unittest.TestCase):
     def test_parse_websocket_message_accepts_json_object(self):
-        command, command_type = parse_websocket_message(
-            '{"command": "look around", "command_type": "natural_language"}'
+        command, command_type, message_uuid = parse_websocket_message(
+            '{"command": "look around", "command_type": "natural_language", '
+            '"uuid": "123e4567-e89b-12d3-a456-426614174000"}'
         )
 
         self.assertEqual(command, "look around")
         self.assertEqual(command_type, "natural_language")
+        self.assertEqual(message_uuid, "123e4567-e89b-12d3-a456-426614174000")
 
     def test_parse_websocket_message_accepts_metta_command_type(self):
-        command, command_type = parse_websocket_message(
-            '{"command": "!(move north)", "command_type": "metta"}'
+        command, command_type, message_uuid = parse_websocket_message(
+            '{"command": "!(move north)", "command_type": "metta", '
+            '"uuid": "123e4567-e89b-12d3-a456-426614174000"}'
         )
 
         self.assertEqual(command, "!(move north)")
         self.assertEqual(command_type, "metta")
+        self.assertEqual(message_uuid, "123e4567-e89b-12d3-a456-426614174000")
+
+    def test_parse_websocket_message_rejects_missing_uuid(self):
+        with self.assertRaises(InvalidWebSocketMessage):
+            parse_websocket_message(
+                '{"command": "look around", "command_type": "natural_language"}'
+            )
+
+    def test_parse_websocket_message_rejects_invalid_uuid(self):
+        with self.assertRaises(InvalidWebSocketMessage):
+            parse_websocket_message(
+                '{"command": "look around", "command_type": "natural_language", '
+                '"uuid": "not-a-uuid"}'
+            )
 
     def test_parse_websocket_message_rejects_missing_command_type(self):
         with self.assertRaises(InvalidWebSocketMessage):
-            parse_websocket_message('{"command": "!(move north)"}')
+            parse_websocket_message(
+                '{"command": "!(move north)", '
+                '"uuid": "123e4567-e89b-12d3-a456-426614174000"}'
+            )
 
     def test_parse_websocket_message_rejects_invalid_command_type(self):
         with self.assertRaises(InvalidWebSocketMessage):
             parse_websocket_message(
-                '{"command": "look around", "command_type": "auto"}'
+                '{"command": "look around", "command_type": "auto", '
+                '"uuid": "123e4567-e89b-12d3-a456-426614174000"}'
             )
 
     def test_parse_websocket_message_rejects_non_json(self):
@@ -73,10 +95,12 @@ class TestWebSocketInput(unittest.TestCase):
                         responses=(),
                     ),
                 ),
-            )
+            ),
+            "123e4567-e89b-12d3-a456-426614174000",
         )
 
         self.assertIn('"event": "command_result"', payload)
+        self.assertIn('"uuid": "123e4567-e89b-12d3-a456-426614174000"', payload)
         self.assertIn('"command_type": "natural_language"', payload)
         self.assertIn('"original_input": "look around"', payload)
         self.assertIn('"matched_metta": "!look"', payload)
@@ -117,7 +141,19 @@ class TestWebSocketInput(unittest.TestCase):
         self.assertIn('"responses": ["Welcome to the cabin."]', payload)
 
     def test_serialize_terminal_event_emits_game_event_json(self):
-        payload = serialize_terminal_event("game_won")
+        payload = serialize_terminal_event(
+            "game_won", "123e4567-e89b-12d3-a456-426614174000"
+        )
 
         self.assertIn('"event": "game_won"', payload)
+        self.assertIn('"uuid": "123e4567-e89b-12d3-a456-426614174000"', payload)
         self.assertNotIn('"message"', payload)
+
+    def test_serialize_error_event_emits_json(self):
+        payload = serialize_error_event(
+            "bad request", "123e4567-e89b-12d3-a456-426614174000"
+        )
+
+        self.assertIn('"event": "error"', payload)
+        self.assertIn('"error": "bad request"', payload)
+        self.assertIn('"uuid": "123e4567-e89b-12d3-a456-426614174000"', payload)
