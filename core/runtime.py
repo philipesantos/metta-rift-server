@@ -143,6 +143,11 @@ def _format_metta_error(exc: Exception) -> str:
     return f"Malformed MeTTa command: {detail}"
 
 
+_UNMATCHED_COMMAND_MESSAGE = (
+    "That makes no sense here."
+)
+
+
 class GameSession:
     def __init__(
         self,
@@ -275,14 +280,14 @@ class GameSession:
                         ok=False,
                         input_text=user_query,
                         command_type=resolved_type,
-                        error="That doesn't seem possible right now.",
+                        error=_UNMATCHED_COMMAND_MESSAGE,
                         queries=(
                             QueryExecution(
                                 command_type=resolved_type,
                                 original_input=user_query,
                                 matched_metta=None,
                                 original_responses=(),
-                                responses=("That doesn't seem possible right now.",),
+                                responses=(_UNMATCHED_COMMAND_MESSAGE,),
                             ),
                         ),
                     )
