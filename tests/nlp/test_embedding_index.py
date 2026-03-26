@@ -3,6 +3,7 @@ from unittest.mock import patch
 
 import numpy as np
 
+import core.nlp.embedding_index as embedding_index_module
 from core.nlp import CommandEntry, EmbeddingIndex
 
 
@@ -28,6 +29,9 @@ class _FakeSentenceTransformer:
 
 
 class TestEmbeddingIndex(unittest.TestCase):
+    def setUp(self):
+        embedding_index_module._clear_shared_sentence_transformer_cache()
+
     def test_matches_best_entry_for_query(self):
         entries = [
             CommandEntry(
@@ -201,6 +205,35 @@ class TestEmbeddingIndex(unittest.TestCase):
 
         self.assertEqual(fake_model.calls[0], ["pickup compass"])
         self.assertEqual(fake_model.calls[1], ["pickup lantern"])
+
+    def test_reuses_sentence_transformer_for_same_model_name(self):
+        entries = [
+            CommandEntry(
+                utterance="inventory",
+                intent="inventory",
+                metta="(inventory)",
+                slots={},
+            )
+        ]
+        vectors = {
+            "inventory": np.array([1.0, 0.0], dtype=np.float32),
+        }
+        created_models: list[_FakeSentenceTransformer] = []
+
+        def build_model(_model_name):
+            model = _FakeSentenceTransformer(vectors)
+            created_models.append(model)
+            return model
+
+        with patch(
+            "core.nlp.embedding_index.SentenceTransformer",
+            side_effect=build_model,
+        ):
+            first = EmbeddingIndex(entries, model_name="fake")
+            second = EmbeddingIndex(entries, model_name="fake")
+
+        self.assertIs(first.model, second.model)
+        self.assertEqual(len(created_models), 1)
 
     def test_prefers_unique_exact_match_before_embeddings(self):
         entries = [

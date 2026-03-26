@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from threading import Lock
 
 import numpy as np
 from sentence_transformers import SentenceTransformer
@@ -10,6 +11,24 @@ from core.nlp.command_catalog import CommandEntry
 class MatchResult:
     entry: CommandEntry
     score: float
+
+
+_MODEL_CACHE_LOCK = Lock()
+_MODEL_CACHE: dict[str, SentenceTransformer] = {}
+
+
+def _get_shared_sentence_transformer(model_name: str) -> SentenceTransformer:
+    with _MODEL_CACHE_LOCK:
+        model = _MODEL_CACHE.get(model_name)
+        if model is None:
+            model = SentenceTransformer(model_name)
+            _MODEL_CACHE[model_name] = model
+        return model
+
+
+def _clear_shared_sentence_transformer_cache() -> None:
+    with _MODEL_CACHE_LOCK:
+        _MODEL_CACHE.clear()
 
 
 class EmbeddingIndex:
@@ -27,7 +46,7 @@ class EmbeddingIndex:
         self.min_score = min_score
         self.min_margin = min_margin
         self.high_confidence_score = high_confidence_score
-        self.model = SentenceTransformer(model_name)
+        self.model = _get_shared_sentence_transformer(model_name)
         self._embedding_cache: dict[str, np.ndarray] = {}
         self.embeddings = self._build_embeddings(entries)
 
