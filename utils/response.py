@@ -222,12 +222,12 @@ def collect_raw_metta_output(output: Any) -> tuple[str, ...]:
         stripped = output.strip()
         return (stripped,) if not _is_empty_raw_value(stripped) else ()
 
-    raw_values: list[str] = []
-    for atom in _iter_metta_atoms(output):
-        raw = str(atom).strip()
-        if not _is_empty_raw_value(raw):
-            raw_values.append(raw)
-    return tuple(raw_values)
+    if isinstance(output, list):
+        rows = [_serialize_raw_row(item) for item in output]
+        return tuple(row for row in rows if row is not None)
+
+    raw = _atom_to_raw(output).strip()
+    return (raw,) if not _is_empty_raw_value(raw) else ()
 
 
 def format_metta_output(output: Any) -> str:
@@ -237,7 +237,7 @@ def format_metta_output(output: Any) -> str:
     if isinstance(output, str):
         atoms = _find_response_atoms(output)
         if not atoms:
-            return output
+            return ""
         responses: list[ResponseText] = []
         for atom in atoms:
             response = parse_response_atom(atom)
@@ -254,10 +254,7 @@ def format_metta_output(output: Any) -> str:
         if response and response.text:
             responses.append(response)
     if not responses:
-        fallback_from_string = format_metta_output(str(output))
-        if fallback_from_string != str(output):
-            return fallback_from_string
-        return str(output)
+        return ""
     responses.sort(key=lambda item: (-item.priority, item.text))
     return "\n".join(item.text for item in responses)
 
@@ -353,3 +350,23 @@ def _iter_metta_atoms(output: Any):
         return
 
     yield output
+
+
+def _serialize_raw_row(row: Any) -> str | None:
+    if isinstance(row, list):
+        values = [_serialize_raw_value(item) for item in row]
+        values = [value for value in values if value is not None]
+        if not values:
+            return None
+        if len(values) == 1:
+            return values[0]
+        return f"[{', '.join(values)}]"
+
+    return _serialize_raw_value(row)
+
+
+def _serialize_raw_value(value: Any) -> str | None:
+    raw = _atom_to_raw(value).strip()
+    if _is_empty_raw_value(raw):
+        return None
+    return raw

@@ -42,6 +42,37 @@ class FakeMetta:
 
 
 class TestMain(unittest.TestCase):
+    @patch("builtins.print")
+    def test_print_command_result_shows_raw_metta_output_when_no_response_text(self, mock_print):
+        result = main.GameSession.__new__(main.GameSession)  # not used, keeps import local
+        command_result = type(
+            "Result",
+            (),
+            {
+                "command_type": "metta",
+                "matched_metta": None,
+                "input_text": "!(match &self foo bar)",
+                "match_score": None,
+                "output": "",
+                "error": None,
+                "tick_output": "",
+                "queries": (
+                    type(
+                        "Query",
+                        (),
+                        {"original_responses": ("glade", "(State (At player glade))")},
+                    )(),
+                ),
+            },
+        )()
+
+        main._print_command_result(command_result)
+
+        self.assertEqual(mock_print.call_args_list[0].args[0], "glade")
+        self.assertEqual(
+            mock_print.call_args_list[1].args[0], "(State (At player glade))"
+        )
+
     def test_end_state_message_returns_game_won_before_game_over(self):
         metta = FakeMetta(
             win_message="You escaped.",

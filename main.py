@@ -68,6 +68,11 @@ def _print_command_result(result) -> None:
 
     if result.output:
         print(result.output)
+    elif result.command_type == "metta" and result.queries:
+        raw_values = result.queries[0].original_responses
+        if raw_values:
+            for raw_value in raw_values:
+                print(raw_value)
     elif result.error:
         print(result.error)
 
