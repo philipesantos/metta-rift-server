@@ -10,3 +10,6 @@ class FirstFunctionDefinition(FunctionDefinition):
             f")"
         )
         # fmt: on
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Returns the first element of a Cons list."

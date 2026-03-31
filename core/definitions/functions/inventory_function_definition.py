@@ -55,3 +55,6 @@ class InventoryFunctionPattern(FunctionDefinition):
             metta="(inventory)",
             slots={},
         )
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Lists the items and containers the player is currently carrying."

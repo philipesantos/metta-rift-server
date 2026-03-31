@@ -137,3 +137,12 @@ class StatuesHelpersFunctionDefinition(FunctionDefinition):
         for condition in conditions[2:]:
             current = cls._format_binary("and", current, condition)
         return current
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        tooltips = {
+            "(statue-has-any-rune ($statue))": "Returns True if the given statue already holds any rune.",
+            "(all-statues-filled)": "Returns True if every statue already holds a rune.",
+            "(statues-solved)": "Returns True if the statues hold the correct rune arrangement.",
+            "(statue-filled-message ($statue $statue_name))": "Builds the response shown when a statue already contains a rune.",
+        }
+        return tooltips.get(signature)

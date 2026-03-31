@@ -64,3 +64,6 @@ class LookInFunctionDefinition(FunctionDefinition):
             metta="(look-in ({container}))",
             slots={"container": SlotSpec("container")},
         )
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Looks inside a reachable container and triggers its contents response."

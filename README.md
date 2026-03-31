@@ -102,7 +102,8 @@ Startup event:
       "head": "inventory",
       "signature": "(inventory)",
       "source_metta": "(= (inventory) ...)",
-      "kind": "function"
+      "kind": "function",
+      "tooltip": "Lists the items and containers the player is currently carrying."
     }
   ]
 }
@@ -110,7 +111,8 @@ Startup event:
 
 `metta_code` is the raw world source loaded into MeTTa. `metta_docs` is a structured
 catalog of callable `FunctionDefinition` entries extracted by the backend so a client can
-show exact definition source without parsing the raw MeTTa text itself.
+show exact definition source without parsing the raw MeTTa text itself. `tooltip` is a
+short backend-authored summary intended for hover text or compact previews in the UI.
 
 If the startup trigger produces messages, they are sent immediately after the `startup`
 event as a normal `command_result`:

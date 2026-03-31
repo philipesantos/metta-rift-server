@@ -67,3 +67,6 @@ class PickUpFunctionDefinition(FunctionDefinition):
             metta="(pickup ({item}))",
             slots={"item": SlotSpec("pickupable")},
         )
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Picks up a reachable pickupable item and triggers its pickup effects."

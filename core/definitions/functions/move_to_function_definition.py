@@ -44,3 +44,6 @@ class MoveToFunctionDefinition(FunctionDefinition):
             metta="(move-to ({location}))",
             slots={"location": SlotSpec("location")},
         )
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Moves the player to a named location if it is reachable and not blocked."

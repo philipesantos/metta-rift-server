@@ -33,6 +33,10 @@ class TestMettaDocCatalog(unittest.TestCase):
         self.assertEqual(docs[0].head, "inventory")
         self.assertEqual(docs[0].signature, "(inventory)")
         self.assertEqual(docs[0].kind, "function")
+        self.assertEqual(
+            docs[0].tooltip,
+            "Lists the items and containers the player is currently carrying.",
+        )
         self.assertIn("(= (inventory)\n", docs[0].source_metta)
 
     def test_builds_docs_for_multi_function_definition(self):
@@ -47,6 +51,13 @@ class TestMettaDocCatalog(unittest.TestCase):
         self.assertIn("(all-statues-filled)", signatures)
         self.assertIn("(statues-solved)", signatures)
         self.assertIn("(statue-filled-message ($statue $statue_name))", signatures)
+        self.assertEqual(
+            {
+                doc.signature: doc.tooltip
+                for doc in docs
+            }["(all-statues-filled)"],
+            "Returns True if every statue already holds a rune.",
+        )
 
     def test_returns_empty_docs_when_world_has_no_definitions_attribute(self):
         self.assertEqual(build_metta_doc_catalog(FakeWorldWithoutDefinitions()), [])

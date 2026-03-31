@@ -155,6 +155,7 @@ class TestWebSocketInput(unittest.TestCase):
                     signature="(look)",
                     source_metta="(= (look) Empty)",
                     kind="function",
+                    tooltip="Shows the current location.",
                 )
             ],
         )
@@ -164,6 +165,7 @@ class TestWebSocketInput(unittest.TestCase):
         self.assertIn('"metta_docs": [{"id": "doc:1", "head": "look"', payload)
         self.assertIn('"signature": "(look)"', payload)
         self.assertIn('"source_metta": "(= (look) Empty)"', payload)
+        self.assertIn('"tooltip": "Shows the current location."', payload)
         self.assertNotIn('startup_output', payload)
 
     def test_serialize_command_result_can_represent_startup_messages(self):
