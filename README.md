@@ -169,6 +169,9 @@ Command response:
 than one `doc_id`, for example when a `trigger` call matches multiple concrete trigger
 definitions.
 
+`original_responses` preserves raw atom strings for debugging, while `responses`
+contains only parsed text from `Response` atoms.
+
 Error event:
 
 ```json

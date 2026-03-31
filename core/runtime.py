@@ -364,6 +364,30 @@ class GameSession:
                     ),
                 )
 
+            if resolved_type == "metta":
+                return CommandResult(
+                    ok=True,
+                    input_text=user_query,
+                    command_type=resolved_type,
+                    output=formatted_output,
+                    end_state_event=None,
+                    end_state_message=None,
+                    metta_query=metta_query,
+                    matched_utterance=matched_utterance,
+                    matched_metta=matched_metta,
+                    match_score=match_score,
+                    queries=(
+                        QueryExecution(
+                            command_type=resolved_type,
+                            original_input=user_query,
+                            matched_metta=metta_query,
+                            doc_ids=resolve_metta_doc_ids(metta_query, self.metta_docs),
+                            original_responses=raw_result_output,
+                            responses=_output_lines(formatted_output),
+                        ),
+                    ),
+                )
+
             tick_query = f"!{SynchronizeTickFunctionPattern().to_metta()}"
             tick_output = self.metta.run(tick_query)
             raw_tick_output = collect_raw_metta_output(tick_output)

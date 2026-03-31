@@ -46,6 +46,14 @@ class _StringOnlyEmptyAtom:
         return "Empty"
 
 
+class _StringOnlyNonResponseAtom:
+    def get_children(self):
+        return []
+
+    def __str__(self):
+        return "(foo bar)"
+
+
 class TestResponseParser(unittest.TestCase):
     def test_parse_response_atom_from_string(self):
         response = parse_response_atom('(Response 42 "Hello")')
@@ -95,6 +103,13 @@ class TestResponseParser(unittest.TestCase):
         self.assertEqual(format_metta_output([]), "")
         self.assertEqual(format_metta_output("[[]]"), "")
 
+    def test_format_metta_output_ignores_non_response_string_output(self):
+        self.assertEqual(format_metta_output("(foo bar)"), "")
+
+    def test_format_metta_output_ignores_non_response_atoms(self):
+        output = [[_StringOnlyNonResponseAtom()]]
+        self.assertEqual(format_metta_output(output), "")
+
     def test_collect_raw_metta_output_returns_unparsed_response_atoms(self):
         output = [[_StringOnlyResponseAtom()]]
         self.assertEqual(
@@ -105,6 +120,16 @@ class TestResponseParser(unittest.TestCase):
     def test_collect_raw_metta_output_suppresses_empty_results(self):
         self.assertEqual(collect_raw_metta_output([[]]), ())
         self.assertEqual(collect_raw_metta_output([[_StringOnlyEmptyAtom()]]), ())
+
+    def test_collect_raw_metta_output_preserves_match_row_shape(self):
+        output = [
+            [
+                _FakeAtom(name="bar"),
+                _FakeAtom(name="foo"),
+                _FakeAtom(name="doe"),
+            ]
+        ]
+        self.assertEqual(collect_raw_metta_output(output), ("[bar, foo, doe]",))
 
 
 if __name__ == "__main__":

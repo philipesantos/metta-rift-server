@@ -6,6 +6,7 @@ from core.websocket_input import (
     HEALTHCHECK_PATH,
     InvalidWebSocketMessage,
     parse_websocket_message,
+    process_client_message,
     process_healthcheck_request,
     serialize_command_result,
     serialize_error_event,
@@ -15,6 +16,22 @@ from core.websocket_input import (
 
 
 class TestWebSocketInput(unittest.TestCase):
+    def test_process_client_message_converts_unexpected_session_error_to_error_event(self):
+        class ExplodingSession:
+            def process_command(self, command, *, command_type):
+                raise RuntimeError("unexpected end of input")
+
+        response, terminal_response = process_client_message(
+            ExplodingSession(),
+            '{"command": "!(broken", "command_type": "metta", '
+            '"uuid": "123e4567-e89b-12d3-a456-426614174000"}',
+        )
+
+        self.assertIn('"event": "error"', response)
+        self.assertIn('"error": "unexpected end of input"', response)
+        self.assertIn('"uuid": "123e4567-e89b-12d3-a456-426614174000"', response)
+        self.assertIsNone(terminal_response)
+
     def test_process_healthcheck_request_handles_legacy_websockets_signature(self):
         response = process_healthcheck_request(HEALTHCHECK_PATH, {})
 
