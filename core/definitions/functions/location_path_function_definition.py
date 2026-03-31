@@ -22,3 +22,6 @@ class LocationPathFunctionDefinition(FunctionDefinition):
             f")"
         )
         # fmt: on
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Builds the containment path from an entity up to its enclosing location."

@@ -17,3 +17,6 @@ class ExistsFunctionDefinition(FunctionDefinition):
             f")"
         )
         # fmt: on
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Returns True when a matching atom exists in the current MeTTa space."

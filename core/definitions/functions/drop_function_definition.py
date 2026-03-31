@@ -42,3 +42,6 @@ class DropFunctionDefinition(FunctionDefinition):
             metta="(drop ({item}))",
             slots={"item": SlotSpec("pickupable")},
         )
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Drops an item from the player's inventory into the current location."

@@ -52,3 +52,6 @@ class UseFunctionDefinition(FunctionDefinition):
             metta="(use ({item} {target}))",
             slots={"item": SlotSpec("item"), "target": SlotSpec("examinable")},
         )
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Uses one carried item on another reachable target and triggers matching effects."

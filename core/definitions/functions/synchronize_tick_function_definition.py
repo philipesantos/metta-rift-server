@@ -26,3 +26,6 @@ class SynchronizeTickFunctionDefinition(FunctionDefinition):
             f")"
         )
         # fmt: on
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Advances the game tick when a stale tick marker is present."

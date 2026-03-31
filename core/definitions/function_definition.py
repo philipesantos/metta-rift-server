@@ -4,4 +4,5 @@ from core.definitions.definition import Definition
 
 
 class FunctionDefinition(Definition, ABC):
-    pass
+    def doc_tooltip(self, signature: str) -> str | None:
+        return None

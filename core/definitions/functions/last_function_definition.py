@@ -13,3 +13,6 @@ class LastFunctionDefinition(FunctionDefinition):
             f")"
         )
         # fmt: on
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Returns the last element of a Cons list."

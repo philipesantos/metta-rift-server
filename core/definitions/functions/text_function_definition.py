@@ -10,3 +10,6 @@ class TextFunctionDefinition(FunctionDefinition):
             f")"
         )
         # fmt: on
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Builds printable text from nested text fragments."

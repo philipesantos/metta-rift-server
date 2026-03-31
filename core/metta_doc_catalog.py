@@ -12,6 +12,7 @@ class MettaDocEntry:
     signature: str
     source_metta: str
     kind: str
+    tooltip: str | None = None
 
 
 def build_metta_doc_catalog(world) -> list[MettaDocEntry]:
@@ -34,6 +35,7 @@ def build_metta_doc_catalog(world) -> list[MettaDocEntry]:
                     signature=signature,
                     source_metta=source_metta,
                     kind="trigger" if head == "trigger" else "function",
+                    tooltip=definition.doc_tooltip(signature),
                 )
             )
     return entries

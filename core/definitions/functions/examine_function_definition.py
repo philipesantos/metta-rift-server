@@ -50,3 +50,6 @@ class ExamineFunctionDefinition(FunctionDefinition):
             metta="(examine ({target}))",
             slots={"target": SlotSpec("examinable")},
         )
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Shows the description for an item or container nearby or in inventory."

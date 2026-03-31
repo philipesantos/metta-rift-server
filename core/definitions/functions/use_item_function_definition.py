@@ -43,3 +43,6 @@ class UseItemFunctionDefinition(FunctionDefinition):
             metta="(use ({item}))",
             slots={"item": SlotSpec("item")},
         )
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Uses a carried item by itself and triggers matching single-item effects."

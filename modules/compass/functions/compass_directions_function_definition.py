@@ -26,3 +26,6 @@ class CompassDirectionsFunctionDefinition(FunctionDefinition):
             f"    )\n"
             f")"
         )
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Lists visible compass directions from a location, skipping blocked routes."

@@ -88,6 +88,7 @@ def serialize_startup_event(metta_code: str, metta_docs=None) -> str:
                     "signature": doc.signature,
                     "source_metta": doc.source_metta,
                     "kind": doc.kind,
+                    "tooltip": doc.tooltip,
                 }
                 for doc in (metta_docs or [])
             ],

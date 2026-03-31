@@ -44,3 +44,6 @@ class MoveTowardsFunctionDefinition(FunctionDefinition):
             metta="(move-towards ({direction}))",
             slots={"direction": SlotSpec("direction")},
         )
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Moves the player in a direction when a route exists and is not blocked."

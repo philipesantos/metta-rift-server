@@ -51,3 +51,6 @@ class TriggerFunctionDefinition(FunctionDefinition):
     @staticmethod
     def _is_variable(value: str) -> bool:
         return value.startswith("$")
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return f"Handles side effects for the event {self.event.to_metta()}."

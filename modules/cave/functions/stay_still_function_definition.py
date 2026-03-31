@@ -34,3 +34,6 @@ class StayStillFunctionDefinition(FunctionDefinition):
             metta="(stay-still)",
             slots={},
         )
+
+    def doc_tooltip(self, signature: str) -> str | None:
+        return "Triggers wait or stay-still effects for the player's current location."
