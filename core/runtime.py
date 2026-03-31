@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from threading import Lock
 from typing import Any, Callable
 
+from core.metta_doc_catalog import build_metta_doc_catalog, resolve_metta_doc_ids
 from core.nlp.command_catalog import build_command_catalog
 from core.patterns.events.startup_event_pattern import StartupEventPattern
 from core.patterns.facts.game_over_fact_pattern import GameOverFactPattern
@@ -101,6 +102,7 @@ class QueryExecution:
     command_type: str
     original_input: str
     matched_metta: str | None
+    doc_ids: tuple[str, ...] = ()
     original_responses: tuple[str, ...] = ()
     responses: tuple[str, ...] = ()
 
@@ -166,6 +168,7 @@ class GameSession:
         self.metta = metta_factory()
         self.world = world_builder()
         self.metta_code = self.world.to_metta()
+        self.metta_docs = build_metta_doc_catalog(self.world)
         self.world_load_output = self.metta.run(self.metta_code)
         self.command_catalog = build_command_catalog(self.world, self.metta)
         self.embedding_index = embedding_index_cls(
@@ -204,6 +207,7 @@ class GameSession:
                     command_type="metta",
                     original_input=self.startup_query,
                     matched_metta=self.startup_query,
+                    doc_ids=resolve_metta_doc_ids(self.startup_query, self.metta_docs),
                     original_responses=collect_raw_metta_output(startup_raw_output),
                     responses=startup_responses,
                 ),
@@ -233,15 +237,16 @@ class GameSession:
                 command_type=resolved_type,
                 error="Command cannot be empty.",
                 queries=(
-                    QueryExecution(
-                        command_type=resolved_type,
-                        original_input=user_query,
-                        matched_metta=None,
-                        original_responses=(),
-                        responses=("Command cannot be empty.",),
+                        QueryExecution(
+                            command_type=resolved_type,
+                            original_input=user_query,
+                            matched_metta=None,
+                            doc_ids=(),
+                            original_responses=(),
+                            responses=("Command cannot be empty.",),
+                        ),
                     ),
-                ),
-            )
+                )
 
         with self._lock:
             resolved_type = self._normalize_command_type(command_type, stripped)
@@ -261,6 +266,7 @@ class GameSession:
                             command_type=resolved_type,
                             original_input=user_query,
                             matched_metta=None,
+                            doc_ids=(),
                             original_responses=(),
                             responses=(stopped_message,),
                         ),
@@ -286,6 +292,7 @@ class GameSession:
                                 command_type=resolved_type,
                                 original_input=user_query,
                                 matched_metta=None,
+                                doc_ids=(),
                                 original_responses=(),
                                 responses=(_UNMATCHED_COMMAND_MESSAGE,),
                             ),
@@ -313,6 +320,7 @@ class GameSession:
                             command_type=resolved_type,
                             original_input=user_query,
                             matched_metta=metta_query,
+                            doc_ids=resolve_metta_doc_ids(metta_query, self.metta_docs),
                             original_responses=(error_message,),
                             responses=(),
                         ),
@@ -349,6 +357,7 @@ class GameSession:
                             command_type=resolved_type,
                             original_input=user_query,
                             matched_metta=metta_query,
+                            doc_ids=resolve_metta_doc_ids(metta_query, self.metta_docs),
                             original_responses=raw_result_output,
                             responses=query_outputs,
                         ),
@@ -387,6 +396,7 @@ class GameSession:
                         command_type=resolved_type,
                         original_input=user_query,
                         matched_metta=metta_query,
+                        doc_ids=resolve_metta_doc_ids(metta_query, self.metta_docs),
                         original_responses=raw_result_output,
                         responses=_output_lines(formatted_output),
                     ),
@@ -394,6 +404,7 @@ class GameSession:
                         command_type="metta",
                         original_input=tick_query,
                         matched_metta=tick_query,
+                        doc_ids=resolve_metta_doc_ids(tick_query, self.metta_docs),
                         original_responses=raw_tick_output,
                         responses=tick_responses,
                     ),
