@@ -95,9 +95,22 @@ Startup event:
 ```json
 {
   "event": "startup",
-  "metta_code": "..."
+  "metta_code": "...",
+  "metta_docs": [
+    {
+      "id": "doc:1",
+      "head": "inventory",
+      "signature": "(inventory)",
+      "source_metta": "(= (inventory) ...)",
+      "kind": "function"
+    }
+  ]
 }
 ```
+
+`metta_code` is the raw world source loaded into MeTTa. `metta_docs` is a structured
+catalog of callable `FunctionDefinition` entries extracted by the backend so a client can
+show exact definition source without parsing the raw MeTTa text itself.
 
 If the startup trigger produces messages, they are sent immediately after the `startup`
 event as a normal `command_result`:
@@ -132,6 +145,7 @@ Command response:
       "command_type": "natural_language",
       "original_input": "look around",
       "matched_metta": "!look",
+      "doc_ids": ["doc:1"],
       "original_responses": [
         "(Response 5 \"You are in a cabin.\")"
       ],
@@ -143,12 +157,17 @@ Command response:
       "command_type": "metta",
       "original_input": "!(synchronize-tick)",
       "matched_metta": "!(synchronize-tick)",
+      "doc_ids": ["doc:9"],
       "original_responses": [],
       "responses": []
     }
   ]
 }
 ```
+
+`doc_ids` refers to entries from the startup `metta_docs` catalog. A query may return more
+than one `doc_id`, for example when a `trigger` call matches multiple concrete trigger
+definitions.
 
 Error event:
 

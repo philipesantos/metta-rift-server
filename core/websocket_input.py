@@ -64,6 +64,7 @@ def serialize_command_result(result: CommandResult, message_uuid: str | None = N
                 "command_type": query_execution.command_type,
                 "original_input": query_execution.original_input,
                 "matched_metta": query_execution.matched_metta,
+                "doc_ids": list(query_execution.doc_ids),
                 "original_responses": list(query_execution.original_responses),
                 "responses": list(query_execution.responses),
             }
@@ -75,11 +76,21 @@ def serialize_command_result(result: CommandResult, message_uuid: str | None = N
     return json.dumps(payload)
 
 
-def serialize_startup_event(metta_code: str) -> str:
+def serialize_startup_event(metta_code: str, metta_docs=None) -> str:
     return json.dumps(
         {
             "event": "startup",
             "metta_code": metta_code,
+            "metta_docs": [
+                {
+                    "id": doc.id,
+                    "head": doc.head,
+                    "signature": doc.signature,
+                    "source_metta": doc.source_metta,
+                    "kind": doc.kind,
+                }
+                for doc in (metta_docs or [])
+            ],
         }
     )
 
@@ -149,7 +160,7 @@ async def run_websocket_server(
 
     async def handle_connection(websocket):
         session = session_factory()
-        await websocket.send(serialize_startup_event(session.metta_code))
+        await websocket.send(serialize_startup_event(session.metta_code, session.metta_docs))
         if session.startup_result.queries and session.startup_result.queries[0].responses:
             await websocket.send(serialize_command_result(session.startup_result))
         if session.startup_result.end_state_event and session.startup_result.end_state_message:

@@ -1,5 +1,6 @@
 import unittest
 
+from core.metta_doc_catalog import MettaDocEntry
 from core.runtime import CommandResult, QueryExecution
 from core.websocket_input import (
     HEALTHCHECK_PATH,
@@ -98,6 +99,7 @@ class TestWebSocketInput(unittest.TestCase):
                         command_type="natural_language",
                         original_input="look around",
                         matched_metta="!look",
+                        doc_ids=("doc:1",),
                         original_responses=("(Response 5 \"You are in a cabin.\")",),
                         responses=("You are in a cabin.",),
                     ),
@@ -118,17 +120,31 @@ class TestWebSocketInput(unittest.TestCase):
         self.assertIn('"command_type": "natural_language"', payload)
         self.assertIn('"original_input": "look around"', payload)
         self.assertIn('"matched_metta": "!look"', payload)
+        self.assertIn('"doc_ids": ["doc:1"]', payload)
         self.assertIn('"original_responses": ["(Response 5 \\"You are in a cabin.\\")"]', payload)
         self.assertIn('"responses": ["You are in a cabin."]', payload)
         self.assertIn('"command_type": "metta"', payload)
         self.assertIn('"original_input": "!sync"', payload)
 
-    def test_serialize_startup_event_has_no_messages(self):
-        payload = serialize_startup_event("(= (look) Empty)")
+    def test_serialize_startup_event_includes_metta_docs(self):
+        payload = serialize_startup_event(
+            "(= (look) Empty)",
+            [
+                MettaDocEntry(
+                    id="doc:1",
+                    head="look",
+                    signature="(look)",
+                    source_metta="(= (look) Empty)",
+                    kind="function",
+                )
+            ],
+        )
 
         self.assertIn('"event": "startup"', payload)
         self.assertIn('"metta_code": "(= (look) Empty)"', payload)
-        self.assertNotIn('command_schema', payload)
+        self.assertIn('"metta_docs": [{"id": "doc:1", "head": "look"', payload)
+        self.assertIn('"signature": "(look)"', payload)
+        self.assertIn('"source_metta": "(= (look) Empty)"', payload)
         self.assertNotIn('startup_output', payload)
 
     def test_serialize_command_result_can_represent_startup_messages(self):
@@ -142,6 +158,7 @@ class TestWebSocketInput(unittest.TestCase):
                         command_type="metta",
                         original_input="!(trigger (Startup))",
                         matched_metta="!(trigger (Startup))",
+                        doc_ids=("doc:9", "doc:10"),
                         original_responses=("(Response 100 \"Welcome to the cabin.\")",),
                         responses=("Welcome to the cabin.",),
                     ),
@@ -151,6 +168,7 @@ class TestWebSocketInput(unittest.TestCase):
 
         self.assertIn('"event": "command_result"', payload)
         self.assertIn('"original_input": "!(trigger (Startup))"', payload)
+        self.assertIn('"doc_ids": ["doc:9", "doc:10"]', payload)
         self.assertIn('"original_responses": ["(Response 100 \\"Welcome to the cabin.\\")"]', payload)
         self.assertIn('"responses": ["Welcome to the cabin."]', payload)
 
