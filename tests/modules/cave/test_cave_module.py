@@ -504,6 +504,7 @@ class TestCaveModule(unittest.TestCase):
         )
         character = CharacterFactPattern("player", "John")
 
+        world.add_definition(ExistsFunctionDefinition())
         CaveModule(cave_entrance, character).apply(world)
         metta.run(world.to_metta())
         metta.run(

@@ -186,6 +186,10 @@ class TestWorldBuilder(unittest.TestCase):
         metta = get_test_metta()
         metta.run(build_world().to_metta())
 
+        metta.run(
+            StateWrapperDefinition(AtFactPattern("player", "hollow_path")).to_metta()
+        )
+
         locked_result = metta.run(f"!{ExamineFunctionPattern('locked_cabin').to_metta()}")
         locked_output_lines = format_metta_output(locked_result).splitlines()
         self.assertIn(
@@ -194,9 +198,6 @@ class TestWorldBuilder(unittest.TestCase):
         )
         self.assertNotIn("It is empty.", locked_output_lines)
 
-        metta.run(
-            StateWrapperDefinition(AtFactPattern("player", "hollow_path")).to_metta()
-        )
         metta.run(
             StateWrapperDefinition(AtFactPattern("metal_key", "player")).to_metta()
         )

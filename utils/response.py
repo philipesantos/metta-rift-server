@@ -64,7 +64,10 @@ def _atom_name(atom: Any) -> str | None:
     if hasattr(atom, "get_name"):
         return atom.get_name()
     if hasattr(atom, "get_object"):
-        obj = atom.get_object()
+        try:
+            obj = atom.get_object()
+        except TypeError:
+            return None
         if hasattr(obj, "value"):
             return str(obj.value)
         if hasattr(obj, "content"):
@@ -76,7 +79,10 @@ def _atom_to_int(atom: Any) -> int:
     if atom is None:
         return 0
     if hasattr(atom, "get_object"):
-        obj = atom.get_object()
+        try:
+            obj = atom.get_object()
+        except TypeError:
+            obj = None
         if hasattr(obj, "value"):
             try:
                 return int(obj.value)
